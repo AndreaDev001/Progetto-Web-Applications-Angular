@@ -19,11 +19,12 @@ export class GameHandlerService {
       withCredentials: false,
     });
   }
-  public search(orderingType: OrderingType,orderingMode: OrderingMode,genre: string): any{
+  public search(orderingType?: OrderingType,orderingMode?: OrderingMode,genre?: string): any{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.addAPIKey(this.apiKEY);
-    this.gameURLBuilder.addOrdering(orderingType,orderingMode);
-    if(genre.length > 0)
+    if(orderingType != undefined && orderingMode != undefined)
+        this.gameURLBuilder.addOrdering(orderingType,orderingMode);
+    if(genre != undefined && genre.length > 0)
         this.gameURLBuilder.addGenre(genre);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
