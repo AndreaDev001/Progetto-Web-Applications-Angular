@@ -23,3 +23,8 @@ export enum SideListType{
   GENRES = "Genres",
   PLATFORMS = "Platforms",
 }
+export enum SearchEventType{
+  COMPLETED = 0,
+  FAILED = 1,
+  STARTED = 2,
+}

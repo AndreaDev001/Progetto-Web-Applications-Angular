@@ -12,7 +12,7 @@ export class GameHandlerService {
   constructor(private httpClient: HttpClient,private gameURLBuilder: GameURLBuilderService) {
 
   }
-  private performRequest(url: string): any{
+  public performRequest(url: string): any{
     return this.httpClient.get(url,{
       observe: 'body',
       responseType: 'json',
@@ -27,7 +27,8 @@ export class GameHandlerService {
         this.gameURLBuilder.addOrdering(orderingType,orderingMode);
     if(genre != undefined && genre.length > 0)
         this.gameURLBuilder.addGenre(genre);
-    return this.performRequest(this.gameURLBuilder.getURL());
+    let value: string = this.gameURLBuilder.getURL();
+    return this.performRequest(value);
   }
   public searchByName(value: string,orderingType: OrderingType,orderingMode: OrderingMode){
     this.gameURLBuilder.reset();

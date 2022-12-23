@@ -1,3 +1,5 @@
+import {SearchEventType} from "./enum";
+
 export interface Game{
   name: string,
   slug: string,
@@ -18,4 +20,14 @@ export interface Platform{
   name: string,
   slug: string,
   games_count: number
+}
+export interface searchSubject{
+  addListener(listener: searchListener): void;
+  removeListener(listener: searchListener): void;
+  notifyAll(eventType: SearchEventType): void;
+}
+export interface searchListener{
+  searchCompleted(values: any[]): void;
+  searchFailed(): void;
+  searchStarted(): void;
 }
