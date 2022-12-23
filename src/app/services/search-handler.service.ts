@@ -105,4 +105,7 @@ export class SearchHandlerService implements searchSubject{
       this.searchListeners.splice(index,1);
     }
   }
+  public getCurrentGenre(): string | undefined {return this.currentGenre;}
+  public getCurrentOrderingType(): OrderingType | undefined {return this.currentOrderingType;}
+  public getCurrentOrderingMode(): OrderingMode | undefined {return this.currentOrderingMode;}
 }

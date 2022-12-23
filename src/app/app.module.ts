@@ -12,6 +12,9 @@ import {SideBarComponent} from "./side-bar/side-bar.component";
 import {SideListComponent} from "./side-list/side-list.component";
 import { SideItemComponent } from './side-item/side-item.component';
 import {SearchHandlerService} from "./services/search-handler.service";
+import { ResultPageComponent } from './HomePage/result-page/result-page.component';
+import { SortingSelectorComponent } from './HomePage/sorting-selector/sorting-selector.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,12 +25,15 @@ import {SearchHandlerService} from "./services/search-handler.service";
     SideBarComponent,
     SideListComponent,
     SideItemComponent,
+    ResultPageComponent,
+    SortingSelectorComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes),
+    NgbModule,
   ],
   providers: [SearchHandlerService],
   bootstrap: [AppComponent]

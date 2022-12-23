@@ -1,0 +1,18 @@
+<div class = "container-fluid d-inline-flex">
+  <div ngbDropdown *ngIf="orderingTypeValues">
+    <button style="padding: 10%" ngbDropdownToggle class="btn btn-secondary" type="button" id="dropdownTypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{currentTypeSelected}}
+    </button>
+    <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownTypeButton">
+      <a ngbDropdownItem class = "dropdown-item" *ngFor="let current of orderingTypeValues" (click)="updateType(current)">{{current}}</a>
+    </div>
+  </div>
+  <div ngbDropdown style="margin-left: 3%" *ngIf="orderingModeValues">
+    <button style="padding: 10%" ngbDropdownToggle class="btn btn-secondary" type="button" id="dropdownModeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{currentModeSelected}}
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownModeButton">
+      <a ngbDropdownItem *ngFor="let current of orderingModeValues" (click)="updateMode(current)">{{current}}</a>
+    </div>
+  </div>
+</div>
