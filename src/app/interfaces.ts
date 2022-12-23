@@ -2,6 +2,7 @@ export interface Game{
   name: string,
   slug: string,
   img: string,
+  released: string,
   rating: number,
   metacritic: number,
   genres: Genre[],

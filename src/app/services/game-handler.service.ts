@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {GameListType, OrderingMode, OrderingType} from "../enum";
+import {GameListType, OrderingMode, OrderingType, RequestType} from "../enum";
 import {GameURLBuilderService} from "./game-urlbuilder.service";
 
 @Injectable({
@@ -21,6 +21,7 @@ export class GameHandlerService {
   }
   public search(orderingType?: OrderingType,orderingMode?: OrderingMode,genre?: string): any{
     this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
     this.gameURLBuilder.addAPIKey(this.apiKEY);
     if(orderingType != undefined && orderingMode != undefined)
         this.gameURLBuilder.addOrdering(orderingType,orderingMode);
@@ -44,5 +45,17 @@ export class GameHandlerService {
         break;
     }
     return this.search(orderingType,orderingMode,"");
+  }
+  public getGenres(): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GENRES);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getPlatforms(): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.PLATFORMS);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {GameListType, OrderingMode, OrderingType} from "../enum";
 import {GameHandlerService} from "./game-handler.service";
 
@@ -6,8 +6,8 @@ import {GameHandlerService} from "./game-handler.service";
   providedIn: 'root'
 })
 export class SearchHandlerService {
-  private currentOrderingType?: OrderingType;
-  private currentOrderingMode?: OrderingMode;
+  private currentOrderingType?: OrderingType = OrderingType.METACRITIC;
+  private currentOrderingMode?: OrderingMode = OrderingMode.DESCENDED;
   private currentListType?: GameListType;
   private currentGenre?: string;
   constructor(private gameHandler: GameHandlerService) {

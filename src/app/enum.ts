@@ -13,3 +13,8 @@ export enum GameListType{
   BEST_RATED = "best rated",
   JUST_RELEASED = "just released",
 }
+export enum RequestType{
+  GAMES = "games",
+  GENRES = "genres",
+  PLATFORMS = "platforms",
+}
