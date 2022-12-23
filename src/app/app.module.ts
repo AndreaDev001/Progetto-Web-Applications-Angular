@@ -15,6 +15,9 @@ import {SearchHandlerService} from "./services/search-handler.service";
 import { ResultPageComponent } from './HomePage/result-page/result-page.component';
 import { SortingSelectorComponent } from './HomePage/sorting-selector/sorting-selector.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { StarComponentComponent } from './HomePage/star-component/star-component.component';
+import { PlatformListComponent } from './HomePage/platform-list/platform-list.component';
 
 @NgModule({
   declarations: [
@@ -27,10 +30,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SideItemComponent,
     ResultPageComponent,
     SortingSelectorComponent,
+    StarComponentComponent,
+    PlatformListComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FontAwesomeModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     NgbModule,

@@ -16,6 +16,7 @@ export class GameListComponent implements OnInit,searchListener{
   }
   searchCompleted(values: any[]): void {
     this.games = this.gameJSONReader.readGames(values);
+    console.log(this.games);
     }
     searchFailed(): void {
 

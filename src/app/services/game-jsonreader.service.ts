@@ -39,7 +39,7 @@ export class GameJSONReaderService {
   public readPlatforms(value: any): Platform[]{
     let values: Platform[] = [];
     for(let current of value)
-        values.push(this.readPlatform(current));
+        values.push(current.platform != undefined ? this.readPlatform(current.platform) : this.readPlatform(current));
     return values;
   }
   public readGenre(value: any): Genre{
