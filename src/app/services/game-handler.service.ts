@@ -29,6 +29,15 @@ export class GameHandlerService {
         this.gameURLBuilder.addGenre(genre);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
+  public searchByName(value: string,orderingType: OrderingType,orderingMode: OrderingMode){
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    this.gameURLBuilder.addSearch(value,true,true);
+    if(orderingType != undefined && orderingMode != undefined)
+       this.gameURLBuilder.addOrdering(orderingType,orderingMode);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
   public getGameList(listType: GameListType): any{
     let orderingType: OrderingType = OrderingType.NAME;
     let orderingMode: OrderingMode = OrderingMode.DESCENDED;

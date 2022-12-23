@@ -45,6 +45,10 @@ export class GameURLBuilderService {
     this.validateRequest();
     this.url += "&page_size=" + pageSize;
   }
+  public addSearch(name: string,precise: boolean,exact: boolean): void{
+    this.validateRequest();
+    this.url += "&search=" + name + "&search_precise=" + precise + "&search_exact=" + exact;
+  }
   public reset(): void{
     this.url = "https://api.rawg.io/api/";
     this.apiKEY = undefined;

@@ -5,6 +5,7 @@ div.game-card{
   background-color: #121212;
   color: whitesmoke;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 div.game-card:hover{
   background-color: whitesmoke;;
