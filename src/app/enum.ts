@@ -18,3 +18,8 @@ export enum RequestType{
   GENRES = "genres",
   PLATFORMS = "platforms",
 }
+export enum SideListType{
+  DEFAULT = "Lists",
+  GENRES = "Genres",
+  PLATFORMS = "Platforms",
+}

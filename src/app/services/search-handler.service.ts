@@ -40,6 +40,7 @@ export class SearchHandlerService {
        return this.performSearch();
   }
   public performSearch(): any{
+    console.log("Called");
     if(this.currentListType == undefined)
       return this.gameHandler.search(this.currentOrderingType,this.currentOrderingMode,this.currentGenre);
     else

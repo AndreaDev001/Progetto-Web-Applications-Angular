@@ -4,4 +4,9 @@ div.game-card{
   margin-top: 10px;
   background-color: #121212;
   color: whitesmoke;
+  transition: all 0.2s ease-in-out;
+}
+div.game-card:hover{
+  background-color: whitesmoke;;
+  color: black;
 }

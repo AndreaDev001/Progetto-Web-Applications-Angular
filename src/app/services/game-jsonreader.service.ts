@@ -33,13 +33,13 @@ export class GameJSONReaderService {
   public readGenres(value: any): Genre[]{
     let values: Genre[] = [];
     for(let current of value)
-         values.push(current);
+         values.push(this.readGenre(current));
     return values;
   }
   public readPlatforms(value: any): Platform[]{
     let values: Platform[] = [];
     for(let current of value)
-        values.push(current);
+        values.push(this.readPlatform(current));
     return values;
   }
   public readGenre(value: any): Genre{

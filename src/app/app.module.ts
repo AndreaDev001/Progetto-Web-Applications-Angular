@@ -8,7 +8,10 @@ import { GameCardComponent } from './HomePage/game-card/game-card.component';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import appRoutes from "./appRoutes";
-import { SideBarComponent } from './HomePage/side-bar/side-bar.component';
+import {SideBarComponent} from "./side-bar/side-bar.component";
+import {SideListComponent} from "./side-list/side-list.component";
+import { SideItemComponent } from './side-item/side-item.component';
+import {SearchHandlerService} from "./services/search-handler.service";
 
 @NgModule({
   declarations: [
@@ -16,7 +19,9 @@ import { SideBarComponent } from './HomePage/side-bar/side-bar.component';
     HomePageComponent,
     GameListComponent,
     GameCardComponent,
-    SideBarComponent
+    SideBarComponent,
+    SideListComponent,
+    SideItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +29,7 @@ import { SideBarComponent } from './HomePage/side-bar/side-bar.component';
     BrowserModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [],
+  providers: [SearchHandlerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
