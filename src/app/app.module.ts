@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { StarComponentComponent } from './HomePage/star-component/star-component.component';
 import { PlatformListComponent } from './HomePage/platform-list/platform-list.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { PlatformListComponent } from './HomePage/platform-list/platform-list.co
     RouterModule.forRoot(appRoutes),
     NgbModule,
   ],
-  providers: [SearchHandlerService],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

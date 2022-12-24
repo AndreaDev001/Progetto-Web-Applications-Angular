@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GameListType, OrderingMode, OrderingType, RequestType} from "../enum";
 import {GameURLBuilderService} from "./game-urlbuilder.service";
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,11 @@ import {GameURLBuilderService} from "./game-urlbuilder.service";
 export class GameHandlerService {
 
   private readonly apiKEY: string = "aed563e51c174ac48bc71a12195a673e";
-  constructor(private httpClient: HttpClient,private gameURLBuilder: GameURLBuilderService) {
+  private readonly minRating: number = 20;
+  private readonly maxRating: number = 100;
+  private readonly maxDate: Date = new Date();
+
+  constructor(private httpClient: HttpClient,private gameURLBuilder: GameURLBuilderService,private datePipe: DatePipe) {
 
   }
   public performRequest(url: string): any{
@@ -23,6 +28,10 @@ export class GameHandlerService {
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
     this.gameURLBuilder.addAPIKey(this.apiKEY);
+    this.gameURLBuilder.addMetacritic(this.minRating,this.maxRating);
+    let requiredDate: string | null = this.datePipe.transform(this.maxDate,'yyyy-MM-dd');
+    if(requiredDate != null)
+        this.gameURLBuilder.addDates("1969-12-31",requiredDate);
     if(orderingType != undefined && orderingMode != undefined)
         this.gameURLBuilder.addOrdering(orderingType,orderingMode);
     if(genre != undefined && genre.length > 0)

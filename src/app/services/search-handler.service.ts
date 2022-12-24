@@ -54,8 +54,19 @@ export class SearchHandlerService implements searchSubject{
   public setCurrentList(listType: GameListType,search: boolean): any{
     this.currentListType = listType;
     this.currentGenre = undefined;
-    this.currentOrderingType = undefined;
-    this.currentOrderingMode = undefined;
+    switch (listType){
+      case GameListType.BEST_RATED:
+        this.currentOrderingType = OrderingType.METACRITIC;
+        this.currentOrderingMode = OrderingMode.DESCENDED;
+        break;
+      case GameListType.JUST_RELEASED:
+        this.currentOrderingType = OrderingType.RELEASED;
+        this.currentOrderingMode = OrderingMode.DESCENDED;
+        break;
+      case GameListType.SUGGESTED:
+        //Non ancora implementato
+        return;
+    }
     if(search)
       this.performSearch();
   }

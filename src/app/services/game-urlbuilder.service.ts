@@ -49,6 +49,18 @@ export class GameURLBuilderService {
     this.validateRequest();
     this.url += "&search=" + name + "&search_precise=" + precise + "&search_exact=" + exact;
   }
+  public addPlatformCount(amount: number): void{
+    this.validateRequest();
+    this.url += "&platforms_count=" + amount;
+  }
+  public addMetacritic(min: number,max: number): void{
+    this.validateRequest();
+    this.url += "&metacritic=" + min + "," + max;
+  }
+  public addDates(first: string,second: string): void{
+    this.validateRequest();
+    this.url += "&dates=" + first + "," + second;
+  }
   public reset(): void{
     this.url = "https://api.rawg.io/api/";
     this.apiKEY = undefined;
