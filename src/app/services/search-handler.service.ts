@@ -143,6 +143,6 @@ export class SearchHandlerService implements searchSubject{
   public getCurrentOrderingType(): OrderingType | undefined {return this.currentOrderingType;}
   public getCurrentOrderingMode(): OrderingMode | undefined {return this.currentOrderingMode;}
   public getCurrentName(): string | undefined {return this.currentName;}
-  public  getStartDate(): string | null {return this.datePipe.transform(this.startDate,'yyyy-MM-dd');};
-  public getEndDate(): string | null {return this.datePipe.transform(this.endDate,'yyyy-MM-dd');};
+  public  getStartDate(): Date | undefined {return this.startDate};
+  public getEndDate(): Date | undefined {return this.endDate};
 }

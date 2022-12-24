@@ -1,4 +1,8 @@
-<div class = "container-fluid d-inline-flex">
-    <input (change)="updateStart(startDate)" style = "margin-left: 10px;padding: 10px" type="date" id = "start-date" name = "Start Date" value="{{startDate}}">
-    <input (change)="updateEnd(endDate)" style = "margin-left: 10px;padding: 10px" type="date" id = "end-date" name = "End Date" value = "{{endDate}}">
+<div class = "d-inline-flex">
+  <div ngbDropdown *ngIf="currentInterval">
+    <button class = "date-dropdown-button" ngbDropdownToggle id="dropdownTypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{getInterval(currentInterval)}}</button>
+    <div ngbDropdownMenu class = "date-dropdown" aria-labelledby="dropdownTypeButton">
+      <button class = "date-item" ngbDropdownItem *ngFor="let current of intervals" (click)="updateValue(current)">{{getInterval(current)}}</button>
+    </div>
+  </div>
 </div>
