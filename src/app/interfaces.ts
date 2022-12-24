@@ -31,3 +31,7 @@ export interface searchListener{
   searchFailed(): void;
   searchStarted(): void;
 }
+export interface DateInterval{
+  startDate: string;
+  endDate: string;
+}

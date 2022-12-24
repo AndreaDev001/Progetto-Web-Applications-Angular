@@ -7,6 +7,9 @@ export interface ParamType{
   orderingType?: OrderingType;
   orderingMode?: OrderingMode;
   genre?: string;
+
+  minDate?: string,
+  maxDate?: string
 }
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,8 @@ export class GameRouterHandlerService {
       orderingType: this.activatedRoute.snapshot.queryParams['orderingType'],
       orderingMode: this.activatedRoute.snapshot.queryParams['orderingMode'],
       genre: this.activatedRoute.snapshot.queryParams['genre'],
+      minDate: this.activatedRoute.snapshot.queryParams['minDate'],
+      maxDate: this.activatedRoute.snapshot.queryParams['maxDate'],
     });
     this.activatedRoute.queryParams.subscribe((result: any) => this.readParams());
   }
@@ -26,14 +31,19 @@ export class GameRouterHandlerService {
     let orderingType = this.activatedRoute.snapshot.queryParams['orderingType'];
     let orderingMode = this.activatedRoute.snapshot.queryParams['orderingMode'];
     let genre = this.activatedRoute.snapshot.queryParams['genre'];
-    this.setParamType({orderingType: orderingType,orderingMode: orderingMode,genre: genre});
+    let minDate = this.activatedRoute.snapshot.queryParams['minDate'];
+    let maxDate = this.activatedRoute.snapshot.queryParams['maxDate'];
+    this.setParamType({orderingType: orderingType,orderingMode: orderingMode,genre: genre,minDate: minDate,maxDate: maxDate});
   }
   public setParamType(value: ParamType): void{
+    console.log(value);
     this.router.navigate(['/games'],{
       queryParams: {
         orderingType: value.orderingType,
         orderingMode: value.orderingMode,
         genre: value.genre,
+        minDate: value.minDate,
+        maxDate: value.maxDate,
       },
       queryParamsHandling: 'merge',
       skipLocationChange: false,

@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {GameListType, OrderingMode, OrderingType, SearchEventType} from "../enum";
 import {GameHandlerService} from "./game-handler.service";
-import {searchListener, searchSubject} from "../interfaces";
+import {DateInterval, searchListener, searchSubject} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
 import {first} from "rxjs";
+import {DatePipe} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,21 @@ export class SearchHandlerService implements searchSubject{
   private currentListType?: GameListType;
   private currentName?: string;
   private currentGenre?: string;
+  private startDate?: Date = new Date('1969-12-31');
+  private endDate?: Date = new Date();
   private latestValues: any[] = [];
 
   private searchListeners: searchListener[] = [];
-  constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService){
+  constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe){
     let observable = this.gameRouterHandler.getCurrentParamType();
     observable.pipe(first()).subscribe((result: ParamType) => {
       this.currentOrderingType = result.orderingType;
       this.currentOrderingMode = result.orderingMode;
       this.currentGenre = result.genre;
-      console.log(this.currentOrderingType);
+      if(result.minDate && result.maxDate){
+        this.startDate = new Date(result.minDate);
+        this.endDate = new Date(result.maxDate);
+      }
       if(this.currentOrderingType == undefined)
           this.currentOrderingType = OrderingType.METACRITIC;
       if(this.currentOrderingMode == undefined)
@@ -44,14 +50,23 @@ export class SearchHandlerService implements searchSubject{
       this.performSearch();
     }
   }
-  public setCurrentGenre(genre: string,search: boolean): any{
+  public setCurrentGenre(genre: string,search: boolean): void{
     this.currentGenre = genre.toLowerCase();
     this.currentListType = undefined;
-    if(search){
+    if(search)
       this.performSearch();
-    }
   }
-  public setCurrentList(listType: GameListType,search: boolean): any{
+  public setStartDate(startDate: Date,search: boolean): void{
+    this.startDate = startDate;
+    if(search)
+        this.performSearch();
+  }
+  public setEndDate(endDate: Date,search: boolean): void{
+    this.endDate = endDate;
+    if(search)
+        this.performSearch();
+  }
+  public setCurrentList(listType: GameListType,search: boolean): void{
     this.currentListType = listType;
     this.currentGenre = undefined;
     switch (listType){
@@ -70,21 +85,29 @@ export class SearchHandlerService implements searchSubject{
     if(search)
       this.performSearch();
   }
-  public performSearch(): any{
-    this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,genre: this.currentGenre})
+  public performSearch(): void{
+    let startDate: string | null | undefined = this.datePipe.transform(this.startDate,'yyyy-MM-dd');
+    let endDate: string | null | undefined = this.datePipe.transform(this.endDate,'yyyy-MM-dd');
+    let interval: DateInterval | undefined  = startDate && endDate ? {startDate: startDate,endDate: endDate} : undefined;
+    if(startDate && endDate)
+       this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,genre: this.currentGenre,minDate: startDate,maxDate: endDate});
+    else
+       this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,genre: this.currentGenre});
     this.notifyAll(SearchEventType.STARTED);
     if(this.currentListType == undefined)
-      this.gameHandler.search(this.currentOrderingType,this.currentOrderingMode,this.currentGenre).subscribe((result: any) => {
+    {
+       this.gameHandler.search(this.currentOrderingType,this.currentOrderingMode,this.currentGenre,interval).subscribe((result: any) => {
         this.latestValues = result.results;
         this.notifyAll(this.latestValues?.length == 0 ? SearchEventType.FAILED : SearchEventType.COMPLETED);
-      })
+       })
+    }
     else
       this.gameHandler.getGameList(this.currentListType).subscribe((result: any) => {
         this.latestValues = result.results;
         this.notifyAll(this.latestValues?.length == 0 ? SearchEventType.FAILED : SearchEventType.COMPLETED);
       })
   }
-  public setCurrentName(name: string,search: boolean): any{
+  public setCurrentName(name: string,search: boolean): void{
     this.currentName = name;
     this.currentListType = undefined;
     if(search)
@@ -119,4 +142,7 @@ export class SearchHandlerService implements searchSubject{
   public getCurrentGenre(): string | undefined {return this.currentGenre;}
   public getCurrentOrderingType(): OrderingType | undefined {return this.currentOrderingType;}
   public getCurrentOrderingMode(): OrderingMode | undefined {return this.currentOrderingMode;}
+  public getCurrentName(): string | undefined {return this.currentName;}
+  public  getStartDate(): string | null {return this.datePipe.transform(this.startDate,'yyyy-MM-dd');};
+  public getEndDate(): string | null {return this.datePipe.transform(this.endDate,'yyyy-MM-dd');};
 }

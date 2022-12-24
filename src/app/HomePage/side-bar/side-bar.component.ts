@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {GameListType, SideListType} from "../enum";
-import {Genre, Platform} from "../interfaces";
-import {GameHandlerService} from "../services/game-handler.service";
-import {GameJSONReaderService} from "../services/game-jsonreader.service";
+import {GameListType, SideListType} from "../../enum";
+import {Genre, Platform} from "../../interfaces";
+import {GameHandlerService} from "../../services/game-handler.service";
+import {GameJSONReaderService} from "../../services/game-jsonreader.service";
 
 export interface SideItem{
   name: string,
