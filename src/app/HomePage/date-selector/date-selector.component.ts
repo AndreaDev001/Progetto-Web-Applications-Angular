@@ -40,12 +40,8 @@ export class DateSelectorComponent implements OnInit,searchListener{
     if(this.searchHandler.getStartDate() != undefined && this.searchHandler.getEndDate() != undefined){
       let startYear: number | undefined = this.searchHandler.getStartDate()?.getFullYear();
       let endYear: number | undefined= this.searchHandler.getEndDate()?.getFullYear()
-      if(startYear != undefined && endYear != undefined){
-        let interval: YearInterval = {start: startYear,end: endYear};
-        this.currentInterval = interval;
-        if(!this.intervals.includes(interval))
-          this.intervals.push(interval)
-      }
+      if(startYear != undefined && endYear != undefined)
+        this.currentInterval = {start: startYear,end: endYear};
     }
   }
   public updateValue(value: YearInterval): void{
