@@ -11,15 +11,16 @@ import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
 export class GameListComponent implements OnInit,searchListener{
 
   public games?: Game[];
+  public shouldBeVisible?: boolean;
   constructor(private searchHandler: SearchHandlerService,private gameJSONReader: GameJSONReaderService){
     this.searchHandler.addListener(this);
   }
   searchCompleted(values: any[]): void {
     this.games = this.gameJSONReader.readGames(values);
-    console.log(this.games);
+    this.shouldBeVisible = true;
     }
     searchFailed(): void {
-
+     this.shouldBeVisible = false;
     }
     searchStarted(): void {
 
@@ -27,4 +28,8 @@ export class GameListComponent implements OnInit,searchListener{
   ngOnInit(): void{
      this.searchHandler.performSearch();
   }
+  public handleClick(): void{
+    this.searchHandler.setCurrentGenre("action",true);
+  }
 }
+
