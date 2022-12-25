@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GameListType, SideListType} from "../../enum";
-import {SearchHandlerService} from "../../services/search-handler.service";
-import {Game} from "../../interfaces";
+import {GameListType, SideListType} from "../../../enum";
+import {SearchHandlerService} from "../../../services/search-handler.service";
 
 @Component({
   selector: 'app-side-item',

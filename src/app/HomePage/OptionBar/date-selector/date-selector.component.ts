@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SearchHandlerService} from "../../services/search-handler.service";
-import {searchListener} from "../../interfaces";
-import {interval} from "rxjs";
-import {end} from "@popperjs/core";
+import {SearchHandlerService} from "../../../services/search-handler.service";
+import {searchListener} from "../../../interfaces";
 
 export interface YearInterval{
   start: number,
@@ -19,6 +17,7 @@ export class DateSelectorComponent implements OnInit,searchListener{
   private endDate?: Date;
   public currentInterval?: YearInterval;
   public intervals: YearInterval[] = [];
+  public shouldBeVisible: boolean = true;
 
   constructor(private searchHandler: SearchHandlerService) {
     this.searchHandler.addListener(this);
@@ -37,6 +36,8 @@ export class DateSelectorComponent implements OnInit,searchListener{
   searchFailed(): void {
   }
   searchStarted(): void {
+    let currentName: string | null | undefined = this.searchHandler.getCurrentName();
+    this.shouldBeVisible = !currentName;
     if(this.searchHandler.getStartDate() != undefined && this.searchHandler.getEndDate() != undefined){
       let startYear: number | undefined = this.searchHandler.getStartDate()?.getFullYear();
       let endYear: number | undefined= this.searchHandler.getEndDate()?.getFullYear()

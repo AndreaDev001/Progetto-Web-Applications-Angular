@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {SearchHandlerService} from "../../services/search-handler.service";
-import {Game, searchListener} from "../../interfaces";
-import {GameJSONReaderService} from "../../services/game-jsonreader.service";
+import {SearchHandlerService} from "../../../services/search-handler.service";
+import {Game, searchListener} from "../../../interfaces";
+import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
 
 @Component({
   selector: 'app-game-list',

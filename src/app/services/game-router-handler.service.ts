@@ -10,6 +10,7 @@ export interface ParamType{
 
   minDate?: string,
   maxDate?: string
+  name?: string
 }
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class GameRouterHandlerService {
       genre: this.activatedRoute.snapshot.queryParams['genre'],
       minDate: this.activatedRoute.snapshot.queryParams['minDate'],
       maxDate: this.activatedRoute.snapshot.queryParams['maxDate'],
+      name: this.activatedRoute.snapshot.queryParams['name']
     });
     this.activatedRoute.queryParams.subscribe((result: any) => this.readParams());
   }
@@ -33,7 +35,8 @@ export class GameRouterHandlerService {
     let genre = this.activatedRoute.snapshot.queryParams['genre'];
     let minDate = this.activatedRoute.snapshot.queryParams['minDate'];
     let maxDate = this.activatedRoute.snapshot.queryParams['maxDate'];
-    this.setParamType({orderingType: orderingType,orderingMode: orderingMode,genre: genre,minDate: minDate,maxDate: maxDate});
+    let name = this.activatedRoute.snapshot.queryParams['name'];
+    this.setParamType({orderingType: orderingType,orderingMode: orderingMode,genre: genre,minDate: minDate,maxDate: maxDate,name: name});
   }
   public setParamType(value: ParamType): void{
     console.log(value);
@@ -44,6 +47,7 @@ export class GameRouterHandlerService {
         genre: value.genre,
         minDate: value.minDate,
         maxDate: value.maxDate,
+        name: value.name
       },
       queryParamsHandling: 'merge',
       skipLocationChange: false,

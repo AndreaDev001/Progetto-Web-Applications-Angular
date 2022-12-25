@@ -31,12 +31,16 @@ export class GameJSONReaderService {
     return {name: name,slug: slug,img: img,released: released,rating: rating,metacritic: metacritic,genres: foundGenres,platforms: foundPlatforms};
   }
   public readGenres(value: any): Genre[]{
+    if(value == null)
+        return [];
     let values: Genre[] = [];
     for(let current of value)
          values.push(this.readGenre(current));
     return values;
   }
   public readPlatforms(value: any): Platform[]{
+    if(value == null)
+      return [];
     let values: Platform[] = [];
     for(let current of value)
         values.push(current.platform != undefined ? this.readPlatform(current.platform) : this.readPlatform(current));

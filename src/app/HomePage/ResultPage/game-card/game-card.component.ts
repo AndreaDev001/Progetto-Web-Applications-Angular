@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Game} from "../../interfaces";
+import {Game} from "../../../interfaces";
 import {IconDefinition,faCalendarDays} from "@fortawesome/free-solid-svg-icons";
 
 @Component({

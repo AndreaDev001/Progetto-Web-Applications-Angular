@@ -39,13 +39,12 @@ export class GameHandlerService {
     console.log(value);
     return this.performRequest(value);
   }
-  public searchByName(value: string,orderingType: OrderingType,orderingMode: OrderingMode,dateInterval?: DateInterval){
+  public searchByName(value: string){
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
     this.gameURLBuilder.addAPIKey(this.apiKEY);
-    this.gameURLBuilder.addSearch(value,true,true);
-    if(orderingType != undefined && orderingMode != undefined)
-       this.gameURLBuilder.addOrdering(orderingType,orderingMode);
+    this.gameURLBuilder.addSearch(value,false,false);
+    this.gameURLBuilder.addMetacritic(20,100);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
   public getGameList(listType: GameListType,dateInterval?: DateInterval): any{

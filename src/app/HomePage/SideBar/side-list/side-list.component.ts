@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SideListType} from "../../enum";
+import {SideListType} from "../../../enum";
 import {SideItem} from "../side-bar/side-bar.component";
 
 @Component({

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Platform} from "../../interfaces";
+import {Platform} from "../../../interfaces";
 import {faDesktop, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {faAndroid, faApple, faPlaystation, faXbox} from "@fortawesome/free-brands-svg-icons";
 
