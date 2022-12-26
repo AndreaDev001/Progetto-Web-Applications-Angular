@@ -3,7 +3,6 @@ import {GameListType, OrderingMode, OrderingType, SearchEventType} from "../enum
 import {GameHandlerService} from "./game-handler.service";
 import {DateInterval, searchListener, searchSubject} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
-import {first} from "rxjs";
 import {DatePipe} from "@angular/common";
 
 @Injectable({
@@ -22,7 +21,7 @@ export class SearchHandlerService implements searchSubject{
   private searchListeners: searchListener[] = [];
   constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe){
     let observable = this.gameRouterHandler.getCurrentParamType();
-    observable.pipe(first()).subscribe((result: ParamType) => {
+    observable.subscribe((result: ParamType) => {
       this.currentOrderingType = result.orderingType;
       this.currentOrderingMode = result.orderingMode;
       this.currentGenre = result.genre;
@@ -35,23 +34,31 @@ export class SearchHandlerService implements searchSubject{
           this.currentOrderingType = OrderingType.METACRITIC;
       if(this.currentOrderingMode == undefined && this.currentName == undefined)
           this.currentOrderingMode = OrderingMode.DESCENDED;
+      this.performSearch();
     });
+  }
+  private updateRoute()
+  {
+     let firstValue: string | null = this.datePipe.transform(this.startDate,'yyyy-MM-dd');
+     let secondValue: string | null = this.datePipe.transform(this.endDate,'yyyy-MM-dd');
+     if(firstValue && secondValue)
+         this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,
+         genre: this.currentGenre,name: this.currentName,minDate: firstValue,maxDate: secondValue});
+     else
+        this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,
+        genre: this.currentGenre,name: this.currentName})
   }
   public setCurrentOrderingType(orderingType: OrderingType,search: boolean): any{
     this.currentOrderingType = orderingType;
     this.currentListType = undefined;
     this.currentName = undefined;
-    if(search){
-      this.performSearch();
-    }
+    this.updateRoute();
   }
   public setCurrentOrderingMode(orderingMode: OrderingMode,search: boolean): any{
     this.currentOrderingMode = orderingMode;
     this.currentListType = undefined;
     this.currentName = undefined;
-    if(search){
-      this.performSearch();
-    }
+    this.updateRoute();
   }
   public setCurrentGenre(genre: string,search: boolean): void{
     this.currentGenre = genre.toLowerCase();
@@ -59,18 +66,16 @@ export class SearchHandlerService implements searchSubject{
     this.currentName = undefined;
     this.currentOrderingType = this.currentOrderingType == null ? OrderingType.METACRITIC : this.currentOrderingType;
     this.currentOrderingMode = this.currentOrderingMode == null ? OrderingMode.DESCENDED : this.currentOrderingMode;
-    if(search)
-      this.performSearch();
+    this.updateRoute();
   }
-  public setStartDate(startDate: Date,search: boolean): void{
+  public setCurrentDate(startDate: Date,endDate: Date){
     this.startDate = startDate;
-    if(search)
-        this.performSearch();
-  }
-  public setEndDate(endDate: Date,search: boolean): void{
     this.endDate = endDate;
-    if(search)
-        this.performSearch();
+    let firstValue: string | null = this.datePipe.transform(startDate,'yyyy-MM-dd');
+    let secondValue: string | null = this.datePipe.transform(endDate,'yyyy-MM-dd');
+    if(firstValue && secondValue)
+        this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,
+        genre: this.currentGenre,name: this.currentName,minDate: firstValue,maxDate: secondValue})
   }
   public setCurrentList(listType: GameListType,search: boolean): void{
     this.currentListType = listType;
@@ -89,8 +94,7 @@ export class SearchHandlerService implements searchSubject{
         //Non ancora implementato
         return;
     }
-    if(search)
-      this.performSearch();
+    this.updateRoute();
   }
   public performSearch(): void{
     let startDate: string | null | undefined = this.datePipe.transform(this.startDate,'yyyy-MM-dd');
@@ -99,10 +103,6 @@ export class SearchHandlerService implements searchSubject{
     this.notifyAll(SearchEventType.STARTED);
     if(this.currentListType == undefined)
     {
-      if(startDate && endDate)
-        this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,genre: this.currentGenre,minDate: startDate,maxDate: endDate});
-      else
-        this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,genre: this.currentGenre});
       if(this.currentName == null || this.currentName == ""){
         this.gameHandler.search(this.currentOrderingType,this.currentOrderingMode,this.currentGenre,interval).subscribe((result: any) => {
           this.latestValues = result.results;
@@ -111,7 +111,6 @@ export class SearchHandlerService implements searchSubject{
       }
       else
       {
-        this.gameRouterHandler.setParamType({name: this.currentName});
         this.gameHandler.searchByName(this.currentName).subscribe((result: any) => {
           this.latestValues = result.results;
           this.notifyAll(this.latestValues?.length == 0 ? SearchEventType.FAILED : SearchEventType.COMPLETED);
@@ -129,9 +128,10 @@ export class SearchHandlerService implements searchSubject{
     this.currentListType = undefined;
     this.currentOrderingType = undefined;
     this.currentOrderingMode = undefined;
-    this.currentGenre = "";
-    if(search)
-        this.performSearch();
+    this.startDate = undefined;
+    this.endDate = undefined;
+    this.currentGenre = undefined;
+    this.updateRoute();
   }
 
   addListener(listener: searchListener): void {

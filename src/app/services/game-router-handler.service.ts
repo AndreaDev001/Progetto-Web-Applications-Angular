@@ -39,7 +39,6 @@ export class GameRouterHandlerService {
     this.setParamType({orderingType: orderingType,orderingMode: orderingMode,genre: genre,minDate: minDate,maxDate: maxDate,name: name});
   }
   public setParamType(value: ParamType): void{
-    console.log(value);
     this.router.navigate(['/games'],{
       queryParams: {
         orderingType: value.orderingType,

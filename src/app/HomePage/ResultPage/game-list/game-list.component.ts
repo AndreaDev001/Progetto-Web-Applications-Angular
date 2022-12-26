@@ -26,7 +26,7 @@ export class GameListComponent implements OnInit,searchListener{
 
     }
   ngOnInit(): void{
-     this.searchHandler.performSearch();
+
   }
   public handleClick(): void{
     this.searchHandler.setCurrentGenre("action",true);

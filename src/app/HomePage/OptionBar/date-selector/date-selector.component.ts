@@ -48,8 +48,7 @@ export class DateSelectorComponent implements OnInit,searchListener{
   public updateValue(value: YearInterval): void{
     let currentStart: string = value.start + "-" + "12" + "-" + "31";
     let currentEnd: string = value.end + "-" + "12" + "-" + "31";
-    this.searchHandler.setStartDate(new Date(currentStart),false);
-    this.searchHandler.setEndDate(new Date(currentEnd),true);
+    this.searchHandler.setCurrentDate(new Date(currentStart),new Date(currentEnd));
   }
   public getInterval(current: YearInterval) : string | undefined{
     if(current != undefined)
