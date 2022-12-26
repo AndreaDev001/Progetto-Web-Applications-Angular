@@ -32,6 +32,7 @@ export class GameListComponent implements OnInit{
         this.shouldBeVisible = true;
         return;
       }
+      this.games = [];
       this.shouldBeVisible = false;
     })
   }

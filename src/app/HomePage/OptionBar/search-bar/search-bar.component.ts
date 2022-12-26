@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
 import {OrderingMode, OrderingType} from "../../../enum";
+import {faSearch, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-search-bar',
@@ -12,6 +13,7 @@ export class SearchBarComponent implements OnInit{
   private currentGenre: string | undefined;
   private currentType: OrderingType | undefined;
   private currentMode: OrderingMode | undefined;
+  public searchIcon: IconDefinition = faSearch;
   constructor(private searchHandler: SearchHandlerService) {
   }
   public ngOnInit(): void{
@@ -35,5 +37,9 @@ export class SearchBarComponent implements OnInit{
       if(this.currentName)
            this.searchHandler.setCurrentName(this.currentName);
     }
+  }
+  public handleClick(): void{
+    if(this.currentName)
+        this.searchHandler.setCurrentName(this.currentName);
   }
 }
