@@ -82,7 +82,8 @@ export class SearchHandlerService
   }
   public setCurrentDate(startDate: Date,endDate: Date){
     this.startDate.next(startDate);
-    this.endDate .next(endDate);
+    this.endDate.next(endDate);
+    this.currentMaxPage.next(1);
     let firstValue: string | null = this.datePipe.transform(startDate,'yyyy-MM-dd');
     let secondValue: string | null = this.datePipe.transform(endDate,'yyyy-MM-dd');
     if(firstValue && secondValue)
@@ -127,7 +128,7 @@ export class SearchHandlerService
   public increaseMaxPage(){
     this.currentMaxPage.next(this.currentMaxPage.value + 1);
     this.validateDates();
-    this.updateRoute();
+    this.performSearch();
   }
   public setCurrentName(name: string): void{
     this.currentName.next(name);
