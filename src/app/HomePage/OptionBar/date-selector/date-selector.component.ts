@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
-import {searchListener} from "../../../interfaces";
 
 export interface YearInterval{
   start: number,

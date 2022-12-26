@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
-import {searchListener} from "../../../interfaces";
 import {OrderingMode, OrderingType} from "../../../enum";
 
 @Component({

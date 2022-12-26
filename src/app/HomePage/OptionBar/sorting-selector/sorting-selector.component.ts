@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderingType,OrderingMode} from "../../../enum";
 import {SearchHandlerService} from "../../../services/search-handler.service";
-import {searchListener} from "../../../interfaces";
 
 @Component({
   selector: 'app-sorting-selector',
