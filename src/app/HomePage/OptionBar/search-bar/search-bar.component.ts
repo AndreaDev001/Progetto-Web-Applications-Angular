@@ -13,23 +13,27 @@ export class SearchBarComponent implements OnInit{
   private currentType: OrderingType | undefined;
   private currentMode: OrderingMode | undefined;
   constructor(private searchHandler: SearchHandlerService) {
-
   }
   public ngOnInit(): void{
-    this.searchHandler.getCurrentGenre().subscribe((value: string | undefined) => this.currentGenre = value);
-    this.searchHandler.getCurrentOrderingType().subscribe((value: OrderingType | undefined) => this.currentType = value);
-    this.searchHandler.getCurrentOrderingMode().subscribe((value: OrderingMode | undefined) => this.currentMode = value);
-    this.searchHandler.getLatestValues().subscribe((values: any[]) => {
-      if(this.currentGenre || this.currentType || this.currentMode)
-         this.currentName = "";
-    })
+    this.searchHandler.getCurrentGenre().subscribe((value: string | undefined) => {
+      this.currentGenre = value;
+      this.currentName = undefined;
+    });
+    this.searchHandler.getCurrentOrderingType().subscribe((value: OrderingType | undefined) => {
+      this.currentType = value;
+      this.currentName = undefined;
+    });
+    this.searchHandler.getCurrentOrderingMode().subscribe((value: OrderingMode | undefined) => {
+      this.currentMode = value;
+      this.currentName = undefined;
+    });
+    this.searchHandler.getCurrentName().subscribe((value: string | undefined) => this.currentName = value);
   }
   public handleInput(event: any): void{
     if(event.key == "Enter"){
-      let value: string = event.target.value;
-      console.log(value);
-      this.currentName = value;
-      this.searchHandler.setCurrentName(this.currentName,true);
+      this.currentName = event.target.value;
+      if(this.currentName)
+           this.searchHandler.setCurrentName(this.currentName);
     }
   }
 }

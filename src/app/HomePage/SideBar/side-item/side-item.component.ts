@@ -19,14 +19,14 @@ export class SideItemComponent implements OnInit{
   public handeClick(): void{
     switch (this.owner){
       case SideListType.GENRES:
-        this.searchHandler.setCurrentGenre(this.name,true);
+        this.searchHandler.setCurrentGenre(this.name);
         break;
       case SideListType.PLATFORMS:
         break;
       case SideListType.DEFAULT:
         const index = Object.values(GameListType).indexOf(this.name as unknown as GameListType);
         const value: GameListType = Object.values(GameListType)[index];
-        this.searchHandler.setCurrentList(value,true);
+        this.searchHandler.setCurrentList(value);
         break;
     }
   }

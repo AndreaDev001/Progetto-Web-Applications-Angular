@@ -26,9 +26,9 @@ export class SortingSelectorComponent implements OnInit{
     this.searchHandler.getLatestValues().subscribe((result: any[]) =>     this.shouldBeVisible = this.currentName == null || this.currentName == "");
   }
   public updateType(value: OrderingType): void{
-    this.searchHandler.setCurrentOrderingType(value,true);
+    this.searchHandler.setCurrentOrderingType(value);
   }
   public updateMode(value: OrderingMode): void{
-    this.searchHandler.setCurrentOrderingMode(value,true);
+    this.searchHandler.setCurrentOrderingMode(value);
   }
 }

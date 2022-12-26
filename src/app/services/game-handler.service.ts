@@ -24,10 +24,12 @@ export class GameHandlerService {
       withCredentials: false,
     });
   }
-  public search(orderingType?: OrderingType,orderingMode?: OrderingMode,genre?: string,dateInterval?: DateInterval): any{
+  public search(orderingType?: OrderingType,orderingMode?: OrderingMode,genre?: string,requiredPage?: number,dateInterval?: DateInterval): any{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
     this.gameURLBuilder.addAPIKey(this.apiKEY);
+    if(requiredPage)
+        this.gameURLBuilder.addPage(requiredPage);
     this.gameURLBuilder.addMetacritic(this.minRating,this.maxRating);
     if(orderingType != undefined && orderingMode != undefined)
         this.gameURLBuilder.addOrdering(orderingType,orderingMode);
@@ -39,15 +41,17 @@ export class GameHandlerService {
     console.log(value);
     return this.performRequest(value);
   }
-  public searchByName(value: string){
+  public searchByName(value: string,requiredPage?: number){
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
     this.gameURLBuilder.addAPIKey(this.apiKEY);
+    if(requiredPage)
+      this.gameURLBuilder.addPage(requiredPage);
     this.gameURLBuilder.addSearch(value,false,false);
     this.gameURLBuilder.addMetacritic(20,100);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
-  public getGameList(listType: GameListType,dateInterval?: DateInterval): any{
+  public getGameList(listType: GameListType,requiredPage?: number,dateInterval?: DateInterval): any{
     let orderingType: OrderingType = OrderingType.NAME;
     let orderingMode: OrderingMode = OrderingMode.DESCENDED;
     switch (listType){
@@ -62,7 +66,7 @@ export class GameHandlerService {
       case GameListType.SUGGESTED:
         break;
     }
-    return this.search(orderingType,orderingMode,"");
+    return this.search(orderingType,orderingMode,"",requiredPage);
   }
   public getGenres(): any{
     this.gameURLBuilder.reset();

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {faStar, faStarHalf, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {faStar,faStarHalfStroke, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-star-component',
@@ -23,8 +23,10 @@ export class StarComponentComponent implements OnInit{
       let fullAmount: number = Number(splitted[0]);
       for(let i = 0;i < fullAmount;i++)
          this.fullStars.push(faStar);
-      if(splitted[1].length >= 2 && Number(splitted[1]) >= 50 || splitted[1].length == 1 && Number(splitted[1]) >= 5)
-         this.halfStars.push(faStarHalf)
+      if(splitted.length == 2){
+        if(splitted[1].length >= 2 && Number(splitted[1]) >= 50 || splitted[1].length == 1 && Number(splitted[1]) >= 5)
+          this.halfStars.push(faStarHalfStroke);
+      }
     }
     return result;
   }

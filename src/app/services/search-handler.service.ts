@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GameListType, OrderingMode, OrderingType} from "../enum";
 import {GameHandlerService} from "./game-handler.service";
-import {DateInterval, Game} from "../interfaces";
+import {DateInterval} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
 import {DatePipe} from "@angular/common";
 import {BehaviorSubject, Observable} from "rxjs";
@@ -18,6 +18,7 @@ export class SearchHandlerService
   private currentGenre: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
   private startDate: BehaviorSubject<Date | undefined> = new BehaviorSubject<Date | undefined>(new Date('1970-12-31'));
   private endDate:BehaviorSubject<Date | undefined> = new BehaviorSubject<Date | undefined>(new Date());
+  private currentMaxPage: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   public latestValues: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe){
@@ -47,24 +48,27 @@ export class SearchHandlerService
         this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType.value,orderingMode: this.currentOrderingMode.value,
         genre: this.currentGenre.value,name: this.currentName.value})
   }
-  public setCurrentOrderingType(orderingType: OrderingType,search: boolean): any{
+  public setCurrentOrderingType(orderingType: OrderingType): any{
     this.currentOrderingType.next(orderingType);
     this.currentListType.next(undefined);
+    this.currentMaxPage.next(1);
     this.currentName.next(undefined);
     this.validateDates();
     this.updateRoute();
   }
-  public setCurrentOrderingMode(orderingMode: OrderingMode,search: boolean): any{
+  public setCurrentOrderingMode(orderingMode: OrderingMode): any{
     this.currentOrderingMode.next(orderingMode);
     this.currentListType.next(undefined);
+    this.currentMaxPage.next(1);
     this.currentName.next(undefined);
     this.validateDates();
     this.updateRoute();
   }
-  public setCurrentGenre(genre: string,search: boolean): void{
+  public setCurrentGenre(genre: string): void{
     this.currentGenre.next(genre.toLowerCase());
     this.currentListType.next(undefined);
     this.currentName.next(undefined);
+    this.currentMaxPage.next(1);
     this.currentOrderingType.next(this.currentOrderingType .value== null ? OrderingType.METACRITIC : this.currentOrderingType.value);
     this.currentOrderingMode.next(this.currentOrderingMode.value == null ? OrderingMode.DESCENDED : this.currentOrderingMode.value);
     this.validateDates();
@@ -85,8 +89,9 @@ export class SearchHandlerService
         this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType.value,orderingMode: this.currentOrderingMode.value,
         genre: this.currentGenre.value,name: this.currentName.value,minDate: firstValue,maxDate: secondValue})
   }
-  public setCurrentList(listType: GameListType,search: boolean): void{
+  public setCurrentList(listType: GameListType): void{
     this.currentListType.next(listType);
+    this.currentMaxPage.next(1);
     this.currentGenre.next(undefined);
     this.currentName.next(undefined);
     switch (listType){
@@ -112,15 +117,21 @@ export class SearchHandlerService
     if(this.currentListType.value == undefined)
     {
       if(this.currentName.value == null || this.currentName.value == "")
-        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,interval).subscribe((result: any) => this.latestValues.next(result.results));
+        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.latestValues.next(result.results));
       else
-        this.gameHandler.searchByName(this.currentName.value).subscribe((result: any) => this.latestValues.next(result.results));
+        this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.latestValues.next(result.results));
     }
     else
-      this.gameHandler.getGameList(this.currentListType.value).subscribe((result: any) => this.latestValues.next(result.results));
+      this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.latestValues.next(result.results));
   }
-  public setCurrentName(name: string,search: boolean): void{
+  public increaseMaxPage(){
+    this.currentMaxPage.next(this.currentMaxPage.value + 1);
+    this.validateDates();
+    this.updateRoute();
+  }
+  public setCurrentName(name: string): void{
     this.currentName.next(name);
+    this.currentMaxPage.next(1);
     this.currentListType.next(undefined);
     this.currentOrderingType.next(undefined);
     this.currentOrderingMode.next(undefined);
@@ -133,11 +144,9 @@ export class SearchHandlerService
   public getCurrentOrderingType(): Observable<OrderingType | undefined> {return this.currentOrderingType.asObservable();}
   public getCurrentOrderingMode(): Observable<OrderingMode | undefined> {return this.currentOrderingMode.asObservable();}
   public getCurrentName(): Observable<string | undefined> {return this.currentName.asObservable();}
+  public getCurrentMaxPage(): Observable<number | undefined> {return this.currentMaxPage.asObservable();}
   public  getStartDate(): Observable<Date | undefined> {return this.startDate.asObservable()};
   public getEndDate(): Observable<Date | undefined> {return this.endDate.asObservable();};
-  private setLatestValues(value: any[]): void{
-    this.latestValues.next(value);
-  }
   public getLatestValues(): Observable<any[]>{
     return this.latestValues.asObservable();
   }
