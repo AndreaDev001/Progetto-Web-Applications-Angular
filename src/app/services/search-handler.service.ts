@@ -52,12 +52,14 @@ export class SearchHandlerService implements searchSubject{
     this.currentOrderingType = orderingType;
     this.currentListType = undefined;
     this.currentName = undefined;
+    this.validateDates();
     this.updateRoute();
   }
   public setCurrentOrderingMode(orderingMode: OrderingMode,search: boolean): any{
     this.currentOrderingMode = orderingMode;
     this.currentListType = undefined;
     this.currentName = undefined;
+    this.validateDates();
     this.updateRoute();
   }
   public setCurrentGenre(genre: string,search: boolean): void{
@@ -66,7 +68,14 @@ export class SearchHandlerService implements searchSubject{
     this.currentName = undefined;
     this.currentOrderingType = this.currentOrderingType == null ? OrderingType.METACRITIC : this.currentOrderingType;
     this.currentOrderingMode = this.currentOrderingMode == null ? OrderingMode.DESCENDED : this.currentOrderingMode;
+    this.validateDates();
     this.updateRoute();
+  }
+  private validateDates(){
+    if(this.startDate == null || this.endDate == null){
+      this.startDate = new Date('1970-12-31');
+      this.endDate = new Date();
+    }
   }
   public setCurrentDate(startDate: Date,endDate: Date){
     this.startDate = startDate;
@@ -94,6 +103,7 @@ export class SearchHandlerService implements searchSubject{
         //Non ancora implementato
         return;
     }
+    this.validateDates();
     this.updateRoute();
   }
   public performSearch(): void{
@@ -133,7 +143,6 @@ export class SearchHandlerService implements searchSubject{
     this.currentGenre = undefined;
     this.updateRoute();
   }
-
   addListener(listener: searchListener): void {
     if(!this.searchListeners.includes(listener))
         this.searchListeners.push(listener);
