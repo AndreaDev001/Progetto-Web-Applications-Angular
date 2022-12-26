@@ -14,9 +14,11 @@ export class SearchBarComponent implements OnInit{
   private currentType: OrderingType | undefined;
   private currentMode: OrderingMode | undefined;
   public searchIcon: IconDefinition = faSearch;
+  private textField: HTMLInputElement | null = null;
   constructor(private searchHandler: SearchHandlerService) {
   }
   public ngOnInit(): void{
+    this.textField = document.querySelector("input");
     this.searchHandler.getCurrentGenre().subscribe((value: string | undefined) => {
       this.currentGenre = value;
       this.currentName = undefined;
@@ -39,7 +41,9 @@ export class SearchBarComponent implements OnInit{
     }
   }
   public handleClick(): void{
-    if(this.currentName)
-        this.searchHandler.setCurrentName(this.currentName);
+    this.currentName = this.textField?.value;
+    if(this.currentName){
+      this.searchHandler.setCurrentName(this.currentName);
+    }
   }
 }
