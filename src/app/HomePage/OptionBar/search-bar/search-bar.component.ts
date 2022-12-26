@@ -8,26 +8,22 @@ import {OrderingMode, OrderingType} from "../../../enum";
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css']
 })
-export class SearchBarComponent implements OnInit,searchListener{
+export class SearchBarComponent implements OnInit{
   public currentName?: string;
+  private currentGenre: string | undefined;
+  private currentType: OrderingType | undefined;
+  private currentMode: OrderingMode | undefined;
   constructor(private searchHandler: SearchHandlerService) {
-    this.searchHandler.addListener(this);
-  }
-  public ngOnInit(): void{
 
   }
-  searchCompleted(values: any[]): void {
-  }
-  searchFailed(): void {
-  }
-  searchStarted(): void {
-    this.currentName = this.searchHandler.getCurrentName();
-    let currentGenre: string | undefined = this.searchHandler.getCurrentGenre();
-    let currentType: OrderingType | undefined = this.searchHandler.getCurrentOrderingType();
-    let currentMode: OrderingMode | undefined = this.searchHandler.getCurrentOrderingMode();
-    if(currentGenre || currentType || currentMode){
-      this.currentName = "";
-    }
+  public ngOnInit(): void{
+    this.searchHandler.getCurrentGenre().subscribe((value: string | undefined) => this.currentGenre = value);
+    this.searchHandler.getCurrentOrderingType().subscribe((value: OrderingType | undefined) => this.currentType = value);
+    this.searchHandler.getCurrentOrderingMode().subscribe((value: OrderingMode | undefined) => this.currentMode = value);
+    this.searchHandler.getLatestValues().subscribe((values: any[]) => {
+      if(this.currentGenre || this.currentType || this.currentMode)
+         this.currentName = "";
+    })
   }
   public handleInput(event: any): void{
     if(event.key == "Enter"){

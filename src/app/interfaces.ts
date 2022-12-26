@@ -21,16 +21,6 @@ export interface Platform{
   slug: string,
   games_count: number
 }
-export interface searchSubject{
-  addListener(listener: searchListener): void;
-  removeListener(listener: searchListener): void;
-  notifyAll(eventType: SearchEventType): void;
-}
-export interface searchListener{
-  searchCompleted(values: any[]): void;
-  searchFailed(): void;
-  searchStarted(): void;
-}
 export interface DateInterval{
   startDate: string;
   endDate: string;

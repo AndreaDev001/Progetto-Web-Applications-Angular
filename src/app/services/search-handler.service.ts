@@ -1,103 +1,102 @@
 import {Injectable} from '@angular/core';
-import {GameListType, OrderingMode, OrderingType, SearchEventType} from "../enum";
+import {GameListType, OrderingMode, OrderingType} from "../enum";
 import {GameHandlerService} from "./game-handler.service";
-import {DateInterval, searchListener, searchSubject} from "../interfaces";
+import {DateInterval, Game} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
 import {DatePipe} from "@angular/common";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SearchHandlerService implements searchSubject{
-  private currentOrderingType?: OrderingType = OrderingType.METACRITIC;
-  private currentOrderingMode?: OrderingMode = OrderingMode.DESCENDED;
-  private currentListType?: GameListType;
-  private currentName?: string;
-  private currentGenre?: string;
-  private startDate?: Date = new Date('1969-12-31');
-  private endDate?: Date = new Date();
-  private latestValues: any[] = [];
+export class SearchHandlerService
+{
+  private currentOrderingType: BehaviorSubject<OrderingType | undefined> = new BehaviorSubject<OrderingType | undefined>(OrderingType.METACRITIC);
+  private currentOrderingMode: BehaviorSubject<OrderingMode | undefined> = new BehaviorSubject<OrderingMode | undefined>(OrderingMode.DESCENDED);
+  private currentListType: BehaviorSubject<GameListType | undefined> = new BehaviorSubject<GameListType | undefined>(undefined);
+  private currentName: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+  private currentGenre: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+  private startDate: BehaviorSubject<Date | undefined> = new BehaviorSubject<Date | undefined>(new Date('1970-12-31'));
+  private endDate:BehaviorSubject<Date | undefined> = new BehaviorSubject<Date | undefined>(new Date());
+  public latestValues: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
-  private searchListeners: searchListener[] = [];
   constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe){
     let observable = this.gameRouterHandler.getCurrentParamType();
     observable.subscribe((result: ParamType) => {
-      this.currentOrderingType = result.orderingType;
-      this.currentOrderingMode = result.orderingMode;
-      this.currentGenre = result.genre;
-      this.currentName = result.name;
-      if(result.minDate && result.maxDate){
-        this.startDate = new Date(result.minDate);
-        this.endDate = new Date(result.maxDate);
+      this.currentGenre.next(result.genre);
+      this.currentName.next(result.name);
+      if((this.currentOrderingType.value == undefined || this.currentOrderingMode.value == undefined) && this.currentName == undefined){
+         this.currentOrderingType.next(OrderingType.METACRITIC);
+         this.currentOrderingMode.next(OrderingMode.DESCENDED);
       }
-      if(this.currentOrderingType == undefined && this.currentName == undefined)
-          this.currentOrderingType = OrderingType.METACRITIC;
-      if(this.currentOrderingMode == undefined && this.currentName == undefined)
-          this.currentOrderingMode = OrderingMode.DESCENDED;
+      if(result.minDate && result.maxDate){
+        this.startDate.next(new Date(result.minDate));
+        this.endDate.next(new Date(result.maxDate));
+      }
       this.performSearch();
     });
   }
   private updateRoute()
   {
-     let firstValue: string | null = this.datePipe.transform(this.startDate,'yyyy-MM-dd');
-     let secondValue: string | null = this.datePipe.transform(this.endDate,'yyyy-MM-dd');
+     let firstValue: string | null = this.datePipe.transform(this.startDate.value,'yyyy-MM-dd');
+     let secondValue: string | null = this.datePipe.transform(this.endDate.value,'yyyy-MM-dd');
      if(firstValue && secondValue)
-         this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,
-         genre: this.currentGenre,name: this.currentName,minDate: firstValue,maxDate: secondValue});
+         this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType.value,orderingMode: this.currentOrderingMode.value,
+         genre: this.currentGenre.value,name: this.currentName.value,minDate: firstValue,maxDate: secondValue});
      else
-        this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,
-        genre: this.currentGenre,name: this.currentName})
+        this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType.value,orderingMode: this.currentOrderingMode.value,
+        genre: this.currentGenre.value,name: this.currentName.value})
   }
   public setCurrentOrderingType(orderingType: OrderingType,search: boolean): any{
-    this.currentOrderingType = orderingType;
-    this.currentListType = undefined;
-    this.currentName = undefined;
+    this.currentOrderingType.next(orderingType);
+    this.currentListType.next(undefined);
+    this.currentName.next(undefined);
     this.validateDates();
     this.updateRoute();
   }
   public setCurrentOrderingMode(orderingMode: OrderingMode,search: boolean): any{
-    this.currentOrderingMode = orderingMode;
-    this.currentListType = undefined;
-    this.currentName = undefined;
+    this.currentOrderingMode.next(orderingMode);
+    this.currentListType.next(undefined);
+    this.currentName.next(undefined);
     this.validateDates();
     this.updateRoute();
   }
   public setCurrentGenre(genre: string,search: boolean): void{
-    this.currentGenre = genre.toLowerCase();
-    this.currentListType = undefined;
-    this.currentName = undefined;
-    this.currentOrderingType = this.currentOrderingType == null ? OrderingType.METACRITIC : this.currentOrderingType;
-    this.currentOrderingMode = this.currentOrderingMode == null ? OrderingMode.DESCENDED : this.currentOrderingMode;
+    this.currentGenre.next(genre.toLowerCase());
+    this.currentListType.next(undefined);
+    this.currentName.next(undefined);
+    this.currentOrderingType.next(this.currentOrderingType .value== null ? OrderingType.METACRITIC : this.currentOrderingType.value);
+    this.currentOrderingMode.next(this.currentOrderingMode.value == null ? OrderingMode.DESCENDED : this.currentOrderingMode.value);
     this.validateDates();
     this.updateRoute();
   }
   private validateDates(){
     if(this.startDate == null || this.endDate == null){
-      this.startDate = new Date('1970-12-31');
-      this.endDate = new Date();
+      this.startDate.next(new Date('1970-12-31'));
+      this.endDate.next(new Date());
     }
   }
   public setCurrentDate(startDate: Date,endDate: Date){
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this.startDate.next(startDate);
+    this.endDate .next(endDate);
     let firstValue: string | null = this.datePipe.transform(startDate,'yyyy-MM-dd');
     let secondValue: string | null = this.datePipe.transform(endDate,'yyyy-MM-dd');
     if(firstValue && secondValue)
-        this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType,orderingMode: this.currentOrderingMode,
-        genre: this.currentGenre,name: this.currentName,minDate: firstValue,maxDate: secondValue})
+        this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType.value,orderingMode: this.currentOrderingMode.value,
+        genre: this.currentGenre.value,name: this.currentName.value,minDate: firstValue,maxDate: secondValue})
   }
   public setCurrentList(listType: GameListType,search: boolean): void{
-    this.currentListType = listType;
-    this.currentGenre = undefined;
-    this.currentName = undefined;
+    this.currentListType.next(listType);
+    this.currentGenre.next(undefined);
+    this.currentName.next(undefined);
     switch (listType){
       case GameListType.BEST_RATED:
-        this.currentOrderingType = OrderingType.METACRITIC;
-        this.currentOrderingMode = OrderingMode.DESCENDED;
+        this.currentOrderingType.next(OrderingType.METACRITIC);
+        this.currentOrderingMode.next(OrderingMode.DESCENDED);
         break;
       case GameListType.JUST_RELEASED:
-        this.currentOrderingType = OrderingType.RELEASED;
-        this.currentOrderingMode = OrderingMode.DESCENDED;
+        this.currentOrderingType.next(OrderingType.RELEASED);
+        this.currentOrderingMode.next(OrderingMode.DESCENDED);
         break;
       case GameListType.SUGGESTED:
         //Non ancora implementato
@@ -107,71 +106,39 @@ export class SearchHandlerService implements searchSubject{
     this.updateRoute();
   }
   public performSearch(): void{
-    let startDate: string | null | undefined = this.datePipe.transform(this.startDate,'yyyy-MM-dd');
-    let endDate: string | null | undefined = this.datePipe.transform(this.endDate,'yyyy-MM-dd');
+    let startDate: string | null | undefined = this.datePipe.transform(this.startDate.value,'yyyy-MM-dd');
+    let endDate: string | null | undefined = this.datePipe.transform(this.endDate.value,'yyyy-MM-dd');
     let interval: DateInterval | undefined  = startDate && endDate ? {startDate: startDate,endDate: endDate} : undefined;
-    this.notifyAll(SearchEventType.STARTED);
-    if(this.currentListType == undefined)
+    if(this.currentListType.value == undefined)
     {
-      if(this.currentName == null || this.currentName == ""){
-        this.gameHandler.search(this.currentOrderingType,this.currentOrderingMode,this.currentGenre,interval).subscribe((result: any) => {
-          this.latestValues = result.results;
-          this.notifyAll(this.latestValues?.length == 0 ? SearchEventType.FAILED : SearchEventType.COMPLETED);
-        })
-      }
+      if(this.currentName.value == null || this.currentName.value == "")
+        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,interval).subscribe((result: any) => this.latestValues.next(result.results));
       else
-      {
-        this.gameHandler.searchByName(this.currentName).subscribe((result: any) => {
-          this.latestValues = result.results;
-          this.notifyAll(this.latestValues?.length == 0 ? SearchEventType.FAILED : SearchEventType.COMPLETED);
-        })
-      }
+        this.gameHandler.searchByName(this.currentName.value).subscribe((result: any) => this.latestValues.next(result.results));
     }
     else
-      this.gameHandler.getGameList(this.currentListType).subscribe((result: any) => {
-        this.latestValues = result.results;
-        this.notifyAll(this.latestValues?.length == 0 ? SearchEventType.FAILED : SearchEventType.COMPLETED);
-      })
+      this.gameHandler.getGameList(this.currentListType.value).subscribe((result: any) => this.latestValues.next(result.results));
   }
   public setCurrentName(name: string,search: boolean): void{
-    this.currentName = name;
-    this.currentListType = undefined;
-    this.currentOrderingType = undefined;
-    this.currentOrderingMode = undefined;
-    this.startDate = undefined;
-    this.endDate = undefined;
-    this.currentGenre = undefined;
+    this.currentName.next(name);
+    this.currentListType.next(undefined);
+    this.currentOrderingType.next(undefined);
+    this.currentOrderingMode.next(undefined);
+    this.startDate.next(undefined);
+    this.endDate.next(undefined);
+    this.currentGenre.next(undefined);
     this.updateRoute();
   }
-  addListener(listener: searchListener): void {
-    if(!this.searchListeners.includes(listener))
-        this.searchListeners.push(listener);
+  public getCurrentGenre(): Observable<string | undefined>{return this.currentGenre.asObservable();}
+  public getCurrentOrderingType(): Observable<OrderingType | undefined> {return this.currentOrderingType.asObservable();}
+  public getCurrentOrderingMode(): Observable<OrderingMode | undefined> {return this.currentOrderingMode.asObservable();}
+  public getCurrentName(): Observable<string | undefined> {return this.currentName.asObservable();}
+  public  getStartDate(): Observable<Date | undefined> {return this.startDate.asObservable()};
+  public getEndDate(): Observable<Date | undefined> {return this.endDate.asObservable();};
+  private setLatestValues(value: any[]): void{
+    this.latestValues.next(value);
   }
-  notifyAll(eventType: SearchEventType): void {
-    for(let current of this.searchListeners){
-      switch (eventType){
-        case SearchEventType.STARTED:
-          current.searchStarted();
-          break;
-        case SearchEventType.FAILED:
-          current.searchFailed();
-          break;
-        case SearchEventType.COMPLETED:
-          current.searchCompleted(this.latestValues);
-          break;
-      }
-    }
+  public getLatestValues(): Observable<any[]>{
+    return this.latestValues.asObservable();
   }
-  removeListener(listener: searchListener): void {
-    if(this.searchListeners.includes(listener)){
-      const index = this.searchListeners.indexOf(listener);
-      this.searchListeners.splice(index,1);
-    }
-  }
-  public getCurrentGenre(): string | undefined {return this.currentGenre;}
-  public getCurrentOrderingType(): OrderingType | undefined {return this.currentOrderingType;}
-  public getCurrentOrderingMode(): OrderingMode | undefined {return this.currentOrderingMode;}
-  public getCurrentName(): string | undefined {return this.currentName;}
-  public  getStartDate(): Date | undefined {return this.startDate};
-  public getEndDate(): Date | undefined {return this.endDate};
 }

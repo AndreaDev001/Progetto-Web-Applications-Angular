@@ -8,25 +8,22 @@ import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
   templateUrl: './game-list.component.html',
   styleUrls: ['./game-list.component.css']
 })
-export class GameListComponent implements OnInit,searchListener{
+export class GameListComponent implements OnInit{
 
   public games?: Game[];
   public shouldBeVisible?: boolean;
   constructor(private searchHandler: SearchHandlerService,private gameJSONReader: GameJSONReaderService){
-    this.searchHandler.addListener(this);
+
   }
-  searchCompleted(values: any[]): void {
-    this.games = this.gameJSONReader.readGames(values);
-    this.shouldBeVisible = true;
-    }
-    searchFailed(): void {
-     this.shouldBeVisible = false;
-    }
-    searchStarted(): void {
-
-    }
   ngOnInit(): void{
-
+    this.searchHandler.latestValues.subscribe((result: any[]) => {
+      if(result.length > 0){
+        this.games = this.gameJSONReader.readGames(result);
+        this.shouldBeVisible = true;
+        return;
+      }
+      this.shouldBeVisible = false;
+    })
   }
   public handleClick(): void{
     this.searchHandler.setCurrentGenre("action",true);

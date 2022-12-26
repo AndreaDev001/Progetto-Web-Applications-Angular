@@ -11,16 +11,17 @@ export interface YearInterval{
   templateUrl: './date-selector.component.html',
   styleUrls: ['./date-selector.component.css']
 })
-export class DateSelectorComponent implements OnInit,searchListener{
+export class DateSelectorComponent implements OnInit{
 
   private startDate?: Date;
   private endDate?: Date;
   public currentInterval?: YearInterval;
   public intervals: YearInterval[] = [];
   public shouldBeVisible: boolean = true;
+  private currentName: string | undefined;
 
   constructor(private searchHandler: SearchHandlerService) {
-    this.searchHandler.addListener(this);
+
   }
   ngOnInit(): void{
     let maxYear: number = new Date().getFullYear();
@@ -30,17 +31,16 @@ export class DateSelectorComponent implements OnInit,searchListener{
       let interval: YearInterval = {start: i,end: next};
       this.intervals.push(interval);
     }
+    this.searchHandler.getCurrentName().subscribe((result: string | undefined) => this.currentName = result);
+    this.searchHandler.getStartDate().subscribe((result: Date | undefined) => this.startDate = result);
+    this.searchHandler.getEndDate().subscribe((result: Date | undefined) => this.endDate = result);
+    this.searchHandler.getLatestValues().subscribe((result: any[]) => this.updateValues());
   }
-  searchCompleted(values: any[]): void {
-  }
-  searchFailed(): void {
-  }
-  searchStarted(): void {
-    let currentName: string | null | undefined = this.searchHandler.getCurrentName();
-    this.shouldBeVisible = !currentName;
+  private updateValues(): void {
+    this.shouldBeVisible = !this.currentName;
     if(this.searchHandler.getStartDate() != undefined && this.searchHandler.getEndDate() != undefined){
-      let startYear: number | undefined = this.searchHandler.getStartDate()?.getFullYear();
-      let endYear: number | undefined= this.searchHandler.getEndDate()?.getFullYear()
+      let startYear: number | undefined = this.startDate?.getFullYear();
+      let endYear: number | undefined= this.endDate?.getFullYear();
       if(startYear != undefined && endYear != undefined)
         this.currentInterval = {start: startYear,end: endYear};
     }
