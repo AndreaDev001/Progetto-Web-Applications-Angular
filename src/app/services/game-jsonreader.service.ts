@@ -36,13 +36,20 @@ export class GameJSONReaderService {
     let redditName: string = value.reddit_name;
     let redditUrl: string = value.reddit_url;
     let metaCriticUrl: string = value.metacritic_url;
+    let stores: Store[] = this.readStores(value.stores);
     let developers: Developer[] = this.readDevelopers(value.developers);
     let publishers: Publisher[] = this.readPublishers(value.publishers);
     let tags: Tag[] = this.readTags(value.tags);
-    let esbrRating: EsrbRating = this.readEsrbRating(value.esbrRating);
+    let esrbRating: EsrbRating = this.readEsrbRating(value.esrb_rating);
     return {original_name: original_name,description: description,description_raw: description_raw,
     website: website,achievementsCount: achievementsCount,reddit_name: redditName,reddit_url: redditUrl,
-    metacritic_url: metaCriticUrl,developers: developers,publishers: publishers,tags: tags,esbrRating: esbrRating};
+    metacritic_url: metaCriticUrl,stores: stores,developers: developers,publishers: publishers,tags: tags,esbrRating: esrbRating};
+  }
+  public readStores(value: any): Store[]{
+    let stores: Store[] = [];
+    for(let current of value)
+      stores.push(this.readStore(current));
+    return stores;
   }
   public readDevelopers(value: any): Developer[]{
     let developers: Developer[] = [];
