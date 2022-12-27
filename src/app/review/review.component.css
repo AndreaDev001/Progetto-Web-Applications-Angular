@@ -1,0 +1,40 @@
+.banner
+{
+
+  height: 500px; background-color: transparent;
+  background-image: linear-gradient(0deg, white 5%, rgba(0, 0, 0, 0.271) 100%), url("https://media.rawg.io/media/resize/1280/-/games/501/501e7019925a3c692bf1c8062f07abe6.jpg");
+  background-position: center;
+  z-index: 1;
+}
+
+#review
+{
+  background-color: white;
+  border: 2px solid #000000;
+  border-radius: 9px;
+  padding: 0px 10px;
+  min-height: 600px;
+}
+
+#review_section
+{
+  margin-bottom: 2em;
+  word-wrap:break-word;
+}
+
+#review_section img
+{
+  max-width: 100%;
+}
+
+.content
+{
+  width: 90%;
+  margin: 30px auto;
+}
+
+.NgxEditor__ImageWrapper
+{
+  max-width: 100% !important;
+}
+

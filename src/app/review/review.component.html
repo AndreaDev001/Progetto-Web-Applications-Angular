@@ -1,0 +1,41 @@
+<div class="banner">
+
+  <button *ngIf="this.isEditMode" [disabled]="this.loading || this.form.invalid" (click)="publishReview(5)">{{!this.isNewReview ? "CONFERMA MODIFICHE" : "PUBBLICA"}}</button>
+  <button *ngIf="!this.isNewReview" [disabled]="this.loading" (click)="this.setEditMode(!this.isEditMode)">{{!this.isEditMode ? "MODIFICA" : "ANNULLA MODIFICHE"}}</button>
+
+
+  <div class="content">
+    <section id="review_section">
+      <form [formGroup]="form" *ngIf="this.isEditMode; else htmlReview">
+        <div class="NgxEditor__Wrapper">
+          <ngx-editor-menu [editor]="editorr" [toolbar]="toolbar"> </ngx-editor-menu>
+          <ngx-editor placeholder="scrivi qui bello" [editor]="editorr" [(ngModel)]="html" formControlName="editorContent"> </ngx-editor>
+        </div>
+        <div *ngIf="form.invalid && (form.dirty || form.touched)">
+          <div *ngIf="form.hasError('minlength', 'editorContent')">
+            Minimum Characters Required {{form.getError("minlength", "editorContent")?.actualLength}} / {{form.getError("minlength", "editorContent")?.requiredLength}}
+            </div>
+          <div *ngIf="form.hasError('required', 'editorContent')">
+              Review is required
+          </div>
+        </div>
+      </form>
+
+      <ng-template #htmlReview>
+        <div id="review" [innerHtml]="sanitizer.bypassSecurityTrustHtml(this.html)"></div>
+      </ng-template>
+
+
+    </section>
+    <section [immediateCheck]="true" infiniteScroll (scrolled)="loadNewComments()" id="commentsSection" style="text-align: center;">
+      <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+      <p *ngIf="this.loadingComments">LOADING COMMENTS....</p>
+    </section>
+
+
+
+
+
+</div>
+
+
