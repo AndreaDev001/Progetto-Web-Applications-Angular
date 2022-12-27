@@ -10,7 +10,7 @@ import {DateInterval} from "../interfaces";
 })
 export class GameHandlerService {
 
-  private readonly apiKEY: string = "aed563e51c174ac48bc71a12195a673e";
+  private readonly apiKEY: string = "5bf2185dae9d4756a3c16083fc00de2b";
   private readonly minRating: number = 20;
   private readonly maxRating: number = 100;
 
