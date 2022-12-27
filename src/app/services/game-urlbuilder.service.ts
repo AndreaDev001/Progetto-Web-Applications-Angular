@@ -19,6 +19,17 @@ export class GameURLBuilderService {
     else
       this.url += requestType + "?";
   }
+  public addDetails(id: number): void{
+    if(this.requestType == null)
+       throw new Error("Request type must be specified before looking for details");
+    let regex: RegExp = /\?key=[a-zA-Z0-9]+/;
+    if(regex.test(this.url))
+       this.url.replace(regex,"/");
+    this.url += "/" + id;
+    if(this.apiKEY != null)
+         this.addAPIKey(this.apiKEY);
+    console.log(this.url);
+  }
   public addAPIKey(apiKEY: string): void{
     this.apiKEY = apiKEY;
     this.url += "key=" + this.apiKEY;

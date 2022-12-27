@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Game, Genre, Platform} from "../interfaces";
+import {Developer, EsrbRating, Game, GameDetails, Genre, Platform, Publisher, Store, Tag} from "../interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,83 @@ export class GameJSONReaderService {
          values.push(this.readGame(current));
     return values;
   }
+  public readGameDetails(value: any): GameDetails{
+    let original_name: string = value.original_name;
+    let description: string = value.description;
+    let description_raw: string = value.description_raw;
+    let website: string = value.website;
+    let achievementsCount: number = value.achievementsCount;
+    let redditName: string = value.reddit_name;
+    let redditUrl: string = value.reddit_url;
+    let metaCriticUrl: string = value.metacritic_url;
+    let developers: Developer[] = this.readDevelopers(value.developers);
+    let publishers: Publisher[] = this.readPublishers(value.publishers);
+    let tags: Tag[] = this.readTags(value.tags);
+    let esbrRating: EsrbRating = this.readEsrbRating(value.esbrRating);
+    return {original_name: original_name,description: description,description_raw: description_raw,
+    website: website,achievementsCount: achievementsCount,reddit_name: redditName,reddit_url: redditUrl,
+    metacritic_url: metaCriticUrl,developers: developers,publishers: publishers,tags: tags,esbrRating: esbrRating};
+  }
+  public readDevelopers(value: any): Developer[]{
+    let developers: Developer[] = [];
+    for(let current of value)
+        developers.push(this.readDeveloper(current));
+    return developers;
+  }
+  public readPublishers(value: any): Publisher[]{
+    let publishers: Publisher[] = [];
+    for(let current of value)
+         publishers.push(this.readPublisher(current));
+    return publishers;
+  }
+  public readTags(value: any): Tag[]{
+    let tags: Tag[] = [];
+    for(let current of value)
+      tags.push(this.readTag(current));
+    return tags;
+  }
+  public readDeveloper(value: any): Developer{
+    let id: number = value.id;
+    let name: string = value.name;
+    let slug: string = value.slug;
+    let games_count: number = value.games_count;
+    let image_background: string = value.image_background;
+    return {id: id,name: name,slug: slug,games_count: games_count,image_background: image_background};
+  }
+  public readStore(value: any): Store{
+    let id: number = value.id;
+    let name: string = value.name;
+    let slug: string = value.slug;
+    let domain: string = value.domain;
+    let games_count: number = value.games_count;
+    let image_background: string = value.image_background;
+    return {id: id,name: name,slug: slug,domain: domain,games_count: games_count,image_background: image_background};
+  }
+  public readTag(value: any): Tag{
+    let id: number = value.id;
+    let name: string = value.name;
+    let slug: string = value.slug;
+    let language: string = value.language;
+    let games_count: number = value.games_count;
+    let image_background: string = value.image_background;
+    return {id: id,name: name,slug: slug,language: language,games_count: games_count,image_background: image_background};
+  }
+  public readEsrbRating(value: any): EsrbRating{
+    let id: number = value.id;
+    let name: string = value.name;
+    let slug: string = value.slug;
+    return {id: id,name: name,slug:slug};
+  }
+  public readPublisher(value: any): Publisher{
+    let id: number = value.id;
+    let name: string = value.name;
+    let slug: string = value.slug;
+    let games_count: number = value.games_count;
+    let image_background: string = value.image_background;
+    return {id: id,name: name,slug: slug,games_count: games_count,image_background: image_background};
+  }
   public readGame(value: any): Game{
+    let id: number = value.id;
     let name: string = value.name;
     let slug: string = value.slug;
     let img: string = value.background_image;
@@ -28,7 +104,7 @@ export class GameJSONReaderService {
     let platforms = value.platforms;
     let foundGenres: Genre[] = this.readGenres(genres);
     let foundPlatforms: Platform[] = this.readPlatforms(platforms);
-    return {name: name,slug: slug,img: img,released: released,rating: rating,metacritic: metacritic,genres: foundGenres,platforms: foundPlatforms};
+    return {id: id,name: name,slug: slug,img: img,released: released,rating: rating,metacritic: metacritic,genres: foundGenres,platforms: foundPlatforms};
   }
   public readGenres(value: any): Genre[]{
     if(value == null)
