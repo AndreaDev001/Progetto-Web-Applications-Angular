@@ -77,3 +77,24 @@ export interface EsrbRating{
   name: string;
   slug: string;
 }
+export interface Screenshot{
+  id: number;
+  image: string;
+  width: number;
+  height: number;
+  is_deleted: boolean;
+}
+export interface Achievement{
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  percent: number;
+}
+export interface Trailer{
+  id: number;
+  name: string;
+  preview: string;
+  lowQuality: string;
+  highQuality: string;
+}

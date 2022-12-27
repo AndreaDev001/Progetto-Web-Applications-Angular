@@ -1,5 +1,17 @@
 import { Injectable } from '@angular/core';
-import {Developer, EsrbRating, Game, GameDetails, Genre, Platform, Publisher, Store, Tag} from "../interfaces";
+import {
+  Achievement,
+  Developer,
+  EsrbRating,
+  Game,
+  GameDetails,
+  Genre,
+  Platform,
+  Publisher,
+  Screenshot,
+  Store,
+  Tag, Trailer
+} from "../interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -44,11 +56,29 @@ export class GameJSONReaderService {
          publishers.push(this.readPublisher(current));
     return publishers;
   }
+  public readScreenshots(value: any): Screenshot[]{
+    let screenshots: Screenshot[] = [];
+    for(let current of value)
+      screenshots.push(this.readScreenshot(current));
+    return screenshots;
+  }
   public readTags(value: any): Tag[]{
     let tags: Tag[] = [];
     for(let current of value)
       tags.push(this.readTag(current));
     return tags;
+  }
+  public readAchievements(value: any): Achievement[]{
+    let achievements: Achievement[] = [];
+    for(let current of value)
+      achievements.push(this.readAchievement(current));
+    return achievements;
+  }
+  public readTrailers(value: any): Trailer[]{
+    let trailers: Trailer[] = [];
+    for(let current of value)
+      trailers.push(this.readTrailer(current));
+    return trailers;
   }
   public readDeveloper(value: any): Developer{
     let id: number = value.id;
@@ -76,6 +106,22 @@ export class GameJSONReaderService {
     let image_background: string = value.image_background;
     return {id: id,name: name,slug: slug,language: language,games_count: games_count,image_background: image_background};
   }
+  public readAchievement(value: any): Achievement{
+    let id: number = value.id;
+    let name: string = value.name;
+    let description: string = value.description;
+    let image: string = value.image;
+    let percent: number = value.percent;
+    return {id: id,name: name,description: description,image: image,percent: percent};
+  }
+  public readTrailer(value: any): Trailer{
+    let id: number = value.id;
+    let name: string = value.name;
+    let preview: string = value.preview;
+    let lowQuality: string = value.lowQuality;
+    let highQuality: string = value.highQuality;
+    return {id: id,name: name,preview: preview,lowQuality: lowQuality,highQuality: highQuality};
+  }
   public readEsrbRating(value: any): EsrbRating{
     let id: number = value.id;
     let name: string = value.name;
@@ -89,6 +135,14 @@ export class GameJSONReaderService {
     let games_count: number = value.games_count;
     let image_background: string = value.image_background;
     return {id: id,name: name,slug: slug,games_count: games_count,image_background: image_background};
+  }
+  public readScreenshot(value: any): Screenshot{
+    let id: number = value.id;
+    let image: string = value.image;
+    let width: number = value.width;
+    let height: number = value.height;
+    let isDeleted: boolean = value.is_deleted;
+    return {id: id,image: image,width: width,height: height,is_deleted: isDeleted};
   }
   public readGame(value: any): Game{
     let id: number = value.id;

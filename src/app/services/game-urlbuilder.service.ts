@@ -17,22 +17,43 @@ export class GameURLBuilderService {
     if(regex.test(this.url))
       this.url.replace(regex,requestType + "?");
     else
-      this.url += requestType + "?";
+      this.url += requestType;
   }
   public addDetails(id: number): void{
     if(this.requestType == null)
        throw new Error("Request type must be specified before looking for details");
     let regex: RegExp = /\?key=[a-zA-Z0-9]+/;
     if(regex.test(this.url))
-       this.url.replace(regex,"/");
+       this.url.replace(regex,"");
     this.url += "/" + id;
-    if(this.apiKEY != null)
-         this.addAPIKey(this.apiKEY);
-    console.log(this.url);
+  }
+  public addAchievements(id: number): void{
+    let regex: RegExp = /\/[0-9]+/;
+    if(!regex.test(this.url))
+         this.addDetails(id);
+    this.url += "/achievements";
+  }
+  public addTrailers(id: number): void{
+    let regex: RegExp = /\/[0-9]+/;
+    if(!regex.test(this.url))
+        this.addDetails(id);
+    this.url += "/movies";
+  }
+  public addStores(id: number): void{
+    let regex: RegExp = /\/[0-9]+/;
+    if(!regex.test(this.url))
+      this.addDetails(id);
+    this.url += "/stores";
+  }
+  public addScreenshots(id: number): void{
+    let regex: RegExp = /\/[0-9]+/;
+    if(!regex.test(this.url))
+      this.addDetails(id);
+    this.url += "/screenshots";
   }
   public addAPIKey(apiKEY: string): void{
     this.apiKEY = apiKEY;
-    this.url += "key=" + this.apiKEY;
+    this.url += "?key=" + this.apiKEY;
   }
   public validateRequest(): void{
     if(this.requestType == undefined)
