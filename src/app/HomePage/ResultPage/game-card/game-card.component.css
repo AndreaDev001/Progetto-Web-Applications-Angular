@@ -1,4 +1,4 @@
-div.game-card{
+a.game-card{
   width: 100%;
   height: auto;
   margin-top: 10px;
@@ -6,8 +6,9 @@ div.game-card{
   color: whitesmoke;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  text-decoration: none;
 }
-div.game-card:hover{
+a.game-card:hover{
   background-color: whitesmoke;;
   color: black;
 }
