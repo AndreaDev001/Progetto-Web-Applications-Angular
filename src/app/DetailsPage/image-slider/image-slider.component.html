@@ -1,0 +1,5 @@
+<ngb-carousel *ngIf="images">
+  <ng-template ngbSlide *ngFor="let current of images">
+    <img src="{{current}}" class = "w-100" style="border-radius: 30px" alt="Not Found">
+  </ng-template>
+</ngb-carousel>

@@ -1,0 +1,18 @@
+div.item{
+  padding: 10px;
+  border: 1px solid whitesmoke;
+  border-radius: 30px;
+  transition: all 0.2s ease-in-out;
+  color: whitesmoke;
+  background-color: #151515;
+  margin-left: 3px;
+}
+div.item:hover{
+  color: #151515;
+  text-decoration-color: #151515;
+  text-decoration: underline;
+  background-color: whitesmoke;
+}
+span.item-text{
+  cursor: default;
+}

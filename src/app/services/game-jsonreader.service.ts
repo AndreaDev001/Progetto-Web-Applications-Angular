@@ -28,7 +28,7 @@ export class GameJSONReaderService {
     return values;
   }
   public readGameDetails(value: any): GameDetails{
-    let original_name: string = value.original_name;
+    let original_name: string = value.name_original;
     let description: string = value.description;
     let description_raw: string = value.description_raw;
     let website: string = value.website;
@@ -125,8 +125,8 @@ export class GameJSONReaderService {
     let id: number = value.id;
     let name: string = value.name;
     let preview: string = value.preview;
-    let lowQuality: string = value.lowQuality;
-    let highQuality: string = value.highQuality;
+    let lowQuality: string = value.data.min;
+    let highQuality: string = value.data.max;
     return {id: id,name: name,preview: preview,lowQuality: lowQuality,highQuality: highQuality};
   }
   public readEsrbRating(value: any): EsrbRating{

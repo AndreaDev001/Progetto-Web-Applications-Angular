@@ -22,7 +22,11 @@ import {DatePipe} from "@angular/common";
 import { DateSelectorComponent } from './HomePage/OptionBar/date-selector/date-selector.component';
 import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.component';
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
-import { GameDetailComponent } from './game-detail/game-detail.component';
+import { GameDetailComponent } from './DetailsPage/game-detail/game-detail.component';
+import { ImageSliderComponent } from './DetailsPage/image-slider/image-slider.component';
+import { TextOverflowComponent } from './DetailsPage/text-overflow/text-overflow.component';
+import { GameAdditionalInfoComponent } from './DetailsPage/game-additional-info/game-additional-info.component';
+import { GameMainInfoComponent } from './DetailsPage/game-main-info/game-main-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +44,10 @@ import { GameDetailComponent } from './game-detail/game-detail.component';
     OptionBarComponent,
     SearchBarComponent,
     GameDetailComponent,
+    ImageSliderComponent,
+    TextOverflowComponent,
+    GameAdditionalInfoComponent,
+    GameMainInfoComponent,
   ],
   imports: [
     BrowserModule,

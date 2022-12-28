@@ -1,6 +1,6 @@
 import {Routes} from "@angular/router";
 import {HomePageComponent} from "./HomePage/home-page/home-page.component";
-import {GameDetailComponent} from "./game-detail/game-detail.component";
+import {GameDetailComponent} from "./DetailsPage/game-detail/game-detail.component";
 
 
 const appRoutes: Routes = [

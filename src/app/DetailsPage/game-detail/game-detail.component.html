@@ -1,0 +1,8 @@
+<div class = "container" style="background-color: #151515" *ngIf="gameDetails">
+  <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
+  <section class = "game-section" *ngIf="gameScreenshots">
+    <h2 class = "text-white text-center">Images</h2>
+    <app-image-slider style="padding: 5%"  [images]="getScreenshots()"></app-image-slider>
+  </section>
+  <app-game-additional-info [developers]="getDevelopers()" [publishers]="getPublishers()" [tags]="getTags()"></app-game-additional-info>
+</div>
