@@ -6,6 +6,7 @@ div.item{
   color: whitesmoke;
   background-color: #151515;
   margin-left: 7px;
+  min-width: 100px;
 }
 div.item:hover{
   color: #151515;

@@ -27,6 +27,8 @@ import { ImageSliderComponent } from './DetailsPage/image-slider/image-slider.co
 import { TextOverflowComponent } from './DetailsPage/text-overflow/text-overflow.component';
 import { GameAdditionalInfoComponent } from './DetailsPage/game-additional-info/game-additional-info.component';
 import { GameMainInfoComponent } from './DetailsPage/game-main-info/game-main-info.component';
+import { GameDetailsMediaComponent } from './DetailsPage/game-details-media/game-details-media.component';
+import { VideoSelectorComponent } from './DetailsPage/video-selector/video-selector.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +50,8 @@ import { GameMainInfoComponent } from './DetailsPage/game-main-info/game-main-in
     TextOverflowComponent,
     GameAdditionalInfoComponent,
     GameMainInfoComponent,
+    GameDetailsMediaComponent,
+    VideoSelectorComponent,
   ],
   imports: [
     BrowserModule,
