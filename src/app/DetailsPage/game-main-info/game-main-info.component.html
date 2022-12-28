@@ -2,8 +2,8 @@
   <div class = "col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 d-block">
     <img id = "gameImage" [src]="gameInfo.image" alt = "Not Found">
     <p class = "text-white text-center game-name">{{gameInfo.name}}</p>
-    <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke"></app-star-component>
-    <div>
+    <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke;font-size: 35px"></app-star-component>
+    <div style="border: 1px solid whitesmoke;border-radius: 15px">
       <ul class = "list-group gameLinks" style="padding: 20px 0">
         <a class = "game-website list-group-item" href="{{gameInfo.website}}">Visit website</a>
         <a class = "game-reddit-url list-group-item" href="{{gameInfo.reddit_url}}">Visit reddit</a>

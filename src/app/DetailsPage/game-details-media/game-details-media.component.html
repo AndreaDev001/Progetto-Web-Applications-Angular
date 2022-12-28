@@ -1,0 +1,5 @@
+<h2 class = "text-white" *ngIf="name">{{name}}</h2>
+<div class = "w-100">
+  <app-video-selector *ngIf="trailers"  [source]="trailers[0]"></app-video-selector>
+  <app-image-slider *ngIf="images" [images]="images"></app-image-slider>
+</div>

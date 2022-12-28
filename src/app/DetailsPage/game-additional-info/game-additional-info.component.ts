@@ -14,6 +14,6 @@ export class GameAdditionalInfoComponent implements OnInit{
   constructor() {
   }
   public ngOnInit(): void{
-
+    console.log(this.achievements);
   }
 }

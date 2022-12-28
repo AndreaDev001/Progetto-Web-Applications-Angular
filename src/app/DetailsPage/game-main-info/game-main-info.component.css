@@ -4,8 +4,7 @@ img#gameImage{
   border-radius: 30px;
 }
 ul.gameLinks{
-  height: 10%;
-  padding: 2% 0;
+  padding: 10px 0;
 }
 p.game-name{
   font-size: 30px;
