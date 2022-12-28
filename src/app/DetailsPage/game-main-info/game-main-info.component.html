@@ -1,13 +1,20 @@
 <div class = "row container-fluid" style="padding: 20px" *ngIf="gameInfo">
-  <div class = "col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 d-block">
+  <div class = "col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 d-block">
     <img id = "gameImage" [src]="gameInfo.image" alt = "Not Found">
-    <ul class = "list-group" style="padding: 2% 0">
-      <a class = "game-website list-group-item" href="{{gameInfo.website}}">Visit website</a>
-      <a class = "game-reddit-url list-group-item" href="{{gameInfo.reddit_url}}">Visit reddit</a>
-    </ul>
+    <p class = "text-white text-center game-name">{{gameInfo.name}}</p>
+    <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke"></app-star-component>
+    <div>
+      <ul class = "list-group gameLinks" style="padding: 20px 0">
+        <a class = "game-website list-group-item" href="{{gameInfo.website}}">Visit website</a>
+        <a class = "game-reddit-url list-group-item" href="{{gameInfo.reddit_url}}">Visit reddit</a>
+        <a class = "game-metacritic-url list-group-item" href="{{gameInfo.metacritic_url}}">Visit Metacritic</a>
+      </ul>
+    </div>
   </div>
-  <div class = "col-xl-9 col-lg-9 col-md-9 col-sm-9 col-12 d-block">
+  <div class = "col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 d-block">
     <p class = "text-white text-center game-name">{{gameInfo.name}}</p>
     <p class = "text-white game-description">{{gameInfo.description}}</p>
+    <app-text-overflow [name]="'Genres'" [values]="gameInfo.genres"></app-text-overflow>
+    <app-text-overflow [name]="'Released on'" [values]="gameInfo.platforms"></app-text-overflow>
   </div>
 </div>

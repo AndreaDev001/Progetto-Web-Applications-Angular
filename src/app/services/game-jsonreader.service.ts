@@ -32,6 +32,8 @@ export class GameJSONReaderService {
     let description: string = value.description;
     let description_raw: string = value.description_raw;
     let website: string = value.website;
+    let rating: number = value.metacritic;
+    let image_background: string = value.background_image;
     let achievementsCount: number = value.achievementsCount;
     let redditName: string = value.reddit_name;
     let redditUrl: string = value.reddit_url;
@@ -40,9 +42,11 @@ export class GameJSONReaderService {
     let developers: Developer[] = this.readDevelopers(value.developers);
     let publishers: Publisher[] = this.readPublishers(value.publishers);
     let tags: Tag[] = this.readTags(value.tags);
+    let genres: Genre[] = this.readGenres(value.genres);
+    let platforms: Platform[] = this.readPlatforms(value.platforms);
     let esrbRating: EsrbRating = this.readEsrbRating(value.esrb_rating);
-    return {original_name: original_name,description: description,description_raw: description_raw,
-    website: website,achievementsCount: achievementsCount,reddit_name: redditName,reddit_url: redditUrl,
+    return {original_name: original_name,description: description,rating: rating,description_raw: description_raw,
+    website: website,genres: genres,platforms: platforms,image_background: image_background,achievementsCount: achievementsCount,reddit_name: redditName,reddit_url: redditUrl,
     metacritic_url: metaCriticUrl,stores: stores,developers: developers,publishers: publishers,tags: tags,esbrRating: esrbRating};
   }
   public readStores(value: any): Store[]{
@@ -149,7 +153,7 @@ export class GameJSONReaderService {
     let width: number = value.width;
     let height: number = value.height;
     let isDeleted: boolean = value.is_deleted;
-    return {id: id,image: image,width: width,height: height,is_deleted: isDeleted};
+    return {id: id,name: image,width: width,height: height,is_deleted: isDeleted};
   }
   public readGame(value: any): Game{
     let id: number = value.id;

@@ -9,7 +9,6 @@ export interface Game{
   metacritic: number,
   genres: Genre[],
   platforms: Platform[],
-
   gameDetails?: GameDetails;
 }
 export interface Genre{
@@ -28,9 +27,12 @@ export interface DateInterval{
   endDate: string;
 }
 export interface GameDetails{
+
   original_name: string;
   description: string;
   description_raw: string;
+  rating: number;
+  image_background: string;
   website: string;
   achievementsCount: number;
   reddit_name: string;
@@ -41,6 +43,8 @@ export interface GameDetails{
   developers?: Developer[];
   publishers?: Publisher[];
   esbrRating?: EsrbRating;
+  genres: Genre[];
+  platforms: Platform[];
 }
 export interface Store{
   id: number;
@@ -79,7 +83,7 @@ export interface EsrbRating{
 }
 export interface Screenshot{
   id: number;
-  image: string;
+  name: string;
   width: number;
   height: number;
   is_deleted: boolean;

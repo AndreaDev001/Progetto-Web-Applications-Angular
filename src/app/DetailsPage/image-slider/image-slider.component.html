@@ -1,3 +1,4 @@
+<h2 class = "text-white text-center" *ngIf="name">{{name}}</h2>
 <ngb-carousel *ngIf="images">
   <ng-template ngbSlide *ngFor="let current of images">
     <img src="{{current}}" class = "w-100" style="border-radius: 30px" alt="Not Found">

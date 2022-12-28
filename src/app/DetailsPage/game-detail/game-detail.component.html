@@ -1,8 +1,10 @@
-<div class = "container" style="background-color: #151515" *ngIf="gameDetails">
-  <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
-  <section class = "game-section" *ngIf="gameScreenshots">
-    <h2 class = "text-white text-center">Images</h2>
-    <app-image-slider style="padding: 5%"  [images]="getScreenshots()"></app-image-slider>
-  </section>
-  <app-game-additional-info [developers]="getDevelopers()" [publishers]="getPublishers()" [tags]="getTags()"></app-game-additional-info>
+<div class = "container-fluid" style="background-color: #151515">
+  <div class = "container" *ngIf="gameDetails">
+    <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
+    <section class = "game-section row" *ngIf="gameScreenshots">
+      <app-image-slider [name]="'Screenshots'" class = "col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="padding: 5%"  [images]="this.getValues(this.gameScreenshots)">
+      </app-image-slider>
+      <app-game-additional-info class = "col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" [developers]="getValues(this.gameDetails.developers)" [publishers]="getValues(this.gameDetails.publishers)" [tags]="getValues(this.gameDetails.tags)"></app-game-additional-info>
+    </section>
+  </div>
 </div>

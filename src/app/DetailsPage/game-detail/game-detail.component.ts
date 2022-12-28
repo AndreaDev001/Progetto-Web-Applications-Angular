@@ -8,9 +8,13 @@ import {GameHandlerService} from "../../services/game-handler.service";
 export interface GameInfo{
   name: string;
   description: string;
+  rating?: number;
   image?: string;
   website?: string;
   reddit_url?: string;
+  metacritic_url?: string;
+  genres?: string[];
+  platforms?: string[];
 }
 @Component({
   selector: 'app-game-detail',
@@ -45,38 +49,19 @@ export class GameDetailComponent implements OnInit{
       console.log(this.gameTrailers);
     });
   }
-  public getScreenshots(): string[]{
-    let values: string[] = [];
-    if(this.gameScreenshots)
-      for(let current of this.gameScreenshots)
-        values.push(current.image);
-    return values;
-  }
-  public getDevelopers(): string[]{
-    let values: string[] = [];
-    if(this.gameDetails?.developers)
-      for(let current of this.gameDetails.developers)
-        values.push(current.name);
-    return values;
-  }
-  public getPublishers(): string[]{
-    let values: string[] = [];
-    if(this.gameDetails?.publishers)
-      for(let current of this.gameDetails.publishers)
-        values.push(current.name);
-    return values;
-  }
-  public getTags(): string[]{
-    let values: string[] = [];
-    if(this.gameDetails?.tags)
-      for(let current of this.gameDetails.tags)
-        values.push(current.name);
-    return values;
+  public getValues(values: any[] | undefined): string[]{
+    let result: string[] = [];
+    if(values)
+      for(let current of values)
+        result.push(current.name);
+    return result;
   }
   public getGameInfo(): GameInfo | undefined{
     if(this.gameDetails && this.gameScreenshots)
-      return {name: this.gameDetails.original_name,description: this.gameDetails.description_raw,
-      website: this.gameDetails.website,reddit_url: this.gameDetails.reddit_url,image: this.gameScreenshots[0].image};
+      return {name: this.gameDetails.original_name,description: this.gameDetails.description_raw,rating: this.gameDetails.rating,
+      website: this.gameDetails.website,reddit_url: this.gameDetails.reddit_url,image: this.gameDetails.image_background,
+      metacritic_url: this.gameDetails.metacritic_url,genres: this.getValues(this.gameDetails.genres),platforms: this.getValues(this.gameDetails.platforms)
+    };
     return undefined;
   }
   public getGameID(): number | undefined {return this.gameID;}

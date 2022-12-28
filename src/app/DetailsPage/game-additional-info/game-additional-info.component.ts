@@ -9,6 +9,7 @@ export class GameAdditionalInfoComponent implements OnInit{
   @Input() developers?: string[];
   @Input() publishers?: string[];
   @Input() tags?: string[];
+  @Input() achievements?: string[];
 
   constructor() {
   }
