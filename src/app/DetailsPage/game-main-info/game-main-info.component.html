@@ -5,9 +5,17 @@
     <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke;font-size: 35px"></app-star-component>
     <div style="border: 1px solid whitesmoke;border-radius: 15px">
       <ul class = "list-group gameLinks" style="padding: 20px 0">
-        <a class = "game-website list-group-item" href="{{gameInfo.website}}">Visit website</a>
-        <a class = "game-reddit-url list-group-item" href="{{gameInfo.reddit_url}}">Visit reddit</a>
-        <a class = "game-metacritic-url list-group-item" href="{{gameInfo.metacritic_url}}">Visit Metacritic</a>
+        <a class = "game-website list-group-item" href="{{gameInfo.website}}">
+          <fa-icon style="font-size: 20px" [icon]="icons[1]"></fa-icon>
+          Visit website
+        </a>
+        <a class = "game-reddit-url list-group-item" href="{{gameInfo.reddit_url}}">
+          <fa-icon style="font-size: 20px" [icon]="icons[0]"></fa-icon>
+          Visit reddit
+        </a>
+        <a class = "game-metacritic-url list-group-item" href="{{gameInfo.metacritic_url}}">
+          <fa-icon style="font-size: 20px" [icon]="icons[2]"></fa-icon>
+          Visit Metacritic</a>
       </ul>
     </div>
   </div>
@@ -16,5 +24,6 @@
     <p class = "text-white game-description">{{gameInfo.description}}</p>
     <app-text-overflow [name]="'Genres'" [values]="gameInfo.genres"></app-text-overflow>
     <app-text-overflow [name]="'Released on'" [values]="gameInfo.platforms"></app-text-overflow>
+    <app-text-overflow [name]="'Available on'" [values]="gameInfo.stores"></app-text-overflow>
   </div>
 </div>

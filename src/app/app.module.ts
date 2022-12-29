@@ -11,7 +11,6 @@ import appRoutes from "./appRoutes";
 import {SideBarComponent} from "./HomePage/SideBar/side-bar/side-bar.component";
 import {SideListComponent} from "./HomePage/SideBar/side-list/side-list.component";
 import { SideItemComponent } from './HomePage/SideBar/side-item/side-item.component';
-import {SearchHandlerService} from "./services/search-handler.service";
 import { ResultPageComponent } from './HomePage/ResultPage/result-page/result-page.component';
 import { SortingSelectorComponent } from './HomePage/OptionBar/sorting-selector/sorting-selector.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -29,6 +28,7 @@ import { GameAdditionalInfoComponent } from './DetailsPage/game-additional-info/
 import { GameMainInfoComponent } from './DetailsPage/game-main-info/game-main-info.component';
 import { GameDetailsMediaComponent } from './DetailsPage/game-details-media/game-details-media.component';
 import { VideoSelectorComponent } from './DetailsPage/video-selector/video-selector.component';
+import { GameReviewComponent } from './DetailsPage/game-review/game-review.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +52,7 @@ import { VideoSelectorComponent } from './DetailsPage/video-selector/video-selec
     GameMainInfoComponent,
     GameDetailsMediaComponent,
     VideoSelectorComponent,
+    GameReviewComponent,
   ],
   imports: [
     BrowserModule,

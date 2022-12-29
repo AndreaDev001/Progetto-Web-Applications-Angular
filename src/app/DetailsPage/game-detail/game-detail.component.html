@@ -1,9 +1,15 @@
 <div class = "container-fluid" style="background-color: #151515">
   <div class = "container" *ngIf="gameDetails">
     <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
-    <section class = "game-section" *ngIf="gameScreenshots && gameTrailers">
-      <app-game-details-media [trailers]="[gameTrailers[0].highQuality]" [name]="'Media'" [images]="getValues(this.gameScreenshots)"></app-game-details-media>
+    <section class = "game-section" *ngIf="gameScreenshots">
+      <app-game-details-media [trailers]="getTrailers(this.gameTrailers)" [name]="'Media'" [images]="getValues(this.gameScreenshots)"></app-game-details-media>
     </section>
-    <app-game-additional-info class = "col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" [achievements]="getValues(this.gameAchievements)" [developers]="getValues(this.gameDetails.developers)" [publishers]="getValues(this.gameDetails.publishers)" [tags]="getValues(this.gameDetails.tags)"></app-game-additional-info>
+    <section class = "game-section row">
+      <div class = "review-holder col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        <h2 class = "text-white text-center" style="font-weight: bold;">Reviews</h2>
+        <app-game-review *ngFor="let current of getGameReviews()" [review]="current"></app-game-review>
+      </div>
+      <app-game-additional-info class = "col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" [achievements]="getValues(this.gameAchievements)" [developers]="getValues(this.gameDetails.developers)" [publishers]="getValues(this.gameDetails.publishers)" [tags]="getValues(this.gameDetails.tags)"></app-game-additional-info>
+    </section>
   </div>
 </div>

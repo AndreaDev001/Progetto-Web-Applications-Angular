@@ -102,3 +102,13 @@ export interface Trailer{
   lowQuality: string;
   highQuality: string;
 }
+export interface Review
+{
+  id: number,
+  profileName: string,
+  preview: string;
+  reviewTitle: string,
+  rating: number,
+  likeCount: number,
+  dislikeCount: number,
+}

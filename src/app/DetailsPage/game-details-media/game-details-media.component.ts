@@ -12,5 +12,6 @@ export class GameDetailsMediaComponent implements OnInit{
   constructor() {
   }
   public ngOnInit() {
+
   }
 }

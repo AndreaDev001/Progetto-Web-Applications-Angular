@@ -1,0 +1,48 @@
+button.interaction-button
+{
+   color: inherit;
+   background-color: inherit;
+   border: 1px solid #151515;
+   border-radius: 30px;
+}
+button.interaction-button:hover{
+  text-decoration: underline;
+  text-decoration-color: #151515;
+}
+p.profile-name{
+  font-size: 20px;
+  font-weight: bold;
+  color: inherit;
+}
+fa-icon{
+  color: inherit;
+}
+span.interaction-text{
+  padding: 0 5px;
+  font-size: 20px;
+  color: inherit;
+}
+p.review-title{
+  font-size: 20px;
+  font-weight: bold;
+  color: inherit;
+}
+p.review-preview{
+  font-size: 17px;
+  font-weight: normal;
+  color: inherit;
+}
+button.holder{
+  background-color: #151515;
+  color: whitesmoke;
+  border-top: 1px solid whitesmoke;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  transition: all 0.2s ease-in-out;
+  padding: 10px 0;
+}
+button.holder:hover{
+  background-color: whitesmoke;
+  color: #151515;
+}
