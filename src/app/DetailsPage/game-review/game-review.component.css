@@ -2,12 +2,11 @@ button.interaction-button
 {
    color: inherit;
    background-color: inherit;
-   border: 1px solid #151515;
    border-radius: 30px;
+   border: 2px solid #151515;
 }
 button.interaction-button:hover{
   text-decoration: underline;
-  text-decoration-color: #151515;
 }
 p.profile-name{
   font-size: 20px;
@@ -19,7 +18,6 @@ fa-icon{
 }
 span.interaction-text{
   padding: 0 5px;
-  font-size: 20px;
   color: inherit;
 }
 p.review-title{
