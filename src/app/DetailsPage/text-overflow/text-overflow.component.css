@@ -17,3 +17,8 @@ span.item-text{
   cursor: default;
   min-width: 100px;
 }
+div.text-holder{
+  white-space: nowrap;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}

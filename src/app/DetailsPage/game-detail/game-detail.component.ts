@@ -37,7 +37,10 @@ export class GameDetailComponent implements OnInit{
   public ngOnInit(): void{
     let value: string | null = this.route.snapshot.paramMap.get("id");
     this.gameID = Number(value);
-    this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => this.gameDetails = this.gameJSONReader.readGameDetails(value));
+    this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
+      this.gameDetails = this.gameJSONReader.readGameDetails(value);
+      console.log(this.gameDetails.platforms);
+    });
     this.gameHandler.getGameAchievements(this.gameID).subscribe((value: any) => this.gameAchievements = this.gameJSONReader.readAchievements(value.results));
     this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results));
     this.gameHandler.getGameTrailers(this.gameID).subscribe((value: any) => this.gameTrailers = this.gameJSONReader.readTrailers(value.results));
@@ -57,7 +60,7 @@ export class GameDetailComponent implements OnInit{
     return result;
   }
   public getGameReviews(): Review[]{
-    let review: Review = {id: 10,reviewTitle: "Test Recensione",profileName: "Test Profilo",rating: 80,preview: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",likeCount: 10,dislikeCount: 20};
+    let review: Review = {id: 10,reviewTitle: "Test Recensione",profileName: "Test Profilo",rating: 80,preview: "Test recensione preview",likeCount: 10,dislikeCount: 20};
     return [review,review,review,review,review];
   }
   public getGameInfo(): GameInfo | undefined{
