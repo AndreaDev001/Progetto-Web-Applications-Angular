@@ -1,7 +1,7 @@
 <h2 class = "text-white text-center" style="font-weight: bold">Additional Info</h2>
 <div class = "container-fluid" style="padding: 20px 0">
-    <app-text-overflow *ngIf="developers && developers.length > 0" [name]="'Developers'" [values]="developers"></app-text-overflow>
-    <app-text-overflow *ngIf="publishers && publishers.length > 0" [name]="'Publishers'" [values]="publishers"></app-text-overflow>
-    <app-text-overflow *ngIf="tags && tags.length > 0" [name]="'Tags'" [values]="tags"></app-text-overflow>
-    <app-text-overflow *ngIf="achievements && achievements.length > 0"  [values]="achievements" [name]="'Achievements'"></app-text-overflow>
+    <app-text-overflow *ngIf="developers && developers.length > 0" [name]="'Developers'" [overflowItems]="createItems(developers)"></app-text-overflow>
+    <app-text-overflow *ngIf="publishers && publishers.length > 0" [name]="'Publishers'" [overflowItems]="createItems(publishers)"></app-text-overflow>
+    <app-text-overflow *ngIf="tags && tags.length > 0" [name]="'Tags'" [overflowItems]="createItems(tags)"></app-text-overflow>
+    <app-text-overflow *ngIf="achievements && achievements.length > 0"  [overflowItems]="createItems(achievements)" [name]="'Achievements'"></app-text-overflow>
 </div>

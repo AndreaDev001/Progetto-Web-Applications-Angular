@@ -40,9 +40,8 @@ export class GameDetailComponent implements OnInit{
     let value: string | null = this.route.snapshot.paramMap.get("id");
     this.gameID = Number(value);
     this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
-      console.log(value);
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
-      console.log(this.gameDetails);
+      console.log(this.gameDetails.stores);
     });
     this.gameHandler.getGameAchievements(this.gameID).subscribe((value: any) => this.gameAchievements = this.gameJSONReader.readAchievements(value.results));
     this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results));

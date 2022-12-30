@@ -22,3 +22,10 @@ div.text-holder{
   padding-top: 10px;
   padding-bottom: 20px;
 }
+fa-icon.item-icon{
+  font-size: 20px;
+}
+img.item-image{
+  width: 40px;
+  height: auto;
+}
