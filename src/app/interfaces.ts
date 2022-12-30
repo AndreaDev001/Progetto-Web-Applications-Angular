@@ -30,6 +30,7 @@ export interface GameDetails{
 
   original_name: string;
   description: string;
+  releaseDate: string;
   description_raw: string;
   rating: number;
   image_background: string;

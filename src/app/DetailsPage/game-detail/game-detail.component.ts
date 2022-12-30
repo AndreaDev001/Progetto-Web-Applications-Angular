@@ -8,12 +8,14 @@ import {GameHandlerService} from "../../services/game-handler.service";
 export interface GameInfo{
   name: string;
   description: string;
+  released?: string;
   rating?: number;
   image?: string;
   stores?: string[];
   website?: string;
   reddit_url?: string;
   metacritic_url?: string;
+  esrbRating?: string;
   genres?: string[];
   platforms?: string[];
 }
@@ -38,8 +40,9 @@ export class GameDetailComponent implements OnInit{
     let value: string | null = this.route.snapshot.paramMap.get("id");
     this.gameID = Number(value);
     this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
+      console.log(value);
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
-      console.log(this.gameDetails.platforms);
+      console.log(this.gameDetails);
     });
     this.gameHandler.getGameAchievements(this.gameID).subscribe((value: any) => this.gameAchievements = this.gameJSONReader.readAchievements(value.results));
     this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results));
@@ -67,8 +70,24 @@ export class GameDetailComponent implements OnInit{
     if(this.gameDetails && this.gameScreenshots)
       return {name: this.gameDetails.original_name,description: this.gameDetails.description_raw,rating: this.gameDetails.rating,
       website: this.gameDetails.website,reddit_url: this.gameDetails.reddit_url,image: this.gameDetails.image_background,
-      metacritic_url: this.gameDetails.metacritic_url,stores: this.getValues(this.gameDetails.stores),genres: this.getValues(this.gameDetails.genres),platforms: this.getValues(this.gameDetails.platforms)
+      metacritic_url: this.gameDetails.metacritic_url,released: this.gameDetails.releaseDate,esrbRating: this.getEsrbImage(),stores: this.getValues(this.gameDetails.stores),genres: this.getValues(this.gameDetails.genres),platforms: this.getValues(this.gameDetails.platforms)
     };
+    return undefined;
+  }
+  public getEsrbImage(): string | undefined{
+    if(this.gameDetails?.esbrRating){
+      let esrbSlug: string = this.gameDetails.esbrRating.slug;
+      switch (esrbSlug){
+        case "teen":
+          return "https://www.esrb.org/wp-content/uploads/2019/05/T.svg";
+        case "mature":
+          return "https://www.esrb.org/wp-content/uploads/2019/05/M.svg";
+        case "everyone":
+          return "https://www.esrb.org/wp-content/uploads/2019/05/E.svg";
+        case "everyone-10-plus":
+          return "https://www.esrb.org/wp-content/uploads/2019/05/E10plus.svg";
+      }
+    }
     return undefined;
   }
   public getGameID(): number | undefined {return this.gameID;}

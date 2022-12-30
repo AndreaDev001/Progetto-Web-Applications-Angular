@@ -1,7 +1,7 @@
 <button class="container-fluid row holder" *ngIf="review">
   <div class = "col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="color:inherit">
     <p class = "profile-name">{{review.profileName}}</p>
-    <fa-icon *ngIf="selectedIcon" [icon]="selectedIcon" style="font-size: 70px"></fa-icon>
+    <fa-icon *ngIf="selectedIcon" [icon]="selectedIcon" style="font-size: 55px"></fa-icon>
     <app-star-component [rating]="review.rating" style="font-size: 25px"></app-star-component>
   </div>
   <div class = "col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12" style="color: inherit">

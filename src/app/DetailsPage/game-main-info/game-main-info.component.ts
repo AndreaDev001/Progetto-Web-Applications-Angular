@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GameInfo} from "../game-detail/game-detail.component";
-import {faGlobe, faStar, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {faGlobe, faStar, faCalendar, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {faReddit} from "@fortawesome/free-brands-svg-icons";
 
 @Component({
@@ -10,7 +10,7 @@ import {faReddit} from "@fortawesome/free-brands-svg-icons";
 })
 export class GameMainInfoComponent implements OnInit{
   @Input() gameInfo?: GameInfo;
-  public icons: IconDefinition[] = [faReddit,faGlobe,faStar];
+  public icons: IconDefinition[] = [faReddit,faGlobe,faStar,faCalendar];
   constructor() {
   }
   public ngOnInit(): void{
