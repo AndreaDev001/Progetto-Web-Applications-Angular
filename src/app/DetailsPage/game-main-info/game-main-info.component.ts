@@ -3,6 +3,7 @@ import {GameInfo} from "../game-detail/game-detail.component";
 import {
   faGlobe,
   faStar,
+  faHeartCirclePlus,
   IconDefinition,
   faStore,
   faGamepad, faList, faCalendarDays
@@ -25,7 +26,7 @@ import {overflowItem} from "../text-overflow/text-overflow.component";
 })
 export class GameMainInfoComponent implements OnInit{
   @Input() gameInfo?: GameInfo;
-  public icons: IconDefinition[] = [faReddit,faGlobe,faStar,faCalendarDays];
+  public icons: IconDefinition[] = [faReddit,faGlobe,faStar,faCalendarDays,faHeartCirclePlus];
   public defaultIcons: IconDefinition[] = [faStore,faGamepad,faList];
   constructor() {
   }

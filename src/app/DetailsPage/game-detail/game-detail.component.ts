@@ -47,7 +47,10 @@ export class GameDetailComponent implements OnInit{
     });
     this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => this.gameDetails = this.gameJSONReader.readGameDetails(value));
     this.gameHandler.getGameAchievements(this.gameID).subscribe((value: any) => this.gameAchievements = this.gameJSONReader.readAchievements(value.results));
-    this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results));
+    this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => {
+      this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results);
+      console.log(this.gameScreenshots)
+    });
     this.gameHandler.getGameTrailers(this.gameID).subscribe((value: any) => this.gameTrailers = this.gameJSONReader.readTrailers(value.results));
   }
   public getValues(values: any[] | undefined): string[]{

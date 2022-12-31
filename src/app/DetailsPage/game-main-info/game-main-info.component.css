@@ -8,6 +8,19 @@ img.esrbImage{
   height: auto;
   padding: 20px;
 }
+button.wishlist-button{
+  padding: 10px;
+  color: whitesmoke;
+  background-color: #151515;
+  border: 1px solid whitesmoke;
+  transition: all 0.2s ease-in-out;
+}
+button.wishlist-button:hover{
+  background-color: whitesmoke;
+  color: #151515;
+  text-decoration: underline;
+  text-decoration-color: #151515;
+}
 ul.gameLinks{
   padding: 10px 0;
 }

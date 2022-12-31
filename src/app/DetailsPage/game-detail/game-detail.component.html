@@ -1,7 +1,7 @@
 <div class = "container-fluid" style="background-color: #151515">
   <div class = "container" *ngIf="gameDetails">
     <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
-    <section class = "game-section" *ngIf="getTrailers(this.gameTrailers).length > 0 && getValues(this.gameScreenshots).length > 0">
+    <section class = "game-section" *ngIf="getTrailers(this.gameTrailers).length > 0 || getValues(this.gameScreenshots).length > 0">
       <h2 class = "text-white text-center" style="font-weight: bold">Media</h2>
       <app-game-details-media style="padding: 20px 0" [trailers]="getTrailers(this.gameTrailers)"  [images]="getValues(this.gameScreenshots)"></app-game-details-media>
     </section>
