@@ -1,4 +1,5 @@
 
+
 export interface Game{
   id: number,
   name: string,
@@ -105,11 +106,12 @@ export interface Trailer{
 }
 export interface Review
 {
-  id: number,
-  profileName: string,
-  preview: string;
-  reviewTitle: string,
-  rating: number,
-  likeCount: number,
-  dislikeCount: number,
+  id: number;
+  titolo:  string;
+  contenuto: string,
+  voto: number;
+  numeroMiPiace: number;
+  numeroNonMiPiace: number;
+  utente: string;
+  gioco: number;
 }

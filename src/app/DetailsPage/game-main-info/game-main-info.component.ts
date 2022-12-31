@@ -3,10 +3,9 @@ import {GameInfo} from "../game-detail/game-detail.component";
 import {
   faGlobe,
   faStar,
-  faCalendar,
   IconDefinition,
   faStore,
-  faGamepad, faList
+  faGamepad, faList, faCalendarDays
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faAndroid,
@@ -26,7 +25,7 @@ import {overflowItem} from "../text-overflow/text-overflow.component";
 })
 export class GameMainInfoComponent implements OnInit{
   @Input() gameInfo?: GameInfo;
-  public icons: IconDefinition[] = [faReddit,faGlobe,faStar,faCalendar];
+  public icons: IconDefinition[] = [faReddit,faGlobe,faStar,faCalendarDays];
   public defaultIcons: IconDefinition[] = [faStore,faGamepad,faList];
   constructor() {
   }

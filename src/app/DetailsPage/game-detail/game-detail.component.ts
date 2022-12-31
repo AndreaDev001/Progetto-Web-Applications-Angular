@@ -3,6 +3,8 @@ import {Achievement, GameDetails, Review, Screenshot, Store, Trailer} from "../.
 import {ActivatedRoute} from "@angular/router";
 import {GameJSONReaderService} from "../../services/game-jsonreader.service";
 import {GameHandlerService} from "../../services/game-handler.service";
+import {HttpClient} from "@angular/common/http";
+import {SpringHandlerService} from "../../services/spring-handler.service";
 
 
 export interface GameInfo{
@@ -34,15 +36,16 @@ export class GameDetailComponent implements OnInit{
   public gameStores?: Store[];
   public gameReviews?: Review[];
 
-  constructor(private route: ActivatedRoute,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService) {
+  constructor(private route: ActivatedRoute,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private springHandler: SpringHandlerService) {
   }
   public ngOnInit(): void{
     let value: string | null = this.route.snapshot.paramMap.get("id");
     this.gameID = Number(value);
-    this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
-      this.gameDetails = this.gameJSONReader.readGameDetails(value);
-      console.log(this.gameDetails.stores);
+    this.springHandler.getAllReviews(this.gameID).subscribe((values: Review[]) => {
+      console.log(values);
+      this.gameReviews = values;
     });
+    this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => this.gameDetails = this.gameJSONReader.readGameDetails(value));
     this.gameHandler.getGameAchievements(this.gameID).subscribe((value: any) => this.gameAchievements = this.gameJSONReader.readAchievements(value.results));
     this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results));
     this.gameHandler.getGameTrailers(this.gameID).subscribe((value: any) => this.gameTrailers = this.gameJSONReader.readTrailers(value.results));
@@ -60,10 +63,6 @@ export class GameDetailComponent implements OnInit{
       for(let current of values)
         result.push(current.highQuality);
     return result;
-  }
-  public getGameReviews(): Review[]{
-    let review: Review = {id: 10,reviewTitle: "Test Recensione",profileName: "Test Profilo",rating: 80,preview: "Test recensione preview",likeCount: 10,dislikeCount: 20};
-    return [review,review,review,review,review];
   }
   public getGameInfo(): GameInfo | undefined{
     if(this.gameDetails && this.gameScreenshots)
