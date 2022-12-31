@@ -118,7 +118,10 @@ export class SearchHandlerService
     if(this.currentListType.value == undefined)
     {
       if(this.currentName.value == null || this.currentName.value == "")
-        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.latestValues.next(result.results));
+        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => {
+          console.log(result);
+          this.latestValues.next(result.results);
+        });
       else
         this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.latestValues.next(result.results));
     }
