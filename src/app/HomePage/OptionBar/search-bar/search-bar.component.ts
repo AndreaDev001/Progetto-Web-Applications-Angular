@@ -10,28 +10,16 @@ import {faSearch, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 })
 export class SearchBarComponent implements OnInit{
   public currentName?: string;
-  private currentGenre: string | undefined;
-  private currentType: OrderingType | undefined;
-  private currentMode: OrderingMode | undefined;
   public searchIcon: IconDefinition = faSearch;
   private textField: HTMLInputElement | null = null;
   constructor(private searchHandler: SearchHandlerService) {
   }
   public ngOnInit(): void{
     this.textField = document.querySelector("input");
-    this.searchHandler.getCurrentGenre().subscribe((value: string | undefined) => {
-      this.currentGenre = value;
-      this.currentName = undefined;
-    });
-    this.searchHandler.getCurrentOrderingType().subscribe((value: OrderingType | undefined) => {
-      this.currentType = value;
-      this.currentName = undefined;
-    });
-    this.searchHandler.getCurrentOrderingMode().subscribe((value: OrderingMode | undefined) => {
-      this.currentMode = value;
-      this.currentName = undefined;
-    });
-    this.searchHandler.getCurrentName().subscribe((value: string | undefined) => this.currentName = value);
+    this.searchHandler.getCurrentGenre(false).subscribe((value: string | undefined) => this.currentName = undefined);
+    this.searchHandler.getCurrentOrderingType(false).subscribe((value: OrderingType | undefined) => this.currentName = undefined);
+    this.searchHandler.getCurrentOrderingMode(false).subscribe((value: OrderingMode | undefined) => this.currentName = undefined);
+    this.searchHandler.getCurrentName(false).subscribe((value: string | undefined) => this.currentName = value);
   }
   public handleInput(event: any): void{
     if(event.key == "Enter"){

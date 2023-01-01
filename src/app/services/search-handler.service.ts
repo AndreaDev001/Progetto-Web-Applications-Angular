@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {GameListType, OrderingMode, OrderingType} from "../enum";
 import {GameHandlerService} from "./game-handler.service";
 import {DateInterval} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
 import {DatePipe} from "@angular/common";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,7 @@ export class SearchHandlerService
   public latestValues: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe){
-    let observable = this.gameRouterHandler.getCurrentParamType();
-    observable.subscribe((result: ParamType) => {
+    this.gameRouterHandler.getCurrentParamType().subscribe((result: ParamType) => {
       this.currentGenre.next(result.genre);
       this.currentName.next(result.name);
       if(result.orderingType == undefined || result.orderingMode == undefined){
@@ -55,16 +54,14 @@ export class SearchHandlerService
     this.currentListType.next(undefined);
     this.currentMaxPage.next(1);
     this.currentName.next(undefined);
-    this.validateDates();
-    this.updateRoute();
+    this.update();
   }
   public setCurrentOrderingMode(orderingMode: OrderingMode): any{
     this.currentOrderingMode.next(orderingMode);
     this.currentListType.next(undefined);
     this.currentMaxPage.next(1);
     this.currentName.next(undefined);
-    this.validateDates();
-    this.updateRoute();
+    this.update();
   }
   public setCurrentGenre(genre: string): void{
     this.currentGenre.next(genre.toLowerCase());
@@ -73,8 +70,7 @@ export class SearchHandlerService
     this.currentMaxPage.next(1);
     this.currentOrderingType.next(this.currentOrderingType .value== null ? OrderingType.METACRITIC : this.currentOrderingType.value);
     this.currentOrderingMode.next(this.currentOrderingMode.value == null ? OrderingMode.DESCENDED : this.currentOrderingMode.value);
-    this.validateDates();
-    this.updateRoute();
+    this.update();
   }
   private validateDates(){
     if(this.startDate.value == undefined || this.endDate.value == undefined){
@@ -110,6 +106,9 @@ export class SearchHandlerService
         //Non ancora implementato
         return;
     }
+    this.update();
+  }
+  private update(): void{
     this.validateDates();
     this.updateRoute();
   }
@@ -129,8 +128,7 @@ export class SearchHandlerService
   }
   public increaseMaxPage(){
     this.currentMaxPage.next(this.currentMaxPage.value + 1);
-    this.validateDates();
-    this.performSearch();
+    this.update();
   }
   public setCurrentName(name: string): void{
     this.currentName.next(name);
@@ -143,17 +141,12 @@ export class SearchHandlerService
     this.currentGenre.next(undefined);
     this.updateRoute();
   }
-  public getCurrentGenre(): Observable<string | undefined>{return this.currentGenre.asObservable();}
-  public getCurrentOrderingType(): Observable<OrderingType | undefined> {return this.currentOrderingType.asObservable();}
-  public getCurrentOrderingMode(): Observable<OrderingMode | undefined> {return this.currentOrderingMode.asObservable();}
-  public getCurrentName(): Observable<string | undefined> {return this.currentName.asObservable();}
-  public getCurrentMaxPage(): Observable<number | undefined> {return this.currentMaxPage.asObservable();}
-  public  getStartDate(): Observable<Date | undefined> {return this.startDate.asObservable()};
-  public getEndDate(): Observable<Date | undefined> {return this.endDate.asObservable();};
-  public getLatestValues(): Observable<any[]> {return this.latestValues.asObservable()};
-
-  public getCurrentMaxPageValue(): number | undefined {return this.currentMaxPage.value};
-  public getStartDateValue(): Date | undefined {return this.startDate?.value};
-  public getEndDateValue(): Date | undefined {return this.endDate?.value};
-
+  public getCurrentGenre(value: boolean): any {return value ? this.currentGenre.value : this.currentGenre}
+  public getCurrentOrderingType(value: boolean): any {return value ? this.currentOrderingType.value : this.currentOrderingType};
+  public getCurrentOrderingMode(value: boolean): any {return value ? this.currentOrderingMode.value : this.currentOrderingMode;}
+  public getCurrentName(value: boolean): any {return value ? this.currentName.value : this.currentName}
+  public getCurrentMaxPage(value: boolean): any {return value ? this.currentMaxPage.value : this.currentMaxPage}
+  public getStartDate(value: boolean): any {return value ? this.startDate.value : this.startDate};
+  public getEndDate(value: boolean): any {return value ? this.endDate.value : this.endDate};
+  public getLatestValues(value: boolean): any {return value ? this.latestValues.value : this.latestValues};
 }

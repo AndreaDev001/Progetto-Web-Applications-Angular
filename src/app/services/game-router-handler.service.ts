@@ -42,7 +42,9 @@ export class GameRouterHandlerService {
       },
       queryParamsHandling: 'merge',
       skipLocationChange: false,
-    }).then(() => this.currentParamType.next(value));
+    }).then(() => {
+      this.currentParamType.next(value)
+    });
   }
   public getCurrentParamType(): Observable<ParamType>{
     return this.currentParamType.asObservable();
