@@ -45,8 +45,7 @@ export class GameListComponent implements OnInit,OnDestroy{
         this.searchHandler.increaseMaxPage();
   }
   public ngOnDestroy(): void{
-    for(let current of this.subscriptions)
-      current.unsubscribe();
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
 }
 

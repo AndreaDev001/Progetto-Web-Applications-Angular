@@ -23,8 +23,7 @@ export class DateSelectorComponent implements OnInit,OnDestroy{
 
   }
   ngOnDestroy(): void{
-    for(let current of this.subscriptions)
-      current.unsubscribe();
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
   ngOnInit(): void {
     let maxYear: number = new Date().getFullYear();

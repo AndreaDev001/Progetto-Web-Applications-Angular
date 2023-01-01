@@ -19,7 +19,6 @@ export class SideItemComponent implements OnInit{
   public handeClick(): void{
     switch (this.owner){
       case SideListType.GENRES:
-        console.log("Genre updated");
         this.searchHandler.setCurrentGenre(this.name);
         break;
       case SideListType.PLATFORMS:

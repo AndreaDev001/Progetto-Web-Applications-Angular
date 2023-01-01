@@ -1,10 +1,10 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {GameListType, OrderingMode, OrderingType} from "../enum";
 import {GameHandlerService} from "./game-handler.service";
 import {DateInterval} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
 import {DatePipe} from "@angular/common";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
