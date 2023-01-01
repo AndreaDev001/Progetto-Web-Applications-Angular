@@ -17,18 +17,15 @@ export class GameListComponent implements OnInit{
 
   }
   public ngOnInit(): void{
-    this.searchHandler.getCurrentMaxPage().subscribe((result: number | undefined) => {
-      if(result == 1){
-        this.games = [];
-        this.scrollableDiv?.scrollTo(0,0);
-        window.scrollTo(0,0);
-      }
-    })
     this.searchHandler.latestValues.subscribe((result: any[]) => {
+      if(this.searchHandler.getCurrentMaxPageValue() == 1){
+        this.games = [];
+        window.scrollTo(0,0);
+        this.scrollableDiv?.scrollTo(0,0);
+      }
       if(result.length > 0){
         let values: Game[] = this.gameJSONReader.readGames(result);
-        for(let current of values)
-           this.games?.push(current);
+        this.games = this.games.concat(values);
         this.shouldBeVisible = true;
         return;
       }

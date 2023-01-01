@@ -18,7 +18,6 @@ export class GameHandlerService {
 
   }
   public performRequest(value: {url: string,queryParams: HttpParams}): any{
-    console.log(value.queryParams);
     return this.httpClient.get(value.url,{
       observe: 'body',
       responseType: 'json',

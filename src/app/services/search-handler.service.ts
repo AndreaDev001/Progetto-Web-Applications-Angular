@@ -11,8 +11,8 @@ import {BehaviorSubject, Observable} from "rxjs";
 })
 export class SearchHandlerService
 {
-  private currentOrderingType: BehaviorSubject<OrderingType | undefined> = new BehaviorSubject<OrderingType | undefined>(OrderingType.METACRITIC);
-  private currentOrderingMode: BehaviorSubject<OrderingMode | undefined> = new BehaviorSubject<OrderingMode | undefined>(OrderingMode.DESCENDED);
+  private currentOrderingType: BehaviorSubject<OrderingType | undefined> = new BehaviorSubject<OrderingType | undefined>(undefined);
+  private currentOrderingMode: BehaviorSubject<OrderingMode | undefined> = new BehaviorSubject<OrderingMode | undefined>(undefined);
   private currentListType: BehaviorSubject<GameListType | undefined> = new BehaviorSubject<GameListType | undefined>(undefined);
   private currentName: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
   private currentGenre: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
@@ -26,10 +26,12 @@ export class SearchHandlerService
     observable.subscribe((result: ParamType) => {
       this.currentGenre.next(result.genre);
       this.currentName.next(result.name);
-      if((this.currentOrderingType.value == undefined || this.currentOrderingMode.value == undefined) && this.currentName == undefined){
-         this.currentOrderingType.next(OrderingType.METACRITIC);
-         this.currentOrderingMode.next(OrderingMode.DESCENDED);
+      if(result.orderingType == undefined || result.orderingMode == undefined){
+        this.currentOrderingType.next(OrderingType.METACRITIC);
+        this.currentOrderingMode.next(OrderingMode.DESCENDED);
       }
+      this.currentOrderingType.next((!result.orderingType || !result.orderingMode) ? OrderingType.METACRITIC : result.orderingType);
+      this.currentOrderingMode.next((!result.orderingType || !result.orderingMode) ? OrderingMode.DESCENDED: result.orderingMode);
       if(result.minDate && result.maxDate){
         this.startDate.next(new Date(result.minDate));
         this.endDate.next(new Date(result.maxDate));
@@ -92,9 +94,9 @@ export class SearchHandlerService
   }
   public setCurrentList(listType: GameListType): void{
     this.currentListType.next(listType);
-    this.currentMaxPage.next(1);
     this.currentGenre.next(undefined);
     this.currentName.next(undefined);
+    this.currentMaxPage.next(1);
     switch (listType){
       case GameListType.BEST_RATED:
         this.currentOrderingType.next(OrderingType.METACRITIC);
@@ -148,7 +150,10 @@ export class SearchHandlerService
   public getCurrentMaxPage(): Observable<number | undefined> {return this.currentMaxPage.asObservable();}
   public  getStartDate(): Observable<Date | undefined> {return this.startDate.asObservable()};
   public getEndDate(): Observable<Date | undefined> {return this.endDate.asObservable();};
-  public getLatestValues(): Observable<any[]>{
-    return this.latestValues.asObservable();
-  }
+  public getLatestValues(): Observable<any[]> {return this.latestValues.asObservable()};
+
+  public getCurrentMaxPageValue(): number | undefined {return this.currentMaxPage.value};
+  public getStartDateValue(): Date | undefined {return this.startDate?.value};
+  public getEndDateValue(): Date | undefined {return this.endDate?.value};
+
 }

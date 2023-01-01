@@ -33,7 +33,6 @@ export class GameURLBuilderService {
   }
   public addOrdering(orderingType: OrderingType,orderingMode: OrderingMode): void{
     this.validateRequest();
-    console.log("Called");
     let value: string = (((orderingMode == OrderingMode.DESCENDED)) ? "-" : "") + orderingType;
     this.currentHttpParams = this.currentHttpParams.append("ordering",value);
   }
