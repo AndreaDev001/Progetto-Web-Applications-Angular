@@ -20,9 +20,7 @@ export class GameListComponent implements OnInit,OnDestroy{
 
   }
   public ngOnInit(): void{
-    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: any) => {
-      this.loadingVisible = value;
-    }));
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: any) => this.loadingVisible = value));
     this.subscriptions.push(this.searchHandler.getLatestValues(false).subscribe((result: any[]) => {
       if(this.searchHandler.getCurrentMaxPage(true) == 1){
         this.games = [];

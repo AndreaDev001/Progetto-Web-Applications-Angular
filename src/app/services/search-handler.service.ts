@@ -124,21 +124,16 @@ export class SearchHandlerService
     if(this.currentListType.value == undefined)
     {
       if(this.currentName.value == null || this.currentName.value == "")
-        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => {
-          this.latestValues.next(result.results);
-          this.isSearching.next(false);
-        });
+        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
       else
-        this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => {
-          this.latestValues.next(result.results);
-          this.isSearching.next(false);
-        });
+        this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
     }
     else
-      this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => {
-        this.latestValues.next(result.results);
-        this.isSearching.next(false);
-      });
+      this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
+  }
+  private updateResults(values: any[],searchingValue: boolean){
+    this.latestValues.next(values);
+    this.isSearching.next(searchingValue);
   }
   public increaseMaxPage(){
     this.currentMaxPage.next(this.currentMaxPage.value + 1);
