@@ -4,7 +4,7 @@ import {GameHandlerService} from "./game-handler.service";
 import {DateInterval} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
 import {DatePipe} from "@angular/common";
-import {BehaviorSubject, Subject} from "rxjs";
+import {BehaviorSubject, Subject, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,7 @@ export class SearchHandlerService
   private currentMaxPage: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   public latestValues: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   private isSearching: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private currentSubscription?: Subscription;
 
   constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe) {
     this.handleParams();
@@ -120,16 +121,18 @@ export class SearchHandlerService
     let startDate: string | null | undefined = this.datePipe.transform(this.startDate.value,'yyyy-MM-dd');
     let endDate: string | null | undefined = this.datePipe.transform(this.endDate.value,'yyyy-MM-dd');
     let interval: DateInterval | undefined  = startDate && endDate ? {startDate: startDate,endDate: endDate} : undefined;
+    if(this.currentSubscription != undefined)
+      this.currentSubscription.unsubscribe();
     this.isSearching.next(true);
     if(this.currentListType.value == undefined)
     {
       if(this.currentName.value == null || this.currentName.value == "")
-        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
+        this.currentSubscription = this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
       else
-        this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
+        this.currentSubscription = this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
     }
     else
-      this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
+      this.currentSubscription = this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
   }
   private updateResults(values: any[],searchingValue: boolean){
     this.latestValues.next(values);
