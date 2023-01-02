@@ -159,4 +159,5 @@ export class SearchHandlerService
   public getEndDate(value: boolean): any {return value ? this.endDate.value : this.endDate};
   public getLatestValues(value: boolean): any {return value ? this.latestValues.value : this.latestValues};
   public getIsSearching(value: boolean): any {return value ? this.isSearching.value : this.isSearching};
+  public getCurrentList(value: boolean): any {return value ? this.currentListType.value : this.currentListType};
 }

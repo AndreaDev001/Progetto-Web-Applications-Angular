@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
-import {OrderingMode, OrderingType} from "../../../enum";
+import {GameListType, OrderingMode, OrderingType} from "../../../enum";
 import {faSearch, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {Subscription} from "rxjs";
 
@@ -18,10 +18,11 @@ export class SearchBarComponent implements OnInit,OnDestroy{
   }
   public ngOnInit(): void{
     this.textField = document.querySelector("input");
-    this.subscriptions.push(this.searchHandler.getCurrentGenre(false).subscribe((value: string | undefined) => this.currentName = undefined));
-    this.subscriptions.push(this.searchHandler.getCurrentOrderingType(false).subscribe((value: OrderingType | undefined) => this.currentName = undefined));
-    this.subscriptions.push(this.searchHandler.getCurrentOrderingMode(false).subscribe((value: OrderingMode | undefined) => this.currentName = undefined));
-    this.subscriptions.push(this.searchHandler.getCurrentName(false).subscribe((value: string | undefined) => this.currentName = value));
+    this.subscriptions.push(this.searchHandler.getLatestValues(false).subscribe((values: any[]) => {
+      let genre: string = this.searchHandler.getCurrentGenre(true);
+      let list: GameListType = this.searchHandler.getCurrentList(true);
+      this.currentName = genre || list ? "" : this.searchHandler.getCurrentName(true);
+    }));
   }
   public ngOnDestroy() {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
