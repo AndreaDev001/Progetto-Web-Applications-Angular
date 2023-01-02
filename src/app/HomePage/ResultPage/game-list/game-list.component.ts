@@ -44,8 +44,9 @@ export class GameListComponent implements OnInit,OnDestroy{
     const target = event.target;
     if(this.scrollableDiv == undefined)
       this.scrollableDiv = target;
-    if((target.scrollHeight - target.scrollTop) === target.clientHeight)
-        this.searchHandler.increaseMaxPage();
+    if((target.scrollHeight - target.scrollTop) === target.clientHeight){
+      this.searchHandler.increaseMaxPage();
+    }
   }
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
