@@ -3,6 +3,7 @@ import {SearchHandlerService} from "../../../services/search-handler.service";
 import {Game} from "../../../interfaces";
 import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
 import {skip, Subscription} from "rxjs";
+import {NgxSpinnerService} from "ngx-spinner";
 @Component({
   selector: 'app-game-list',
   templateUrl: './game-list.component.html',
@@ -14,11 +15,15 @@ export class GameListComponent implements OnInit,OnDestroy{
   public shouldBeVisible?: boolean;
   private scrollableDiv?: HTMLElement;
   private subscriptions: Subscription[] = [];
+  public loadingVisible: boolean = false;
   constructor(private searchHandler: SearchHandlerService,private gameJSONReader: GameJSONReaderService){
 
   }
   public ngOnInit(): void{
-    this.subscriptions.push(this.searchHandler.getLatestValues(false).pipe(skip(1)).subscribe((result: any[]) => {
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: any) => {
+      this.loadingVisible = value;
+    }));
+    this.subscriptions.push(this.searchHandler.getLatestValues(false).subscribe((result: any[]) => {
       if(this.searchHandler.getCurrentMaxPage(true) == 1){
         this.games = [];
         window.scrollTo(0,0);

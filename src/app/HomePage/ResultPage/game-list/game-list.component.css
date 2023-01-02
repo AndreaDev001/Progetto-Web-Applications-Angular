@@ -10,3 +10,7 @@ button.reset-button:hover{
   text-decoration-color: #121212;
   color: #121212;
 }
+p.loadingText{
+  font-weight: bold;
+  font-size: 30px;
+}

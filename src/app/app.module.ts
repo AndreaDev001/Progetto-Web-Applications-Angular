@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { GameListComponent } from './HomePage/ResultPage/game-list/game-list.component';
 import { GameCardComponent } from './HomePage/ResultPage/game-card/game-card.component';
@@ -11,7 +12,7 @@ import appRoutes from "./appRoutes";
 import {SideBarComponent} from "./HomePage/SideBar/side-bar/side-bar.component";
 import {SideListComponent} from "./HomePage/SideBar/side-list/side-list.component";
 import { SideItemComponent } from './HomePage/SideBar/side-item/side-item.component';
-import {SearchHandlerService} from "./services/search-handler.service";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ResultPageComponent } from './HomePage/ResultPage/result-page/result-page.component';
 import { SortingSelectorComponent } from './HomePage/OptionBar/sorting-selector/sorting-selector.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,6 +23,7 @@ import {DatePipe} from "@angular/common";
 import { DateSelectorComponent } from './HomePage/OptionBar/date-selector/date-selector.component';
 import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.component';
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,9 @@ import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.com
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     NgbModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
