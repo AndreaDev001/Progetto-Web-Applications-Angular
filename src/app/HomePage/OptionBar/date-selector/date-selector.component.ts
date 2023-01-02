@@ -34,7 +34,7 @@ export class DateSelectorComponent implements OnInit,OnDestroy{
       this.intervals.push(interval);
     }
     this.subscriptions.push(this.searchHandler.getCurrentName(false).subscribe((result: string | undefined) => this.shouldBeVisible = result == undefined));
-    this.subscriptions.push(this.searchHandler.getLatestValues(false).subscribe((result : any[]) => {
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => {
       let start: number | undefined = this.searchHandler.getStartDate(true).getFullYear();
       let end: number | undefined = this.searchHandler.getEndDate(true).getFullYear();
       if(start && end)

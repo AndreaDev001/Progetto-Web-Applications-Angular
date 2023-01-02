@@ -18,7 +18,7 @@ export class SearchBarComponent implements OnInit,OnDestroy{
   }
   public ngOnInit(): void{
     this.textField = document.querySelector("input");
-    this.subscriptions.push(this.searchHandler.getLatestValues(false).subscribe((values: any[]) => {
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => {
       let genre: string = this.searchHandler.getCurrentGenre(true);
       let list: GameListType = this.searchHandler.getCurrentList(true);
       this.currentName = genre || list ? "" : this.searchHandler.getCurrentName(true);

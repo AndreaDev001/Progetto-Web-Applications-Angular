@@ -21,9 +21,11 @@ export class SortingSelectorComponent implements OnInit,OnDestroy{
   ngOnInit() {
     this.orderingTypeValues = Object.values(OrderingType);
     this.orderingModeValues = Object.values(OrderingMode);
-    this.subscriptions.push(this.searchHandler.getCurrentName(false).subscribe((result: string | undefined) => this.shouldBeVisible = result == undefined));
-    this.subscriptions.push(this.searchHandler.getCurrentOrderingType(false).subscribe((value: OrderingType | undefined) => this.currentTypeSelected = value));
-    this.subscriptions.push(this.searchHandler.getCurrentOrderingMode(false).subscribe((value: OrderingMode | undefined) => this.currentModeSelected = value));
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => {
+      this.currentTypeSelected = this.searchHandler.getCurrentOrderingType(true);
+      this.currentModeSelected = this.searchHandler.getCurrentOrderingMode(true);
+      this.shouldBeVisible = this.searchHandler.getCurrentName(true) == undefined;
+    }));
   }
   ngOnDestroy(){
     this.subscriptions.forEach((value: any) => value.unsubscribe());
