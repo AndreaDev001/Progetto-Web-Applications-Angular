@@ -11,6 +11,7 @@ export class SideItemComponent implements OnInit{
   @Input() name: string = "";
   @Input() owner?: SideListType;
   @Input() img?: string;
+
   constructor(private searchHandler: SearchHandlerService) {
   }
   ngOnInit(): void{

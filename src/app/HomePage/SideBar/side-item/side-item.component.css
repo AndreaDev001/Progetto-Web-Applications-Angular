@@ -4,6 +4,14 @@ button.side-item-button{
   border-top: 1px solid grey;
   transition: all 0.2s ease-in-out;
 }
+button.side-item-selected{
+  background-color: whitesmoke;
+  color: #151515;
+  border-top: 1px solid grey;
+  transition: all 0.2s ease-in-out;
+  text-decoration: underline;
+  text-decoration-color: #151515;
+}
 span.side-item-text{
   padding-left: 2%;
   padding-right: 2%;
