@@ -25,6 +25,11 @@ export class SideListComponent implements OnInit,OnDestroy{
         let name: string | null = value.textContent;
         let currentGenre: string = this.searchHandler.getCurrentGenre(true);
         let currentList: string = this.searchHandler.getCurrentList(true);
+        let currentName: string = this.searchHandler.getCurrentName(true);
+        if(currentName != undefined){
+          value.className =  "list-group-item list-group-item-action side-item-button";
+          return;
+        }
         if(currentList != undefined){
           value.className = name && name.toLowerCase() == currentList ? "list-group-item list-group-item-action side-item-selected" : "list-group-item list-group-item-action side-item-button";
           return;

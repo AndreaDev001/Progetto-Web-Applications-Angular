@@ -35,10 +35,11 @@ export class DateSelectorComponent implements OnInit,OnDestroy{
     }
     this.subscriptions.push(this.searchHandler.getCurrentName(false).subscribe((result: string | undefined) => this.shouldBeVisible = result == undefined));
     this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => {
-      let start: number | undefined = this.searchHandler.getStartDate(true).getFullYear();
-      let end: number | undefined = this.searchHandler.getEndDate(true).getFullYear();
-      if(start && end)
-        this.currentInterval = {start: start,end: end};
+      let start: Date | undefined = this.searchHandler.getStartDate(true);
+      let end: Date | undefined = this.searchHandler.getEndDate(true);
+      if(start && end){
+        this.currentInterval = {start: start.getFullYear(),end: end.getFullYear()};
+      }
     }));
   }
   public updateValue(value: YearInterval): void{
