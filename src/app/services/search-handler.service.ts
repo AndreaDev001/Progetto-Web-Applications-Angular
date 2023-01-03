@@ -41,7 +41,7 @@ export class SearchHandlerService
           this.startDate.next(new Date(result.minDate));
           this.endDate.next(new Date(result.maxDate));
         }
-        this.performSearch();
+        this.performSearch(true);
       });
   }
   private updateRoute()
@@ -98,6 +98,8 @@ export class SearchHandlerService
     this.currentListType.next(listType);
     this.currentGenre.next(undefined);
     this.currentName.next(undefined);
+    this.startDate.next(undefined);
+    this.endDate.next(undefined);
     this.currentMaxPage.next(1);
     switch (listType){
       case GameListType.BEST_RATED:
@@ -117,13 +119,14 @@ export class SearchHandlerService
     this.validateDates();
     this.updateRoute();
   }
-  public performSearch(): void{
+  public performSearch(updateIsSearching: boolean): void{
     let startDate: string | null | undefined = this.datePipe.transform(this.startDate.value,'yyyy-MM-dd');
     let endDate: string | null | undefined = this.datePipe.transform(this.endDate.value,'yyyy-MM-dd');
     let interval: DateInterval | undefined  = startDate && endDate ? {startDate: startDate,endDate: endDate} : undefined;
     if(this.currentSubscription != undefined)
       this.currentSubscription.unsubscribe();
-    this.isSearching.next(true);
+    if(updateIsSearching)
+       this.isSearching.next(true);
     if(this.currentListType.value == undefined)
     {
       if(this.currentName.value == null || this.currentName.value == "")
@@ -140,7 +143,7 @@ export class SearchHandlerService
   }
   public increaseMaxPage(){
     this.currentMaxPage.next(this.currentMaxPage.value + 1);
-    this.update();
+    this.performSearch(false);
   }
   public setCurrentName(name: string): void{
     this.currentName.next(name);

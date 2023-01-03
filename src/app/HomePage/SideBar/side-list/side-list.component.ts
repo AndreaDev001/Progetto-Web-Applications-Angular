@@ -24,10 +24,14 @@ export class SideListComponent implements OnInit,OnDestroy{
       this.buttons.forEach((value: Element) => {
         let name: string | null = value.textContent;
         let currentGenre: string = this.searchHandler.getCurrentGenre(true);
-        if(name && name.toLowerCase() != currentGenre)
-           value.className = "list-group-item list-group-item-action side-item-button";
-        else if(name)
-          value.className = "list-group-item list-group-item-action side-item-selected";
+        let currentList: string = this.searchHandler.getCurrentList(true);
+        if(currentList != undefined){
+          value.className = name && name.toLowerCase() == currentList ? "list-group-item list-group-item-action side-item-selected" : "list-group-item list-group-item-action side-item-button";
+          return;
+        }
+        if(currentGenre != undefined){
+          value.className = name && name.toLowerCase() == currentGenre ? "list-group-item list-group-item-action side-item-selected" : "list-group-item list-group-item-action side-item-button";
+        }
       });
     }));
   }
