@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
@@ -20,8 +21,11 @@
 
     <div class="form-group">
       <label for="password">Password*:</label>
-      <input id="password" class="form-control" type="password" formControlName="password" placeholder="password">
-    </div>
+      <div class="d-inline-flex w-100 justify-content-between">
+        <input id="password" class="form-control" [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Enter your password">
+        <i [class]="hidePassword ? 'far fa-eye-slash' : 'far fa-eye'" style="width: 3%" (click)="hidePassword = !hidePassword"></i>
+      </div>
+      </div>
 
     <div>
       <button type="submit" class="btn btn-success" [disabled]="!registrationForm.valid">Sign up</button>

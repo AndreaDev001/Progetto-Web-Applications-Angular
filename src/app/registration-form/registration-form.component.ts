@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 
 export class RegistrationFormComponent implements OnInit {
+  hidePassword: boolean = true;
   registrationForm!: FormGroup;
 
   ngOnInit(): void {
