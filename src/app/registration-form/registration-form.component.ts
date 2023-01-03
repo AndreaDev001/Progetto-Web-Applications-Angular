@@ -24,4 +24,15 @@ export class RegistrationFormComponent implements OnInit {
   get username() { return this.registrationForm.get('username'); }
   get password() { return this.registrationForm.get('password'); }
 
+  onSubmit() {
+    // todo
+  }
+
+  showPasswordRequirements(): void {
+    // todo
+  }
+
+  goToLogin(): void {
+    // todo
+  }
 }
