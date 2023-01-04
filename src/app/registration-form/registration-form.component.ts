@@ -38,6 +38,6 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   goToLogin(): void {
-    // todo
+    window.open("http://localhost:8080/login", "_self");
   }
 }
