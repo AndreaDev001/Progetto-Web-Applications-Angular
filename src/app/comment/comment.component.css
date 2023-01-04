@@ -1,0 +1,31 @@
+#editSection
+{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.buttonsSection
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.selected
+{
+  color: blue
+}
+
+h4{
+  color: white;
+  text-align: left;
+  background-color: gray;
+  padding: 0.25em;
+}
+
+#commentTextSection
+{
+  position: relative;
+}
