@@ -2,13 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NgxSpinnerModule } from "ngx-spinner";
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { GameListComponent } from './HomePage/ResultPage/game-list/game-list.component';
 import { GameCardComponent } from './HomePage/ResultPage/game-card/game-card.component';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
-import appRoutes from "./appRoutes";
 import {SideBarComponent} from "./HomePage/SideBar/side-bar/side-bar.component";
 import {SideListComponent} from "./HomePage/SideBar/side-list/side-list.component";
 import { SideItemComponent } from './HomePage/SideBar/side-item/side-item.component';
@@ -24,6 +22,9 @@ import { DateSelectorComponent } from './HomePage/OptionBar/date-selector/date-s
 import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.component';
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {RouterModule} from "@angular/router";
+import appRoutes from "./appRoutes";
+
 @NgModule({
   declarations: [
     AppComponent,
