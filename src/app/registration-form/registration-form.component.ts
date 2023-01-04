@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {validateEmail, validatePassword} from "../validation";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
   selector: 'app-registration-form',
@@ -11,6 +12,8 @@ import {validateEmail, validatePassword} from "../validation";
 export class RegistrationFormComponent implements OnInit {
   hidePassword: boolean = true;
   registrationForm!: FormGroup;
+
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -25,7 +28,20 @@ export class RegistrationFormComponent implements OnInit {
   get password() { return this.registrationForm.get('password'); }
 
   onSubmit() {
-    // todo
+    var email: string = this.email?.value
+    var username: string = this.username?.value
+    var password: string = this.password?.value
+    this.authenticationService.doRegistration(email, username, password).subscribe(
+      registrationStatus => {
+        if (registrationStatus === "ok") {
+          alert("You've successfully registered! You can now log in")
+          window.open("http://localhost:8080/login", "_self");
+        }
+        else {
+          // todo
+        }
+      }
+    )
   }
 
   showPasswordRequirements(): void {

@@ -8,7 +8,7 @@
 </head>
 <body class="container-fluid">
   <h1>Sign up</h1>
-  <form [formGroup]="registrationForm">
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="email">Email*:</label>
       <input id="email" class="form-control"  type="email" formControlName="email" placeholder="email@example.com">  <!-- Using the template binding syntax, the form control is now registered to the email input element in the template. -->
