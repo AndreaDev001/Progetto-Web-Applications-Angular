@@ -19,6 +19,11 @@ import { GameListComponent } from './HomePage/ResultPage/game-list/game-list.com
 import { GameCardComponent } from './HomePage/ResultPage/game-card/game-card.component';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import { AppRoutingModule } from './app-routing.module';
+
 import {SideBarComponent} from "./HomePage/SideBar/side-bar/side-bar.component";
 import {SideListComponent} from "./HomePage/SideBar/side-list/side-list.component";
 import { SideItemComponent } from './HomePage/SideBar/side-item/side-item.component';
@@ -37,9 +42,19 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import appRoutes from "./appRoutes";
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+    RegistrationFormComponent
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+
     ReviewComponent,
     CommentComponent,
     HomePageComponent,
