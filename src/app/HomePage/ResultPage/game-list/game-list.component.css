@@ -1,0 +1,16 @@
+button.reset-button{
+  background-color: #121212;
+  border: 1px solid grey;
+  color: whitesmoke;
+  transition: 0.2s all ease-in-out;
+}
+button.reset-button:hover{
+  background-color: whitesmoke;
+  text-decoration: underline;
+  text-decoration-color: #121212;
+  color: #121212;
+}
+p.loadingText{
+  font-weight: bold;
+  font-size: 30px;
+}
