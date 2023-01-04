@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import {FormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -35,7 +34,6 @@ import { DateSelectorComponent } from './HomePage/OptionBar/date-selector/date-s
 import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.component';
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {RouterModule} from "@angular/router";
 import appRoutes from "./appRoutes";
 
 
@@ -100,10 +98,9 @@ import appRoutes from "./appRoutes";
       },
     }),
     FormsModule,
-    AutosizeModule
+    AutosizeModule,
     FontAwesomeModule,
     NgbModule,
-    NgxSpinnerModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule
   ],
