@@ -28,6 +28,7 @@ export class DateSelectorComponent implements OnInit,OnDestroy{
   ngOnInit(): void {
     let maxYear: number = new Date().getFullYear();
     let startYear: number = 1980;
+    this.intervals.push({start: 1970,end: maxYear});
     for (let i = startYear; i < maxYear; i += 10) {
       let next: number = i + 10;
       let interval: YearInterval = {start: i, end: next};
