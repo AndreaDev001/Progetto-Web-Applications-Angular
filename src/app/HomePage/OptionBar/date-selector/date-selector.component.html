@@ -1,0 +1,8 @@
+<div class = "d-inline-flex" *ngIf="shouldBeVisible">
+  <div ngbDropdown *ngIf="currentInterval">
+    <button class = "date-dropdown-button" ngbDropdownToggle id="dropdownTypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{getInterval(currentInterval)}}</button>
+    <div ngbDropdownMenu class = "date-dropdown" aria-labelledby="dropdownTypeButton">
+      <button class = "date-item" ngbDropdownItem *ngFor="let current of intervals" (click)="updateValue(current)">{{getInterval(current)}}</button>
+    </div>
+  </div>
+</div>
