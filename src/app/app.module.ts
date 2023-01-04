@@ -20,8 +20,6 @@ import { GameCardComponent } from './HomePage/ResultPage/game-card/game-card.com
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 
 import {SideBarComponent} from "./HomePage/SideBar/side-bar/side-bar.component";
@@ -46,15 +44,7 @@ import appRoutes from "./appRoutes";
 @NgModule({
   declarations: [
     AppComponent,
-    RegistrationFormComponent
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    ReactiveFormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-
+    RegistrationFormComponent,
     ReviewComponent,
     CommentComponent,
     HomePageComponent,
@@ -73,8 +63,12 @@ import appRoutes from "./appRoutes";
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserModule,
+    HttpClientModule,
     ReactiveFormsModule,
     InfiniteScrollModule,
     NgxEditorModule.forRoot({
