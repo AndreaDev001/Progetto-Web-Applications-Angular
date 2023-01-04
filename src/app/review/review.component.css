@@ -1,0 +1,44 @@
+.banner
+{
+
+  height: 500px; background-color: transparent;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+#review
+{
+  background-color: white;
+  box-shadow: 0px -1px 14px 0px rgba(0,0,0,0.93);
+  border-radius: 9px;
+  padding: 0px 10px;
+}
+
+#review_section
+{
+  margin-bottom: 2em;
+  word-wrap:break-word;
+}
+
+#review_section img
+{
+  max-width: 100%;
+}
+
+.content
+{
+  width: 90%;
+  margin: 30px auto;
+}
+
+.NgxEditor
+{
+  background-color: red !important;
+}
+
+.NgxEditor__ImageWrapper
+{
+  max-width: 100% !important;
+}
+

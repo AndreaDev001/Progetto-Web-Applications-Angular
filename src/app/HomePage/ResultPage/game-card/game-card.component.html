@@ -1,0 +1,13 @@
+<a class = "card game-card" *ngIf="game">
+  <img class = "card-img-top" src="{{game.img}}" alt = "Not Found">
+  <div class = "card-body">
+    <app-platform-list [platforms]="game.platforms"></app-platform-list>
+    <h2 class = "card-title">{{game.name}}</h2>
+    <app-star-component [rating]="game.metacritic"></app-star-component>
+    <div class = "d-inline-flex justify-content-center" style="width: 100%">
+      <fa-icon [icon]="faCalendarDays" style="font-size: 25px"></fa-icon>
+      <p class = "card-text" style="padding: 2%">{{game.released}}</p>
+    </div>
+    <p class = "card-text">{{getGenres()}}</p>
+  </div>
+</a>

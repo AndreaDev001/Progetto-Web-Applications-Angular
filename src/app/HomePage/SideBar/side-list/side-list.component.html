@@ -1,0 +1,4 @@
+<h2 class = "text-white text-center">{{name}}</h2>
+<div class = "list-group">
+  <app-side-item *ngFor="let current of values" [name]="current.name" [img]="current.img" [owner]="listType"></app-side-item>
+</div>
