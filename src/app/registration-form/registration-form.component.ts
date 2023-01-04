@@ -38,7 +38,24 @@ export class RegistrationFormComponent implements OnInit {
           window.open("http://localhost:8080/login", "_self");
         }
         else {
-          // todo
+          if (registrationStatus === "emptyFields") {
+            alert("All fields are mandatory")
+          }
+          if (registrationStatus === "unavailableUsername") {
+            this.registrationForm.controls['username'].setErrors({'unavailable' : true});
+          }
+          if (registrationStatus === "invalidUsername") {
+            this.registrationForm.controls['username'].setErrors({'minlength': true, 'maxlength' : true});
+          }
+          if (registrationStatus === "unavailableEmail") {
+            this.registrationForm.controls['email'].setErrors({'unavailable' : true});
+          }
+          if (registrationStatus === "invalidEmail") {
+            this.registrationForm.controls['email'].setErrors({'emailRequirements' : true});
+          }
+          if (registrationStatus === "invalidPassword") {
+            this.registrationForm.controls['password'].setErrors({'passwordRequirements' : true});
+          }
         }
       }
     )

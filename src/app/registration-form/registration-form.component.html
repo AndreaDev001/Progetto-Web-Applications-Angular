@@ -22,7 +22,11 @@
           Invalid email
         </small>
       </span>
-
+      <span class="error-message" *ngIf="email && email.errors?.['unavailable']">
+        <small>
+          There is already an account associated with this email
+        </small>
+      </span>
     </div>
 
     <div class="form-group">
@@ -36,6 +40,11 @@
       <span class="error-message" *ngIf="username && username.touched && username.invalid && (username.errors?.['minlength'] || username.errors?.['maxlength'])">
         <small>
           Username must be between 3 and 50 characters long
+        </small>
+      </span>
+      <span class="error-message" *ngIf="username && username.errors?.['unavailable']">
+        <small>
+          This username is unavailable
         </small>
       </span>
     </div>
