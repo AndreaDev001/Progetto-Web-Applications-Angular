@@ -14,8 +14,8 @@ export class SpringHandlerService {
 
   }
   public getAllReviews(gameId: number): Observable<Review[]>{
-    const desiredURL = this.url + "/getReviews?" + "gameId=" + gameId;
-    return this.httpClient.post<Review[]>(desiredURL,{});
+    const desiredURL = this.url + "/getReviews?" + "gameID=" + gameId;
+    return this.httpClient.get<Review[]>(desiredURL,{});
   }
   public getUrl(): string {return this.url;}
 }
