@@ -4,15 +4,15 @@ import {GameHandlerService} from "./game-handler.service";
 import {DateInterval} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
 import {DatePipe} from "@angular/common";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Subject, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchHandlerService
 {
-  private currentOrderingType: BehaviorSubject<OrderingType | undefined> = new BehaviorSubject<OrderingType | undefined>(OrderingType.METACRITIC);
-  private currentOrderingMode: BehaviorSubject<OrderingMode | undefined> = new BehaviorSubject<OrderingMode | undefined>(OrderingMode.DESCENDED);
+  private currentOrderingType: BehaviorSubject<OrderingType | undefined> = new BehaviorSubject<OrderingType | undefined>(undefined);
+  private currentOrderingMode: BehaviorSubject<OrderingMode | undefined> = new BehaviorSubject<OrderingMode | undefined>(undefined);
   private currentListType: BehaviorSubject<GameListType | undefined> = new BehaviorSubject<GameListType | undefined>(undefined);
   private currentName: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
   private currentGenre: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
@@ -20,22 +20,29 @@ export class SearchHandlerService
   private endDate:BehaviorSubject<Date | undefined> = new BehaviorSubject<Date | undefined>(new Date());
   private currentMaxPage: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   public latestValues: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  private isSearching: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private currentSubscription?: Subscription;
 
-  constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe){
-    let observable = this.gameRouterHandler.getCurrentParamType();
-    observable.subscribe((result: ParamType) => {
-      this.currentGenre.next(result.genre);
-      this.currentName.next(result.name);
-      if((this.currentOrderingType.value == undefined || this.currentOrderingMode.value == undefined) && this.currentName == undefined){
-         this.currentOrderingType.next(OrderingType.METACRITIC);
-         this.currentOrderingMode.next(OrderingMode.DESCENDED);
-      }
-      if(result.minDate && result.maxDate){
-        this.startDate.next(new Date(result.minDate));
-        this.endDate.next(new Date(result.maxDate));
-      }
-      this.performSearch();
-    });
+  constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe) {
+    this.handleParams();
+  }
+  private handleParams(): void
+  {
+      this.gameRouterHandler.getCurrentParamType().subscribe((result: ParamType) => {
+        this.currentGenre.next(result.genre);
+        this.currentName.next(result.name);
+        if(result.orderingType == undefined || result.orderingMode == undefined){
+          this.currentOrderingType.next(OrderingType.METACRITIC);
+          this.currentOrderingMode.next(OrderingMode.DESCENDED);
+        }
+        this.currentOrderingType.next((!result.orderingType || !result.orderingMode) ? OrderingType.METACRITIC : result.orderingType);
+        this.currentOrderingMode.next((!result.orderingType || !result.orderingMode) ? OrderingMode.DESCENDED: result.orderingMode);
+        if(result.minDate && result.maxDate){
+          this.startDate.next(new Date(result.minDate));
+          this.endDate.next(new Date(result.maxDate));
+        }
+        this.performSearch(true);
+      });
   }
   private updateRoute()
   {
@@ -53,16 +60,14 @@ export class SearchHandlerService
     this.currentListType.next(undefined);
     this.currentMaxPage.next(1);
     this.currentName.next(undefined);
-    this.validateDates();
-    this.updateRoute();
+    this.update();
   }
   public setCurrentOrderingMode(orderingMode: OrderingMode): any{
     this.currentOrderingMode.next(orderingMode);
     this.currentListType.next(undefined);
     this.currentMaxPage.next(1);
     this.currentName.next(undefined);
-    this.validateDates();
-    this.updateRoute();
+    this.update();
   }
   public setCurrentGenre(genre: string): void{
     this.currentGenre.next(genre.toLowerCase());
@@ -71,11 +76,10 @@ export class SearchHandlerService
     this.currentMaxPage.next(1);
     this.currentOrderingType.next(this.currentOrderingType .value== null ? OrderingType.METACRITIC : this.currentOrderingType.value);
     this.currentOrderingMode.next(this.currentOrderingMode.value == null ? OrderingMode.DESCENDED : this.currentOrderingMode.value);
-    this.validateDates();
-    this.updateRoute();
+    this.update();
   }
   private validateDates(){
-    if(this.startDate == null || this.endDate == null){
+    if(this.startDate.value == undefined || this.endDate.value == undefined){
       this.startDate.next(new Date('1970-12-31'));
       this.endDate.next(new Date());
     }
@@ -92,9 +96,11 @@ export class SearchHandlerService
   }
   public setCurrentList(listType: GameListType): void{
     this.currentListType.next(listType);
-    this.currentMaxPage.next(1);
     this.currentGenre.next(undefined);
     this.currentName.next(undefined);
+    this.startDate.next(undefined);
+    this.endDate.next(undefined);
+    this.currentMaxPage.next(1);
     switch (listType){
       case GameListType.BEST_RATED:
         this.currentOrderingType.next(OrderingType.METACRITIC);
@@ -105,30 +111,39 @@ export class SearchHandlerService
         this.currentOrderingMode.next(OrderingMode.DESCENDED);
         break;
       case GameListType.SUGGESTED:
-        //Non ancora implementato
-        return;
+        throw new Error("Not yet implemented");
     }
+    this.update();
+  }
+  private update(): void{
     this.validateDates();
     this.updateRoute();
   }
-  public performSearch(): void{
+  public performSearch(updateIsSearching: boolean): void{
     let startDate: string | null | undefined = this.datePipe.transform(this.startDate.value,'yyyy-MM-dd');
     let endDate: string | null | undefined = this.datePipe.transform(this.endDate.value,'yyyy-MM-dd');
     let interval: DateInterval | undefined  = startDate && endDate ? {startDate: startDate,endDate: endDate} : undefined;
+    if(this.currentSubscription != undefined)
+      this.currentSubscription.unsubscribe();
+    if(updateIsSearching)
+       this.isSearching.next(true);
     if(this.currentListType.value == undefined)
     {
       if(this.currentName.value == null || this.currentName.value == "")
-        this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.latestValues.next(result.results));
+        this.currentSubscription = this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
       else
-        this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.latestValues.next(result.results));
+        this.currentSubscription = this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
     }
     else
-      this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.latestValues.next(result.results));
+      this.currentSubscription = this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
+  }
+  private updateResults(values: any[],searchingValue: boolean){
+    this.latestValues.next(values);
+    this.isSearching.next(searchingValue);
   }
   public increaseMaxPage(){
     this.currentMaxPage.next(this.currentMaxPage.value + 1);
-    this.validateDates();
-    this.performSearch();
+    this.performSearch(false);
   }
   public setCurrentName(name: string): void{
     this.currentName.next(name);
@@ -141,14 +156,14 @@ export class SearchHandlerService
     this.currentGenre.next(undefined);
     this.updateRoute();
   }
-  public getCurrentGenre(): Observable<string | undefined>{return this.currentGenre.asObservable();}
-  public getCurrentOrderingType(): Observable<OrderingType | undefined> {return this.currentOrderingType.asObservable();}
-  public getCurrentOrderingMode(): Observable<OrderingMode | undefined> {return this.currentOrderingMode.asObservable();}
-  public getCurrentName(): Observable<string | undefined> {return this.currentName.asObservable();}
-  public getCurrentMaxPage(): Observable<number | undefined> {return this.currentMaxPage.asObservable();}
-  public  getStartDate(): Observable<Date | undefined> {return this.startDate.asObservable()};
-  public getEndDate(): Observable<Date | undefined> {return this.endDate.asObservable();};
-  public getLatestValues(): Observable<any[]>{
-    return this.latestValues.asObservable();
-  }
+  public getCurrentGenre(value: boolean): any {return value ? this.currentGenre.value : this.currentGenre}
+  public getCurrentOrderingType(value: boolean): any {return value ? this.currentOrderingType.value : this.currentOrderingType};
+  public getCurrentOrderingMode(value: boolean): any {return value ? this.currentOrderingMode.value : this.currentOrderingMode;}
+  public getCurrentName(value: boolean): any {return value ? this.currentName.value : this.currentName}
+  public getCurrentMaxPage(value: boolean): any {return value ? this.currentMaxPage.value : this.currentMaxPage}
+  public getStartDate(value: boolean): any {return value ? this.startDate.value : this.startDate};
+  public getEndDate(value: boolean): any {return value ? this.endDate.value : this.endDate};
+  public getLatestValues(value: boolean): any {return value ? this.latestValues.value : this.latestValues};
+  public getIsSearching(value: boolean): any {return value ? this.isSearching.value : this.isSearching};
+  public getCurrentList(value: boolean): any {return value ? this.currentListType.value : this.currentListType};
 }

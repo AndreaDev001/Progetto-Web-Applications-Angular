@@ -1,40 +1,41 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
 import {Game} from "../../../interfaces";
 import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
-
+import {skip, Subscription} from "rxjs";
+import {NgxSpinnerService} from "ngx-spinner";
 @Component({
   selector: 'app-game-list',
   templateUrl: './game-list.component.html',
   styleUrls: ['./game-list.component.css']
 })
-export class GameListComponent implements OnInit{
+export class GameListComponent implements OnInit,OnDestroy{
 
   public games: Game[] = [];
   public shouldBeVisible?: boolean;
   private scrollableDiv?: HTMLElement;
+  private subscriptions: Subscription[] = [];
+  public loadingVisible: boolean = false;
   constructor(private searchHandler: SearchHandlerService,private gameJSONReader: GameJSONReaderService){
 
   }
   public ngOnInit(): void{
-    this.searchHandler.getCurrentMaxPage().subscribe((result: number | undefined) => {
-      if(result == 1){
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: any) => this.loadingVisible = value));
+    this.subscriptions.push(this.searchHandler.getLatestValues(false).subscribe((result: any[]) => {
+      if(this.searchHandler.getCurrentMaxPage(true) == 1){
         this.games = [];
-        this.scrollableDiv?.scrollTo(0,0);
         window.scrollTo(0,0);
+        this.scrollableDiv?.scrollTo(0,0);
       }
-    })
-    this.searchHandler.latestValues.subscribe((result: any[]) => {
       if(result.length > 0){
         let values: Game[] = this.gameJSONReader.readGames(result);
-        for(let current of values)
-           this.games?.push(current);
+        this.games = this.games.concat(values);
         this.shouldBeVisible = true;
         return;
       }
       this.games = [];
       this.shouldBeVisible = false;
-    })
+    }));
   }
   public handleClick(): void{
     this.searchHandler.setCurrentGenre("action");
@@ -43,8 +44,12 @@ export class GameListComponent implements OnInit{
     const target = event.target;
     if(this.scrollableDiv == undefined)
       this.scrollableDiv = target;
-    if((target.scrollHeight - target.scrollTop) === target.clientHeight)
-        this.searchHandler.increaseMaxPage();
+    if((target.scrollHeight - target.scrollTop) === target.clientHeight){
+      this.searchHandler.increaseMaxPage();
+    }
+  }
+  public ngOnDestroy(): void{
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
 }
 

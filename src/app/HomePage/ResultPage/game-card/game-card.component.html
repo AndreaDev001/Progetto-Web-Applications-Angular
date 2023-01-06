@@ -1,4 +1,4 @@
-<div class = "card game-card" *ngIf="game" [routerLink]="['/games',game.id]">
+<a class = "card game-card" [routerLink]="['/games',game.id]" *ngIf="game">
   <img class = "card-img-top" src="{{game.img}}" alt = "Not Found">
   <div class = "card-body">
     <app-platform-list [platforms]="game.platforms"></app-platform-list>
@@ -10,4 +10,4 @@
     </div>
     <p class = "card-text">{{getGenres()}}</p>
   </div>
-</div>
+</a>

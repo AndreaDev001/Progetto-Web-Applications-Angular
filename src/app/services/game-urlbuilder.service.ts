@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {OrderingMode, OrderingType, RequestType} from "../enum";
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ export class GameURLBuilderService {
   private url: string = "https://api.rawg.io/api/";
   private apiKEY?: string;
   private requestType?: RequestType;
+  private currentHttpParams: HttpParams = new HttpParams();
   constructor() {
 
   }
@@ -53,7 +55,7 @@ export class GameURLBuilderService {
   }
   public addAPIKey(apiKEY: string): void{
     this.apiKEY = apiKEY;
-    this.url += "?key=" + this.apiKEY;
+    this.currentHttpParams = this.currentHttpParams.append("key",this.apiKEY);
   }
   public validateRequest(): void{
     if(this.requestType == undefined)
@@ -63,42 +65,48 @@ export class GameURLBuilderService {
   }
   public addOrdering(orderingType: OrderingType,orderingMode: OrderingMode): void{
     this.validateRequest();
-    this.url += "&ordering=" + ((orderingMode == OrderingMode.DESCENDED) ? "-" : "") + orderingType;
+    let value: string = (((orderingMode == OrderingMode.DESCENDED)) ? "-" : "") + orderingType;
+    this.currentHttpParams = this.currentHttpParams.append("ordering",value);
   }
   public addGenre(genre: string): void{
     this.validateRequest();
-    this.url += "&genres=" + genre;
+    this.currentHttpParams = this.currentHttpParams.append("genres",genre);
   }
   public addPage(page: number): void{
     this.validateRequest();
-    this.url += "&page=" + page;
+    this.currentHttpParams = this.currentHttpParams.append("page",page);
   }
   public addPageSize(pageSize: number){
     this.validateRequest();
-    this.url += "&page_size=" + pageSize;
+    this.currentHttpParams = this.currentHttpParams.append("page_size",pageSize);
   }
   public addSearch(name: string,precise: boolean,exact: boolean): void{
     this.validateRequest();
-    this.url += "&search=" + name + "&search_precise=" + precise + "&search_exact=" + exact;
+    this.currentHttpParams = this.currentHttpParams.append("search",name);
+    this.currentHttpParams = this.currentHttpParams.append("search_precise",precise);
+    this.currentHttpParams = this.currentHttpParams.append("search_exact",exact);
   }
   public addPlatformCount(amount: number): void{
     this.validateRequest();
-    this.url += "&platforms_count=" + amount;
+    this.currentHttpParams = this.currentHttpParams.append("platforms_count",amount);
   }
   public addMetacritic(min: number,max: number): void{
     this.validateRequest();
-    this.url += "&metacritic=" + min + "," + max;
+    let value: string = min + "," + max;
+    this.currentHttpParams = this.currentHttpParams.append("metacritic",value);
   }
   public addDates(first: string,second: string): void{
     this.validateRequest();
-    this.url += "&dates=" + first + "," + second;
+    let value: string = first + "," + second;
+    this.currentHttpParams = this.currentHttpParams.append("dates",value);
   }
   public reset(): void{
     this.url = "https://api.rawg.io/api/";
     this.apiKEY = undefined;
+    this.currentHttpParams = new HttpParams();
   }
-  public getURL(): string {
-    let value = this.url;
+  public getURL(): {url: string,queryParams: HttpParams} {
+    let value = {url: this.url,queryParams: this.currentHttpParams};
     this.reset();
     return value;
   }

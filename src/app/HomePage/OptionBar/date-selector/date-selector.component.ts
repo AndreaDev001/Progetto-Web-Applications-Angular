@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
+import {Subscription} from "rxjs";
 
 export interface YearInterval{
   start: number,
@@ -10,39 +11,37 @@ export interface YearInterval{
   templateUrl: './date-selector.component.html',
   styleUrls: ['./date-selector.component.css']
 })
-export class DateSelectorComponent implements OnInit{
+export class DateSelectorComponent implements OnInit,OnDestroy{
 
-  private startDate?: Date;
-  private endDate?: Date;
   public currentInterval?: YearInterval;
   public intervals: YearInterval[] = [];
   public shouldBeVisible: boolean = true;
-  private currentName: string | undefined;
+  private subscriptions: Subscription[] = [];
+
 
   constructor(private searchHandler: SearchHandlerService) {
 
   }
-  ngOnInit(): void{
+  ngOnDestroy(): void{
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
+  }
+  ngOnInit(): void {
     let maxYear: number = new Date().getFullYear();
     let startYear: number = 1980;
-    for(let i = startYear;i < maxYear;i+=10){
+    this.intervals.push({start: 1970,end: maxYear});
+    for (let i = startYear; i < maxYear; i += 10) {
       let next: number = i + 10;
-      let interval: YearInterval = {start: i,end: next};
+      let interval: YearInterval = {start: i, end: next};
       this.intervals.push(interval);
     }
-    this.searchHandler.getCurrentName().subscribe((result: string | undefined) => this.currentName = result);
-    this.searchHandler.getStartDate().subscribe((result: Date | undefined) => this.startDate = result);
-    this.searchHandler.getEndDate().subscribe((result: Date | undefined) => this.endDate = result);
-    this.searchHandler.getLatestValues().subscribe((result: any[]) => this.updateValues());
-  }
-  private updateValues(): void {
-    this.shouldBeVisible = !this.currentName;
-    if(this.searchHandler.getStartDate() != undefined && this.searchHandler.getEndDate() != undefined){
-      let startYear: number | undefined = this.startDate?.getFullYear();
-      let endYear: number | undefined= this.endDate?.getFullYear();
-      if(startYear != undefined && endYear != undefined)
-        this.currentInterval = {start: startYear,end: endYear};
-    }
+    this.subscriptions.push(this.searchHandler.getCurrentName(false).subscribe((result: string | undefined) => this.shouldBeVisible = result == undefined));
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => {
+      let start: Date | undefined = this.searchHandler.getStartDate(true);
+      let end: Date | undefined = this.searchHandler.getEndDate(true);
+      if(start && end){
+        this.currentInterval = {start: start.getFullYear(),end: end.getFullYear()};
+      }
+    }));
   }
   public updateValue(value: YearInterval): void{
     let currentStart: string = value.start + "-" + "12" + "-" + "31";

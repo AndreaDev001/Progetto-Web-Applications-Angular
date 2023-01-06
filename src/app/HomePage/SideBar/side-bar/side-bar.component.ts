@@ -21,10 +21,10 @@ export class SideBarComponent implements OnInit{
   constructor(private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService) {
   }
   ngOnInit(): void{
-    this.gameHandler.getGenres().subscribe((result: any) => {
+    this.gameHandler.getGenres().subscribe((result: any) =>{
       let genres: Genre[] = this.gameJSONReader.readGenres(result.results);
       for(let current of genres){
-        let name: string = current.name;
+        let name: string = current.slug;
         let img: string = current.img;
         let sideItem: SideItem = {name: name,img: img};
         this.genres.push(sideItem);

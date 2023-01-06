@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {OrderingMode, OrderingType} from "../enum";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 export interface ParamType{
   orderingType?: OrderingType;
@@ -17,7 +17,7 @@ export interface ParamType{
 })
 export class GameRouterHandlerService {
 
-  private currentParamType: BehaviorSubject<ParamType> = new BehaviorSubject<ParamType>({});
+  private currentParamType: Subject<ParamType> = new BehaviorSubject<ParamType>({});
   constructor(private activatedRoute: ActivatedRoute,private router: Router) {
     this.activatedRoute.queryParams.subscribe((result: any) => this.currentParamType.next(this.readParams()));
   }
@@ -42,7 +42,7 @@ export class GameRouterHandlerService {
       },
       queryParamsHandling: 'merge',
       skipLocationChange: false,
-    }).then(() => this.currentParamType.next(value));
+    });
   }
   public getCurrentParamType(): Observable<ParamType>{
     return this.currentParamType.asObservable();

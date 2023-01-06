@@ -1,29 +1,34 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {OrderingType,OrderingMode} from "../../../enum";
 import {SearchHandlerService} from "../../../services/search-handler.service";
+import {Subscription, take} from "rxjs";
 
 @Component({
   selector: 'app-sorting-selector',
   templateUrl: './sorting-selector.component.html',
   styleUrls: ['./sorting-selector.component.css']
 })
-export class SortingSelectorComponent implements OnInit{
+export class SortingSelectorComponent implements OnInit,OnDestroy{
 
   public orderingTypeValues?: OrderingType[];
   public orderingModeValues?: OrderingMode[];
   public currentTypeSelected?: OrderingType;
   public currentModeSelected?: OrderingMode;
-  private currentName: string | undefined;
   public shouldBeVisible: boolean = true;
+  private subscriptions: Subscription[] = [];
   constructor(private searchHandler: SearchHandlerService){
   }
   ngOnInit() {
     this.orderingTypeValues = Object.values(OrderingType);
     this.orderingModeValues = Object.values(OrderingMode);
-    this.searchHandler.getCurrentName().subscribe((value: string | undefined) => this.currentName = value);
-    this.searchHandler.getCurrentOrderingType().subscribe((value: OrderingType | undefined) => this.currentTypeSelected = value);
-    this.searchHandler.getCurrentOrderingMode().subscribe((value: OrderingMode | undefined) => this.currentModeSelected = value);
-    this.searchHandler.getLatestValues().subscribe((result: any[]) =>     this.shouldBeVisible = this.currentName == null || this.currentName == "");
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => {
+      this.currentTypeSelected = this.searchHandler.getCurrentOrderingType(true);
+      this.currentModeSelected = this.searchHandler.getCurrentOrderingMode(true);
+      this.shouldBeVisible = this.searchHandler.getCurrentName(true) == undefined;
+    }));
+  }
+  ngOnDestroy(){
+    this.subscriptions.forEach((value: any) => value.unsubscribe());
   }
   public updateType(value: OrderingType): void{
     this.searchHandler.setCurrentOrderingType(value);

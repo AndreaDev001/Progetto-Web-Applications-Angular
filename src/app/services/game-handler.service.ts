@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {GameListType, OrderingMode, OrderingType, RequestType} from "../enum";
 import {GameURLBuilderService} from "./game-urlbuilder.service";
 import {DatePipe} from '@angular/common';
@@ -16,11 +16,12 @@ export class GameHandlerService {
 
   constructor(private httpClient: HttpClient,private gameURLBuilder: GameURLBuilderService,private datePipe: DatePipe) {
   }
-  public performRequest(url: string): any{
-    return this.httpClient.get(url,{
+  public performRequest(value: {url: string,queryParams: HttpParams}): any{
+    return this.httpClient.get(value.url,{
       observe: 'body',
       responseType: 'json',
       withCredentials: false,
+      params: value.queryParams,
     });
   }
   public search(orderingType?: OrderingType,orderingMode?: OrderingMode,genre?: string,requiredPage?: number,dateInterval?: DateInterval): any{
@@ -36,9 +37,7 @@ export class GameHandlerService {
         this.gameURLBuilder.addGenre(genre);
     if(dateInterval != null)
         this.gameURLBuilder.addDates(dateInterval.startDate,dateInterval.endDate);
-    let value: string = this.gameURLBuilder.getURL();
-    console.log(value);
-    return this.performRequest(value);
+    return this.performRequest(this.gameURLBuilder.getURL());
   }
   public searchByName(value: string,requiredPage?: number){
     this.gameURLBuilder.reset();

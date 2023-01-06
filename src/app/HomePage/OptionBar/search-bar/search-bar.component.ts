@@ -1,37 +1,31 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
-import {OrderingMode, OrderingType} from "../../../enum";
+import {GameListType, OrderingMode, OrderingType} from "../../../enum";
 import {faSearch, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css']
 })
-export class SearchBarComponent implements OnInit{
+export class SearchBarComponent implements OnInit,OnDestroy{
   public currentName?: string;
-  private currentGenre: string | undefined;
-  private currentType: OrderingType | undefined;
-  private currentMode: OrderingMode | undefined;
   public searchIcon: IconDefinition = faSearch;
   private textField: HTMLInputElement | null = null;
+  private subscriptions: Subscription[] = [];
   constructor(private searchHandler: SearchHandlerService) {
   }
   public ngOnInit(): void{
     this.textField = document.querySelector("input");
-    this.searchHandler.getCurrentGenre().subscribe((value: string | undefined) => {
-      this.currentGenre = value;
-      this.currentName = undefined;
-    });
-    this.searchHandler.getCurrentOrderingType().subscribe((value: OrderingType | undefined) => {
-      this.currentType = value;
-      this.currentName = undefined;
-    });
-    this.searchHandler.getCurrentOrderingMode().subscribe((value: OrderingMode | undefined) => {
-      this.currentMode = value;
-      this.currentName = undefined;
-    });
-    this.searchHandler.getCurrentName().subscribe((value: string | undefined) => this.currentName = value);
+    this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => {
+      let genre: string = this.searchHandler.getCurrentGenre(true);
+      let list: GameListType = this.searchHandler.getCurrentList(true);
+      this.currentName = genre || list ? "" : this.searchHandler.getCurrentName(true);
+    }));
+  }
+  public ngOnDestroy() {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
   public handleInput(event: any): void{
     if(event.key == "Enter"){

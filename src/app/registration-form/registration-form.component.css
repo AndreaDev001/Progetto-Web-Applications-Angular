@@ -1,0 +1,18 @@
+input.ng-invalid.ng-touched {
+  border: #c30f0f 2px solid;
+}
+
+.error-message {
+  color: #c30f0f;
+}
+
+.btn-outline-danger {
+  border-radius: 70%;
+  font-size: 11px;
+}
+
+.i {
+  margin-left: -30px;
+  cursor: pointer;
+}
+
