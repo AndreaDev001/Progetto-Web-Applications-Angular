@@ -13,7 +13,6 @@ export class GameListComponent implements OnInit,OnDestroy{
 
   public games: Game[] = [];
   public shouldBeVisible?: boolean;
-  private scrollableDiv?: HTMLElement;
   private subscriptions: Subscription[] = [];
   public loadingVisible: boolean = false;
   constructor(private searchHandler: SearchHandlerService,private gameJSONReader: GameJSONReaderService){
@@ -25,7 +24,6 @@ export class GameListComponent implements OnInit,OnDestroy{
       if(this.searchHandler.getCurrentMaxPage(true) == 1){
         this.games = [];
         window.scrollTo(0,0);
-        this.scrollableDiv?.scrollTo(0,0);
       }
       if(result.length > 0){
         let values: Game[] = this.gameJSONReader.readGames(result);
@@ -40,13 +38,8 @@ export class GameListComponent implements OnInit,OnDestroy{
   public handleClick(): void{
     this.searchHandler.setCurrentGenre("action");
   }
-  public scroll(event: any): void{
-    const target = event.target;
-    if(this.scrollableDiv == undefined)
-      this.scrollableDiv = target;
-    if((target.scrollHeight - target.scrollTop) === target.clientHeight){
-      this.searchHandler.increaseMaxPage();
-    }
+  public scroll(): void{
+    this.searchHandler.increaseMaxPage();
   }
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
