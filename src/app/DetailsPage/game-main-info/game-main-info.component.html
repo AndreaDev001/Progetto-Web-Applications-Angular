@@ -1,0 +1,40 @@
+<div class = "row container-fluid" style="padding: 20px" *ngIf="gameInfo">
+  <div class = "col-xl-4 col-lg-4 col-md-4 col-sm-12">
+    <img id = "gameImage"  [src]="gameInfo.image" alt = "Not Found">
+    <p class = "text-white text-center game-name d-xl-block d-lg-block d-md-block d-sm-none d-none">{{gameInfo.name}}</p>
+    <div class = "d-inline-block w-100 text-center position-relative">
+      <fa-icon class = "text-white" [icon]="icons[3]" style="font-size: 35px"></fa-icon>
+      <span class = "text-white p-2" style="font-size: 20px;">{{gameInfo.released}}</span>
+    </div>
+    <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke;font-size: 35px"></app-star-component>
+    <div style="border: 1px solid whitesmoke;border-radius: 15px">
+      <ul class = "list-group gameLinks" style="padding: 20px 0">
+        <a *ngIf="gameInfo.website" class = "game-website list-group-item" href="{{gameInfo.website}}">
+          <fa-icon style="font-size: 20px" [icon]="icons[1]"></fa-icon>
+          Visit website
+        </a>
+        <a *ngIf="gameInfo.reddit_url" class = "game-reddit-url list-group-item" href="{{gameInfo.reddit_url}}">
+          <fa-icon style="font-size: 20px" [icon]="icons[0]"></fa-icon>
+          Visit reddit
+        </a>
+        <a *ngIf="gameInfo.metacritic_url" class = "game-metacritic-url list-group-item" href="{{gameInfo.metacritic_url}}">
+          <fa-icon style="font-size: 20px" [icon]="icons[2]"></fa-icon>
+          Visit Metacritic</a>
+      </ul>
+    </div>
+    <div class = "w-100 text-center p-2">
+      <button class = "btn wishlist-button">
+        <fa-icon [icon]="icons[4]" style="font-size: 20px"></fa-icon>
+        <span class = "text-center p-2">Aggiungi alla wishlist</span>
+      </button>
+    </div>
+  </div>
+  <div class = "col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 d-block">
+    <p class = "text-white text-center game-name">{{gameInfo.name}}</p>
+    <p class = "text-white game-description">{{gameInfo.description}}</p>
+    <img *ngIf="gameInfo.esrbRating" class = "esrbImage" [src]="gameInfo.esrbRating" alt = "Rating Not Found">
+    <app-text-overflow *ngIf="gameInfo.genres && gameInfo.genres.length > 0" [name]="'Genres'" [overflowItems]="createGenres()" [nameIcon]="defaultIcons[2]"></app-text-overflow>
+    <app-text-overflow *ngIf="gameInfo.platforms && gameInfo.platforms.length > 0" [name]="'Released on'" [nameIcon]="defaultIcons[1]" [overflowItems]="createPlatforms()"></app-text-overflow>
+    <app-text-overflow *ngIf="gameInfo.stores && gameInfo.stores.length > 0" [name]="'Available on'" [nameIcon]="defaultIcons[0]" [overflowItems]="createStores()"></app-text-overflow>
+  </div>
+</div>

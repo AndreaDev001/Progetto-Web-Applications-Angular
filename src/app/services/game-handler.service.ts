@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {GameListType, OrderingMode, OrderingType, RequestType} from "../enum";
 import {GameURLBuilderService} from "./game-urlbuilder.service";
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {DateInterval} from "../interfaces";
 
 @Injectable({
@@ -15,7 +15,6 @@ export class GameHandlerService {
   private readonly maxRating: number = 100;
 
   constructor(private httpClient: HttpClient,private gameURLBuilder: GameURLBuilderService,private datePipe: DatePipe) {
-
   }
   public performRequest(value: {url: string,queryParams: HttpParams}): any{
     return this.httpClient.get(value.url,{
@@ -66,6 +65,45 @@ export class GameHandlerService {
         break;
     }
     return this.search(orderingType,orderingMode,"",requiredPage);
+  }
+  public getGameDetails(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getGameStores(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addStores(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getGameScreenshots(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addScreenshots(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getGameAchievements(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addAchievements(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getGameTrailers(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addTrailers(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
   }
   public getGenres(): any{
     this.gameURLBuilder.reset();
