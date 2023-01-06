@@ -31,4 +31,15 @@ export class SideItemComponent implements OnInit{
         break;
     }
   }
+  public getTooltipText(): string{
+    let result: string = "";
+    switch (this.owner){
+      case SideListType.GENRES:
+        result = "Search games by" + " " + this.name + " " + "genre";
+        break;
+      case SideListType.DEFAULT:
+        break;
+    }
+    return result;
+  }
 }

@@ -38,6 +38,7 @@ import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.c
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import appRoutes from "./appRoutes";
+import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 
 
 
@@ -59,7 +60,8 @@ import appRoutes from "./appRoutes";
     PlatformListComponent,
     DateSelectorComponent,
     OptionBarComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    OffcanvasSideBarComponent
   ],
   imports: [
     BrowserModule,
