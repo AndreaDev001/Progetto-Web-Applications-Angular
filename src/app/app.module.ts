@@ -32,13 +32,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { StarComponentComponent } from './HomePage/ResultPage/star-component/star-component.component';
 import { PlatformListComponent } from './HomePage/ResultPage/platform-list/platform-list.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import { DateSelectorComponent } from './HomePage/OptionBar/date-selector/date-selector.component';
 import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.component';
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import appRoutes from "./appRoutes";
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
+import {LazyLoadImageModule} from "ng-lazyload-image";
 
 
 
@@ -63,58 +64,60 @@ import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanv
     SearchBarComponent,
     OffcanvasSideBarComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    ReactiveFormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    InfiniteScrollModule,
-    NgxEditorModule.forRoot({
-      locals: {
-        // menu
-        bold: 'Bold',
-        italic: 'Italic',
-        code: 'Code',
-        blockquote: 'Blockquote',
-        underline: 'Underline',
-        strike: 'Strike',
-        bullet_list: 'Bullet List',
-        ordered_list: 'Ordered List',
-        heading: 'Heading',
-        h1: 'Header 1',
-        h2: 'Header 2',
-        h3: 'Header 3',
-        h4: 'Header 4',
-        h5: 'Header 5',
-        h6: 'Header 6',
-        align_left: 'Left Align',
-        align_center: 'Center Align',
-        align_right: 'Right Align',
-        align_justify: 'Justify',
-        text_color: 'Text Color',
-        background_color: 'Background Color',
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(appRoutes),
+        ReactiveFormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        LazyLoadImageModule,
+        BrowserModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        InfiniteScrollModule,
+        NgxEditorModule.forRoot({
+            locals: {
+                // menu
+                bold: 'Bold',
+                italic: 'Italic',
+                code: 'Code',
+                blockquote: 'Blockquote',
+                underline: 'Underline',
+                strike: 'Strike',
+                bullet_list: 'Bullet List',
+                ordered_list: 'Ordered List',
+                heading: 'Heading',
+                h1: 'Header 1',
+                h2: 'Header 2',
+                h3: 'Header 3',
+                h4: 'Header 4',
+                h5: 'Header 5',
+                h6: 'Header 6',
+                align_left: 'Left Align',
+                align_center: 'Center Align',
+                align_right: 'Right Align',
+                align_justify: 'Justify',
+                text_color: 'Text Color',
+                background_color: 'Background Color',
 
-        // popups, forms, others...
-        url: 'URL',
-        text: 'Text',
-        openInNewTab: 'Open in new tab',
-        insert: 'Insert',
-        altText: 'Alt Text',
-        title: 'Title',
-        remove: 'Remove',
-      },
-    }),
-    FormsModule,
-    AutosizeModule,
-    FontAwesomeModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule
-  ],
+                // popups, forms, others...
+                url: 'URL',
+                text: 'Text',
+                openInNewTab: 'Open in new tab',
+                insert: 'Insert',
+                altText: 'Alt Text',
+                title: 'Title',
+                remove: 'Remove',
+            },
+        }),
+        FormsModule,
+        AutosizeModule,
+        FontAwesomeModule,
+        NgbModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        NgOptimizedImage
+    ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })

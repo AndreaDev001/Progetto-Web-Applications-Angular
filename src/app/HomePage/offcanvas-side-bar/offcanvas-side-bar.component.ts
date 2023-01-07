@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbOffcanvas, OffcanvasDismissReasons} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -6,13 +6,18 @@ import {NgbOffcanvas, OffcanvasDismissReasons} from "@ng-bootstrap/ng-bootstrap"
   templateUrl: './offcanvas-side-bar.component.html',
   styleUrls: ['./offcanvas-side-bar.component.css']
 })
-export class OffcanvasSideBarComponent {
+export class OffcanvasSideBarComponent implements OnInit{
+  private element?: HTMLElement | null;
+  private closeResult = '';
 
   constructor(private offcanvasService: NgbOffcanvas) {
 
   }
-  closeResult = '';
-  open(content: any) {
+  public ngOnInit() {
+    this.element = document.querySelector("offCanvas");
+    console.log(this.element);
+  }
+  public open(content: any) {
     this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then(
       (result) => {
         this.closeResult = `Closed with: ${result}`;
@@ -22,7 +27,6 @@ export class OffcanvasSideBarComponent {
       },
     );
   }
-
   private getDismissReason(reason: any): string {
     if (reason === OffcanvasDismissReasons.ESC) {
       return 'by pressing ESC';
