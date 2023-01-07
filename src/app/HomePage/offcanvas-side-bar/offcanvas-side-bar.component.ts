@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {NgbOffcanvas, OffcanvasDismissReasons} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -35,5 +35,11 @@ export class OffcanvasSideBarComponent implements OnInit{
     } else {
       return `with: ${reason}`;
     }
+  }
+  @HostListener('window:resize', ['$event'])
+  public onResize(event: any) {
+    const size = event.target.innerWidth;
+    if(size >= 768)
+      this.offcanvasService.dismiss(OffcanvasDismissReasons.ESC);
   }
 }

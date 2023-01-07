@@ -15,6 +15,8 @@ export class GameListComponent implements OnInit,OnDestroy{
   public shouldBeVisible?: boolean;
   private subscriptions: Subscription[] = [];
   public loadingVisible: boolean = false;
+  public increasingPage: boolean = false;
+  public maxReached: boolean = false;
   constructor(private searchHandler: SearchHandlerService,private gameJSONReader: GameJSONReaderService){
 
   }
@@ -34,6 +36,7 @@ export class GameListComponent implements OnInit,OnDestroy{
       this.games = [];
       this.shouldBeVisible = false;
     }));
+    this.subscriptions.push(this.searchHandler.getIsIncreasingPage(false).subscribe((value: any) => this.increasingPage = value));
   }
   public handleClick(): void{
     this.searchHandler.setCurrentGenre("action");
