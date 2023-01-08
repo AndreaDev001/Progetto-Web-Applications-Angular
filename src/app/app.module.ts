@@ -40,6 +40,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import appRoutes from "./appRoutes";
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
+import {NgxSpinnerModule} from "ngx-spinner";
 
 
 
@@ -114,9 +115,10 @@ import {LazyLoadImageModule} from "ng-lazyload-image";
         AutosizeModule,
         FontAwesomeModule,
         NgbModule,
-        BrowserAnimationsModule,
         MatProgressSpinnerModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        BrowserAnimationsModule,
+        NgxSpinnerModule,
     ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

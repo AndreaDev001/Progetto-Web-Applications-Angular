@@ -42,7 +42,8 @@ export class GameListComponent implements OnInit,OnDestroy{
     this.searchHandler.setCurrentGenre("action");
   }
   public scroll(): void{
-    this.searchHandler.increaseMaxPage();
+    if(!this.searchHandler.getIsIncreasingPage(true))
+        this.searchHandler.increaseMaxPage();
   }
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());

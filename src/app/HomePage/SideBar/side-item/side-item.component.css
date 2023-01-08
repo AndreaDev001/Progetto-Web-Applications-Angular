@@ -1,5 +1,5 @@
 button.side-item-button{
-  background-color: #121212;
+  background-color: #212529;
   color: whitesmoke;
   border-top: 1px solid grey;
   transition: all 0.2s ease-in-out;
@@ -13,18 +13,17 @@ button.side-item-selected{
   text-decoration-color: #151515;
 }
 span.side-item-text{
-  padding-left: 2%;
-  padding-right: 2%;
+  padding: 0 2%;
+  font-size: 16px;
 }
 button.side-item-button:hover{
   background-color: whitesmoke;
   color: #121212;
   text-decoration: underline;
   text-decoration-color: #121212;
-  padding-left: 40px;
 }
 img.side-img{
   width: 80px;
-  height: auto;
+  height: 60px;
   border-radius: 40px;
 }

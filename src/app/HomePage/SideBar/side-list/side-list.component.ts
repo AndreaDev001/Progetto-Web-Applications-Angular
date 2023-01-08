@@ -19,14 +19,12 @@ export class SideListComponent implements OnInit,OnDestroy{
 
   }
   public ngOnInit(): void{
-    this.updateCurrentSelection();
     this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => this.updateCurrentSelection()));
   }
   private updateCurrentSelection(): void{
     let currentGenre: string = this.searchHandler.getCurrentGenre(true);
     let currentList: string = this.searchHandler.getCurrentList(true);
     let currentName: string = this.searchHandler.getCurrentName(true);
-    console.log(currentGenre);
     this.buttons = document.querySelectorAll("button.list-group-item.list-group-item.list-group-item-action");
     this.buttons.forEach((value: Element) => {
       let name: string | null = value.textContent;
