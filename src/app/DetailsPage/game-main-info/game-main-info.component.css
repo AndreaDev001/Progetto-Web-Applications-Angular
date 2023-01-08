@@ -11,7 +11,7 @@ img.esrbImage{
 button.wishlist-button{
   padding: 10px;
   color: whitesmoke;
-  background-color: #151515;
+  background-color: #212529;
   border: 1px solid whitesmoke;
   transition: all 0.2s ease-in-out;
 }
@@ -20,9 +20,6 @@ button.wishlist-button:hover{
   color: #151515;
   text-decoration: underline;
   text-decoration-color: #151515;
-}
-ul.gameLinks{
-  padding: 10px 0;
 }
 p.game-name{
   font-size: 30px;
@@ -34,7 +31,7 @@ p.game-description{
 }
 a
 {
-  background-color: #151515;
+  background-color: #212529;
   color: whitesmoke;
   transition: 0.2s all ease-in-out;
   cursor: pointer;

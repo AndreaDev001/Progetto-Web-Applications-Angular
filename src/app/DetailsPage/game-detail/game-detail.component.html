@@ -1,3 +1,6 @@
+<ngx-spinner bgColor="rgba(51,51,51,0.8)" type="ball-scale-multiple" [fullScreen]="true">
+  <h2 class = "text-white">Loading Game Details...</h2>
+</ngx-spinner>
 <div class = "container-fluid" style="background-color: #151515">
   <div class = "container" *ngIf="gameDetails">
     <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>

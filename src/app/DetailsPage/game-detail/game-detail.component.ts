@@ -5,6 +5,7 @@ import {GameJSONReaderService} from "../../services/game-jsonreader.service";
 import {GameHandlerService} from "../../services/game-handler.service";
 import {HttpClient} from "@angular/common/http";
 import {SpringHandlerService} from "../../services/spring-handler.service";
+import {NgxSpinnerService} from "ngx-spinner";
 
 
 export interface GameInfo{
@@ -36,16 +37,20 @@ export class GameDetailComponent implements OnInit{
   public gameStores?: Store[];
   public gameReviews?: Review[];
 
-  constructor(private route: ActivatedRoute,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private springHandler: SpringHandlerService) {
+  constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private springHandler: SpringHandlerService) {
   }
   public ngOnInit(): void{
+    this.spinnerService.show();
     let value: string | null = this.route.snapshot.paramMap.get("id");
     this.gameID = Number(value);
     this.springHandler.getAllReviews(this.gameID).subscribe((values: Review[]) => {
       console.log(values);
       this.gameReviews = values;
     });
-    this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => this.gameDetails = this.gameJSONReader.readGameDetails(value));
+    this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
+      this.gameDetails = this.gameJSONReader.readGameDetails(value);
+      this.spinnerService.hide();
+    });
     this.gameHandler.getGameAchievements(this.gameID).subscribe((value: any) => this.gameAchievements = this.gameJSONReader.readAchievements(value.results));
     this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => {
       this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results);

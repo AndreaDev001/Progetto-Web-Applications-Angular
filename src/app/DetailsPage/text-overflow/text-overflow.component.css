@@ -4,7 +4,7 @@ div.item{
   border-radius: 30px;
   transition: all 0.2s ease-in-out;
   color: whitesmoke;
-  background-color: #151515;
+  background-color: #212529;
   margin-left: 7px;
 }
 div.item:hover{

@@ -1,3 +1,4 @@
+<ngx-spinner [fullScreen]="true" bgColor="rgba(51,51,51,0.8)" type="ball-scale-multiple"></ngx-spinner>
 <div class = "row container-fluid" style="padding: 20px" *ngIf="gameInfo">
   <div class = "col-xl-4 col-lg-4 col-md-4 col-sm-12">
     <img id = "gameImage"  [src]="gameInfo.image" alt = "Not Found">
@@ -7,7 +8,7 @@
       <span class = "text-white p-2" style="font-size: 20px;">{{gameInfo.released}}</span>
     </div>
     <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke;font-size: 35px"></app-star-component>
-    <div style="border: 1px solid whitesmoke;border-radius: 15px">
+    <div style="border: 1px solid whitesmoke;border-radius: 15px;background-color: #212529">
       <ul class = "list-group gameLinks" style="padding: 20px 0">
         <a *ngIf="gameInfo.website" class = "game-website list-group-item" href="{{gameInfo.website}}">
           <fa-icon style="font-size: 20px" [icon]="icons[1]"></fa-icon>
