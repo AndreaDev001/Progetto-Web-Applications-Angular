@@ -115,3 +115,9 @@ export interface Review
   utente: string;
   gioco: number;
 }
+export interface Utente{
+  email: string;
+  username: string;
+  amministratore: boolean;
+  bandito: boolean;
+}

@@ -36,16 +36,38 @@ export class GameDetailComponent implements OnInit{
   public gameTrailers?: Trailer[];
   public gameStores?: Store[];
   public gameReviews?: Review[];
+  public userReview?: Review;
+  public isLogged: boolean = false;
 
   constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private springHandler: SpringHandlerService) {
+
   }
-  public ngOnInit(): void{
+  public ngOnInit(): void {
     this.spinnerService.show();
-    let value: string | null = this.route.snapshot.paramMap.get("id");
-    this.gameID = Number(value);
+    let gameId: string | null = this.route.snapshot.paramMap.get("id");this.gameID = Number(gameId);
+    this.getAllValues();
+  }
+  private getAllValues(): void{
+    if(!this.gameID)
+      return;
+    let sessionId: string | null = this.route.snapshot.queryParams["jsessionid"];
+    if(sessionId)
+      this.springHandler.getUser(sessionId).subscribe((value: any) => {
+        if(value != "" && this.gameID){
+          this.isLogged = value;
+          this.springHandler.getUserReview(value,this.gameID).subscribe((value: any) => {
+            let current: string | undefined = this.formatHTML(value.contenuto);
+            value.contenuto = current != undefined ? current : "No preview found";
+            this.userReview = value;
+          });
+        }
+      });
     this.springHandler.getAllReviews(this.gameID).subscribe((values: Review[]) => {
-      console.log(values);
       this.gameReviews = values;
+      this.gameReviews.forEach((value: Review) => {
+        let current: string | undefined = this.formatHTML(value.contenuto);
+        value.contenuto = current != undefined ? current : "No preview found";
+      });
     });
     this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
@@ -95,6 +117,12 @@ export class GameDetailComponent implements OnInit{
       }
     }
     return undefined;
+  }
+  private formatHTML(value: string) : string | undefined{
+    let domParser: DOMParser = new DOMParser();
+    let result: Document = domParser.parseFromString(value,'text/html');
+    let foundElement: HTMLParagraphElement | null = result.body.querySelector("p");
+    return foundElement?.innerText;
   }
   public getGameID(): number | undefined {return this.gameID;}
 }

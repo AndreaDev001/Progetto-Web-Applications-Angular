@@ -18,6 +18,8 @@ import {
   faXbox,
 } from "@fortawesome/free-brands-svg-icons";
 import {overflowItem} from "../text-overflow/text-overflow.component";
+import {SpringHandlerService} from "../../services/spring-handler.service";
+import {Review, Utente} from "../../interfaces";
 
 @Component({
   selector: 'app-game-main-info',
@@ -28,6 +30,7 @@ export class GameMainInfoComponent implements OnInit{
   @Input() gameInfo?: GameInfo;
   public icons: IconDefinition[] = [faReddit,faGlobe,faStar,faCalendarDays,faHeartCirclePlus];
   public defaultIcons: IconDefinition[] = [faStore,faGamepad,faList];
+  @Input() isLogged: boolean = false;
   constructor() {
   }
   public ngOnInit(): void{

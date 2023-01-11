@@ -3,15 +3,23 @@
 </ngx-spinner>
 <div class = "container-fluid" style="background-color: #151515">
   <div class = "container" *ngIf="gameDetails">
-    <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
+    <app-game-main-info [gameInfo]="getGameInfo()" [isLogged]="isLogged"></app-game-main-info>
     <section class = "game-section" *ngIf="getTrailers(this.gameTrailers).length > 0 || getValues(this.gameScreenshots).length > 0">
       <h2 class = "text-white text-center" style="font-weight: bold">Media</h2>
       <app-game-details-media style="padding: 20px 0" [trailers]="getTrailers(this.gameTrailers)"  [images]="getValues(this.gameScreenshots)"></app-game-details-media>
     </section>
     <section class = "game-section row">
         <div *ngIf="gameReviews && gameReviews.length > 0" [ngClass] = "getValues(this.gameAchievements).length > 0 || getValues(this.gameDetails.developers).length > 0 || getValues(this.gameDetails.publishers).length > 0 || getValues(this.gameDetails.tags).length > 0 ? 'review-holder col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6' : 'review-holder col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'">
-          <h2 class = "text-white text-center" style="font-weight: bold;">Reviews</h2>
-          <app-game-review *ngFor="let current of gameReviews" [review]="current"></app-game-review>
+          <div class = "d-block d-sm-block d-md-block d-lg-block d-xl-block">
+            <div class = "container-fluid" *ngIf="userReview">
+              <h2 class = "text-white text-center" style="font-weight: bold">Your Review</h2>
+              <app-game-review [review]="userReview"></app-game-review>
+            </div>
+            <div class="container-fluid" style="margin-top: 30px">
+              <h2 class = "text-white text-center" style="font-weight: bold">Reviews</h2>
+              <app-game-review *ngFor="let current of gameReviews" [review]="current"></app-game-review>
+            </div>
+          </div>
         </div>
         <app-game-additional-info [ngClass]="gameReviews && gameReviews.length > 0 ? 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6' : 'col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'" [achievements]="getValues(this.gameAchievements)" [developers]="getValues(this.gameDetails.developers)" [publishers]="getValues(this.gameDetails.publishers)" [tags]="getValues(this.gameDetails.tags)"></app-game-additional-info>
     </section>
