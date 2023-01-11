@@ -1,0 +1,24 @@
+<div class = "container-fluid" *ngIf="gameInfo">
+    <p class = "text-white text-center game-name d-block d-sm-block d-md-none d-lg-none d-xl-none">{{gameInfo.name}}</p>
+    <img id = "gameImage"  [src]="gameInfo.image" alt = "Not Found">
+    <p class = "text-white text-center game-name d-none d-sm-none d-md-block d-lg-block d-xl-block">{{gameInfo.name}}</p>
+    <div class = "d-inline-block w-100 text-center position-relative">
+      <fa-icon class = "text-white" [icon]="icons[3]" style="font-size: 35px"></fa-icon>
+      <span class = "text-white p-2" style="font-size: 20px;">{{gameInfo.released}}</span>
+    </div>
+    <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke;font-size: 35px"></app-star-component>
+    <div style="border: 1px solid whitesmoke;border-radius: 15px;background-color: #212529">
+      <ul class = "list-group gameLinks" style="padding: 20px 0">
+        <a class = "list-group-item game-link" *ngFor="let current of links" [href]="current.link">
+          <fa-icon *ngIf="current.icon" [icon]="current.icon" style="font-size: 17px"></fa-icon>
+          {{current.name}}
+        </a>
+      </ul>
+    </div>
+    <div class = "w-100 text-center p-2" *ngIf="isLogged">
+      <button class = "btn wishlist-button">
+        <fa-icon [icon]="icons[4]" style="font-size: 20px"></fa-icon>
+        <span class = "text-center p-2">Aggiungi alla wishlist</span>
+      </button>
+    </div>
+</div>

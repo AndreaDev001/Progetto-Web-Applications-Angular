@@ -34,7 +34,6 @@ export class GameDetailComponent implements OnInit{
   public gameAchievements?: Achievement[];
   public gameScreenshots?: Screenshot[];
   public gameTrailers?: Trailer[];
-  public gameStores?: Store[];
   public gameReviews?: Review[];
   public userReview?: Review;
   public isLogged: boolean = false;
@@ -45,6 +44,7 @@ export class GameDetailComponent implements OnInit{
   public ngOnInit(): void {
     this.spinnerService.show();
     let gameId: string | null = this.route.snapshot.paramMap.get("id");this.gameID = Number(gameId);
+    this.springHandler.forceLogin("AndreaDev01","123456");
     this.getAllValues();
   }
   private getAllValues(): void{
