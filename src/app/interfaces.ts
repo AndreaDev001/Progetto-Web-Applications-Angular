@@ -28,7 +28,7 @@ export interface DateInterval{
   endDate: string;
 }
 export interface GameDetails{
-
+  id: number;
   original_name: string;
   description: string;
   releaseDate: string;

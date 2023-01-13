@@ -28,6 +28,7 @@ export class GameJSONReaderService {
     return values;
   }
   public readGameDetails(value: any): GameDetails{
+    let id: number = value.id;
     let original_name: string = value.name_original;
     let description: string = value.description;
     let description_raw: string = value.description_raw;
@@ -49,7 +50,7 @@ export class GameJSONReaderService {
     let platforms: Platform[] = this.readPlatforms(value.platforms);
     let esrb_rating = value.esrb_rating;
     let currentEsrb: EsrbRating | undefined = esrb_rating ? this.readEsrbRating(esrb_rating) : undefined;
-    return {original_name: original_name,description: description,releaseDate: releaseDate,rating: rating,description_raw: description_raw,
+    return {id: id,original_name: original_name,description: description,releaseDate: releaseDate,rating: rating,description_raw: description_raw,
     website: website,genres: genres,platforms: platforms,image_background: image_background,achievementsCount: achievementsCount,reddit_name: redditName,reddit_url: redditUrl,
     metacritic_url: metaCriticUrl,stores: stores,developers: developers,publishers: publishers,tags: tags,esbrRating: currentEsrb};
   }

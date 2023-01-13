@@ -16,9 +16,9 @@
       </ul>
     </div>
     <div class = "w-100 text-center p-2" *ngIf="isLogged">
-      <button class = "btn wishlist-button">
+      <button class = "btn wishlist-button" (click)="handleClick()">
         <fa-icon [icon]="icons[4]" style="font-size: 20px"></fa-icon>
-        <span class = "text-center p-2">Aggiungi alla wishlist</span>
+        <span class = "text-center p-2 wishlist-button-text">{{currentText}}</span>
       </button>
     </div>
 </div>
