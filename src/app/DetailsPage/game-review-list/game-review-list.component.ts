@@ -17,7 +17,7 @@ export class GameReviewListComponent implements OnInit {
   {
     this.reviews?.forEach((value: Review) => this.formatReview(value));
     if(this.userReview)
-        this.formatReview(this.userReview);
+      this.formatReview(this.userReview);
   }
   private formatReview(value: Review): void{
     let result: string | undefined = this.formatHTML(value.contenuto);

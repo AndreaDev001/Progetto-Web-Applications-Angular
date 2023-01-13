@@ -43,6 +43,13 @@ export class GameDetailComponent implements OnInit{
     this.spinnerService.show();
     let gameId: string | null = this.route.snapshot.paramMap.get("id");this.gameID = Number(gameId);
     this.springHandler.forceLogin("AndreaDev01","123456");
+    this.springHandler.getCurrentUsername(false).subscribe((value: any) => {
+      if(value != undefined && this.gameID)
+        this.springHandler.getUserReview(value,this.gameID).subscribe((value: Review) => {
+          this.userReview = value
+          console.log(this.userReview);
+        });
+    })
     this.getAllValues();
   }
   private getAllValues(): void{
