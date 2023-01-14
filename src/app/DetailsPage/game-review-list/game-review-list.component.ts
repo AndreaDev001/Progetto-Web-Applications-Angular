@@ -7,6 +7,7 @@ import {Review} from "../../interfaces";
   styleUrls: ['./game-review-list.component.css']
 })
 export class GameReviewListComponent implements OnInit {
+
   @Input() reviews?: Review[];
   @Input() userReview?: Review;
 

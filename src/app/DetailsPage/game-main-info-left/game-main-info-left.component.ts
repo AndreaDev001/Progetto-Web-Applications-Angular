@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GameInfo} from "../game-detail/game-detail.component";
+import {GameInfo} from "../../interfaces";
 import {
   faCalendarDays,
   faGlobe, faHeartCirclePlus,

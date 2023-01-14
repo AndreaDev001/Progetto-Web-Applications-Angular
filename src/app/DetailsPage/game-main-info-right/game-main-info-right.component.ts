@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GameInfo} from "../game-detail/game-detail.component";
+import {GameInfo} from "../../interfaces";
 import {overflowItem} from "../text-overflow/text-overflow.component";
 import {faGamepad, faList, faStore, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {
@@ -43,9 +43,10 @@ export class GameMainInfoRightComponent implements OnInit{
   }
   public createStores(): overflowItem[]{
     let stores: overflowItem[] = [];
-    if(this.gameInfo?.stores){
+    if(this.gameInfo?.stores)
+    {
       for(let current of this.gameInfo.stores)
-        stores.push({name: current,icon: this.getStoreIcon(current)});
+        stores.push({name: current.name,icon: this.getStoreIcon(current.name),link: current.link});
     }
     return stores;
   }

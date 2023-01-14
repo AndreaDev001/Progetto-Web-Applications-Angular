@@ -5,21 +5,8 @@ import {GameJSONReaderService} from "../../services/game-jsonreader.service";
 import {GameHandlerService} from "../../services/game-handler.service";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {NgxSpinnerService} from "ngx-spinner";
-export interface GameInfo{
-  id: number;
-  name: string;
-  description: string;
-  released?: string;
-  rating?: number;
-  image?: string;
-  stores?: string[];
-  website?: string;
-  reddit_url?: string;
-  metacritic_url?: string;
-  esrbRating?: string;
-  genres?: string[];
-  platforms?: string[];
-}
+import {StoreLink, GameInfo} from "../../interfaces";
+
 @Component({
   selector: 'app-game-detail',
   templateUrl: './game-detail.component.html',
@@ -31,10 +18,10 @@ export class GameDetailComponent implements OnInit{
   public gameDetails?: GameDetails;
   public gameAchievements?: Achievement[];
   public gameScreenshots?: Screenshot[];
+  public storeLinks: StoreLink[] = [];
   public gameTrailers?: Trailer[];
   public gameReviews?: Review[];
   public userReview?: Review;
-  public isLogged: boolean = false;
 
   constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private springHandler: SpringHandlerService) {
 
@@ -45,10 +32,7 @@ export class GameDetailComponent implements OnInit{
     this.springHandler.forceLogin("AndreaDev01","123456");
     this.springHandler.getCurrentUsername(false).subscribe((value: any) => {
       if(value != undefined && this.gameID)
-        this.springHandler.getUserReview(value,this.gameID).subscribe((value: Review) => {
-          this.userReview = value
-          console.log(this.userReview);
-        });
+        this.springHandler.getUserReview(value,this.gameID).subscribe((value: Review) => this.userReview = value);
     })
     this.getAllValues();
   }
@@ -65,6 +49,7 @@ export class GameDetailComponent implements OnInit{
           if(this.gameID && genre)
             this.springHandler.addGame(this.gameID,genre).subscribe((value: any) => console.log(value));
         })
+        this.gameHandler.getGameStores(this.gameID).subscribe((value: any) => this.createStoreLinks(value.results));
       }
       this.spinnerService.hide();
     });
@@ -75,8 +60,9 @@ export class GameDetailComponent implements OnInit{
   public getValues(values: any[] | undefined): string[]{
     let result: string[] = [];
     if(values)
-      for(let current of values)
+      for(let current of values){
         result.push(current.name);
+      }
     return result;
   }
   public getTrailers(values: Trailer[] | undefined): string[]{
@@ -86,11 +72,32 @@ export class GameDetailComponent implements OnInit{
         result.push(current.highQuality);
     return result;
   }
+  public getStores(values: Store[] | undefined) : string[]{
+    let result: string[] = [];
+    if(values)
+        for(let current of values)
+          result.push(current.name)
+    return result;
+  }
+  public createStoreLinks(values: any): void{
+    for(let current of values)
+    {
+      let url: string = current.url;
+      let store_id: number = current.store_id;
+      this.gameDetails?.stores?.forEach((value: Store) => {
+        if(value.id == store_id){
+          let storeLink: StoreLink = {name: value.name,link: url};
+          this.storeLinks.push(storeLink);
+        }
+      })
+    }
+  }
   public getGameInfo(): GameInfo | undefined{
     if(this.gameDetails)
+      //@ts-ignore
       return {id: this.gameDetails.id,name: this.gameDetails.original_name,description: this.gameDetails.description_raw,rating: this.gameDetails.rating,
       website: this.gameDetails.website,reddit_url: this.gameDetails.reddit_url,image: this.gameDetails.image_background,
-      metacritic_url: this.gameDetails.metacritic_url,released: this.gameDetails.releaseDate,esrbRating: this.getEsrbImage(),stores: this.getValues(this.gameDetails.stores),genres: this.getValues(this.gameDetails.genres),platforms: this.getValues(this.gameDetails.platforms)
+      metacritic_url: this.gameDetails.metacritic_url,released: this.gameDetails.releaseDate,esrbRating: this.getEsrbImage(),stores: this.storeLinks,genres: this.getValues(this.gameDetails.genres),platforms: this.getValues(this.gameDetails.platforms)
     };
     return undefined;
   }

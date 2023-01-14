@@ -11,11 +11,12 @@ export class GameAdditionalInfoComponent implements OnInit{
   @Input() publishers?: string[];
   @Input() tags?: string[];
   @Input() achievements?: string[];
+  public isEmpty: boolean = false;
 
   constructor() {
   }
   public ngOnInit(): void{
-    console.log(this.achievements);
+    this.isEmpty = !this.developers && !this.publishers && !this.tags && !this.achievements;
   }
   public createItems(values: string[]): overflowItem[]{
     let result: overflowItem[] = [];

@@ -56,6 +56,25 @@ export interface Store{
   domain: string;
   games_count: number;
 }
+export interface GameInfo{
+  id: number;
+  name: string;
+  description: string;
+  released?: string;
+  rating?: number;
+  image?: string;
+  stores: StoreLink[] | undefined;
+  website?: string;
+  reddit_url?: string;
+  metacritic_url?: string;
+  esrbRating?: string;
+  genres?: string[];
+  platforms?: string[];
+}
+export interface StoreLink{
+  name: string,
+  link: string,
+}
 export interface Tag{
   id: number;
   name: string;

@@ -5,7 +5,8 @@ import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
 export interface overflowItem{
   name: string,
   image?: string,
-  icon?: IconDefinition;
+  icon?: IconDefinition,
+  link?: string;
 }
 @Component({
   selector: 'app-text-overflow',
