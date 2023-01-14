@@ -147,6 +147,7 @@ export class SearchHandlerService
   private updateResults(values: any[],searchingValue: boolean){
     this.latestValues.next(values);
     this.isSearching.next(searchingValue);
+    this.isIncreasingPage.next(false);
   }
   public increaseMaxPage(){
     this.currentMaxPage.next(this.currentMaxPage.value + 1);
