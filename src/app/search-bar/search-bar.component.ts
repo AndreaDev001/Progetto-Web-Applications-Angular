@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -13,5 +13,12 @@ export class SearchBarComponent implements OnInit{
     this.searchForm = new FormGroup({
       searchField: new FormControl('', Validators.required)
     });
+  }
+
+  @Output() searchValueChanged = new EventEmitter<string>();
+
+  makeNewSearch() {
+    var searchValue = this.searchForm.get('searchField')?.value
+    this.searchValueChanged.emit(searchValue)
   }
 }

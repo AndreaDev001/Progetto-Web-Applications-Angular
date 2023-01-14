@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
 })
 
 export class NewsComponent {
+  keywords: string[] = [];
 
+  updateKeywords(newKeywords: string) {
+    this.keywords = newKeywords.split(/\s+/);
+    console.log("new keywords: ", this.keywords)  // todo: debug
+    // todo: fai partire una nuova ricerca con le keywords aggiornate
+  }
 }
