@@ -7,13 +7,13 @@ import {Review} from "../../interfaces";
   styleUrls: ['./game-review-list.component.css']
 })
 export class GameReviewListComponent implements OnInit {
-
+  @Input() gameID?: number;
   @Input() reviews?: Review[];
   @Input() userReview?: Review;
 
   constructor() {
-  }
 
+  }
   public ngOnInit(): void
   {
     this.reviews?.forEach((value: Review) => this.formatReview(value));

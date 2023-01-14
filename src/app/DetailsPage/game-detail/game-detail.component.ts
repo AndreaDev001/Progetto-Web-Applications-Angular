@@ -14,7 +14,7 @@ import {StoreLink, GameInfo} from "../../interfaces";
 })
 export class GameDetailComponent implements OnInit{
 
-  private gameID?: number;
+  public gameID?: number;
   public gameDetails?: GameDetails;
   public gameAchievements?: Achievement[];
   public gameScreenshots?: Screenshot[];
