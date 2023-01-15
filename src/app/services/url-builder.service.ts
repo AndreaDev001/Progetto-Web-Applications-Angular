@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,7 @@ export class UrlBuilderService {
 
   private httpParams = new HttpParams();
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor() { }
 
 
   addKeywords(keywords: String[]): void {
@@ -41,7 +39,7 @@ export class UrlBuilderService {
 
   buildUrl(): {url: string, queryParams: HttpParams} {
     this.httpParams = this.httpParams.append('apiKey', this.newsApiKey)
-    console.error(this.httpParams.toString())
+    console.warn(this.httpParams.toString())
     /*
     let finalUrl = (this.url + this.httpParams.toString())  // todo: debug
     return finalUrl

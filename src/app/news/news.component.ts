@@ -27,7 +27,7 @@ export class NewsComponent implements OnInit {
     this.keywords = newKeywords.split(/\s+/);
     console.log("new keywords: ", this.keywords)  // todo: debug
     // todo: resetta numero di apgina corrente (la nuova ricerca deve partire da pag 1)
-    this.search() // todo: fai partire ricerca
+    this.search()
 
   }
 
@@ -40,6 +40,7 @@ export class NewsComponent implements OnInit {
           totalResults: response.totalResults
         })
       }
+      // todo: gestisci errori
     )
   }
 
@@ -47,8 +48,8 @@ export class NewsComponent implements OnInit {
     this.urlBuilder.addKeywords(this.keywords)
 
     var url = this.urlBuilder.buildUrl()
-    console.warn("CIAO:\n" + url)
 
+    this.subscribeToNews(url)
     this.urlBuilder.resetUrl()
   }
 }
