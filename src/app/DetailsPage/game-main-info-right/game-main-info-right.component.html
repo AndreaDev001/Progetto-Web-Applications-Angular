@@ -1,0 +1,8 @@
+<div class = "d-block" *ngIf="gameInfo">
+  <p class = "text-white text-center game-name d-none d-sm-none d-md-block d-lg-block d-xl-block">{{gameInfo.name}}</p>
+  <p class = "text-white game-description">{{gameInfo.description}}</p>
+  <img *ngIf="gameInfo.esrbRating" class = "esrbImage" [src]="gameInfo.esrbRating" alt = "Rating Not Found">
+  <app-text-overflow *ngIf="gameInfo.genres && gameInfo.genres.length > 0" [name]="'Genres'" [overflowItems]="createGenres()" [nameIcon]="defaultIcons[2]"></app-text-overflow>
+  <app-text-overflow *ngIf="gameInfo.platforms && gameInfo.platforms.length > 0" [name]="'Released on'" [nameIcon]="defaultIcons[1]" [overflowItems]="createPlatforms()"></app-text-overflow>
+  <app-text-overflow *ngIf="gameInfo.stores && gameInfo.stores.length > 0" [name]="'Available on'" [nameIcon]="defaultIcons[0]" [overflowItems]="createStores()"></app-text-overflow>
+</div>

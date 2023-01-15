@@ -47,6 +47,10 @@ import { VideoSelectorComponent } from './DetailsPage/video-selector/video-selec
 import { GameReviewComponent } from './DetailsPage/game-review/game-review.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import appRoutes from "./appRoutes";
+import {NgxSpinnerModule} from "ngx-spinner";
+import { GameReviewListComponent } from './DetailsPage/game-review-list/game-review-list.component';
+import { GameMainInfoLeftComponent } from './DetailsPage/game-main-info-left/game-main-info-left.component';
+import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/game-main-info-right.component';
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {NgxSpinnerModule} from "ngx-spinner";
@@ -79,6 +83,9 @@ import {NgxSpinnerModule} from "ngx-spinner";
     GameDetailsMediaComponent,
     VideoSelectorComponent,
     GameReviewComponent,
+    GameReviewListComponent,
+    GameMainInfoLeftComponent,
+    GameMainInfoRightComponent,
   ],
     imports: [
         BrowserModule,

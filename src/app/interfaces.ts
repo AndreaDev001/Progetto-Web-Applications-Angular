@@ -28,7 +28,7 @@ export interface DateInterval{
   endDate: string;
 }
 export interface GameDetails{
-
+  id: number;
   original_name: string;
   description: string;
   releaseDate: string;
@@ -55,6 +55,25 @@ export interface Store{
   image_background: string;
   domain: string;
   games_count: number;
+}
+export interface GameInfo{
+  id: number;
+  name: string;
+  description: string;
+  released?: string;
+  rating?: number;
+  image?: string;
+  stores: StoreLink[] | undefined;
+  website?: string;
+  reddit_url?: string;
+  metacritic_url?: string;
+  esrbRating?: string;
+  genres?: string[];
+  platforms?: string[];
+}
+export interface StoreLink{
+  name: string,
+  link: string,
 }
 export interface Tag{
   id: number;
@@ -114,4 +133,10 @@ export interface Review
   numeroNonMiPiace?: number;
   utente?: string;
   gioco?: number;
+}
+export interface Utente{
+  email: string;
+  username: string;
+  amministratore: boolean;
+  bandito: boolean;
 }
