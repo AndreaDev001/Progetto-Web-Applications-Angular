@@ -1,0 +1,8 @@
+<div class="col">
+  <label>Sort by:</label>
+  <select [(ngModel)]="selectedSortingType" (ngModelChange)="makeNewSearch()">
+    <option *ngFor="let selected of sortingTypes">{{selected}}</option>
+  </select>
+</div>
+
+

@@ -8,6 +8,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <!-- qui inserisci gli item -->
     <app-search-bar (searchValueChanged)="updateKeywords($event)"></app-search-bar>
+    <app-sorting-filter (sortingValueChanged)="updateSorting($event)"></app-sorting-filter>
     <app-date-filter (dateValueChanged)="updateDateRange($event)"></app-date-filter>
   </div>
 

@@ -12,6 +12,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { NewsResultsComponent } from './news-results/news-results.component';
 import { NoResultsComponent } from './no-results/no-results.component';
 import { DateFilterComponent } from './date-filter/date-filter.component';
+import { SortingFilterComponent } from './sorting-filter/sorting-filter.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DateFilterComponent } from './date-filter/date-filter.component';
     SearchBarComponent,
     NewsResultsComponent,
     NoResultsComponent,
-    DateFilterComponent
+    DateFilterComponent,
+    SortingFilterComponent
   ],
     imports: [
         BrowserModule,

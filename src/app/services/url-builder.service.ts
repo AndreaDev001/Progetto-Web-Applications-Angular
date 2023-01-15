@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from "@angular/common/http";
-import {DateRange} from "../enum";
+import {DateRange, Sorting} from "../enum";
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +70,16 @@ export class UrlBuilderService {
 
       this.httpParams = this.httpParams.append('from', fromDate.toISOString().substring(0, 10))
       this.httpParams = this.httpParams.append('to', now.toISOString().substring(0, 10))
+    }
+  }
+
+
+  addSorting(sortingType: Sorting): void {
+    if (sortingType === Sorting.LATEST) {
+      this.httpParams = this.httpParams.append('sortBy', 'publishedAt')
+    }
+    else {
+      this.httpParams = this.httpParams.append('sortBy', sortingType)
     }
   }
 

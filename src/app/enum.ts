@@ -5,3 +5,10 @@ export enum DateRange {
   THIS_YEAR = "this year",
   ALL = "all"
 }
+
+export enum Sorting {
+  LATEST = "latest",
+  RELEVANCY = "relevancy",
+  POPULARITY = "popularity"
+}
+
