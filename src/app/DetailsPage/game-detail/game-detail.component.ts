@@ -1,4 +1,4 @@
-import {Component,OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Achievement, GameDetails, Review, Screenshot, Store, Trailer} from "../../interfaces";
 import {ActivatedRoute} from "@angular/router";
 import {GameJSONReaderService} from "../../services/game-jsonreader.service";
@@ -6,13 +6,14 @@ import {GameHandlerService} from "../../services/game-handler.service";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {StoreLink, GameInfo} from "../../interfaces";
+import {catchError, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-game-detail',
   templateUrl: './game-detail.component.html',
   styleUrls: ['./game-detail.component.css']
 })
-export class GameDetailComponent implements OnInit{
+export class GameDetailComponent implements OnInit,OnDestroy{
 
   public gameID?: number;
   public gameDetails?: GameDetails;
@@ -22,6 +23,7 @@ export class GameDetailComponent implements OnInit{
   public gameTrailers?: Trailer[];
   public gameReviews?: Review[];
   public userReview?: Review;
+  private subscriptions: Subscription[] = [];
 
   constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private springHandler: SpringHandlerService) {
 
@@ -30,34 +32,38 @@ export class GameDetailComponent implements OnInit{
     this.spinnerService.show();
     let gameId: string | null = this.route.snapshot.paramMap.get("id");this.gameID = Number(gameId);
     this.springHandler.forceLogin("AndreaDev01","123456");
-    this.springHandler.getCurrentUsername(false).subscribe((value: any) => {
-      if(value != undefined && this.gameID)
-        this.springHandler.getUserReview(value,this.gameID).subscribe((value: Review) => {
-          this.userReview = value;
-        });
-    })
     this.getAllValues();
   }
   private getAllValues(): void{
     if(!this.gameID)
       return;
-    this.springHandler.getReviews(this.gameID).subscribe((values: Review[]) => this.gameReviews = values);
     this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
       if(this.gameID)
       {
-        this.springHandler.existsGame(this.gameID).subscribe((value: boolean) => {
+        this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: any) => {
+          if(value != undefined && this.gameID)
+            this.springHandler.getUserReview(value,this.gameID).subscribe((value: Review) => {
+              this.userReview = value;
+              this.formatReview(this.userReview);
+            });
+        }));
+        this.subscriptions.push(this.springHandler.getReviews(this.gameID).subscribe((values: Review[]) => {
+          this.gameReviews = values;
+          this.gameReviews.forEach((value: Review) => this.formatReview(value));
+        }));
+        this.subscriptions.push(this.springHandler.existsGame(this.gameID).subscribe((value: boolean) => {
           let genre: string | undefined = this.gameDetails?.genres[0].slug;
           if(this.gameID && genre && this.gameDetails)
             this.springHandler.addGame(this.gameID,genre,this.gameDetails?.original_name,this.gameDetails?.image_background).subscribe((value: any) => console.log(value));
-        })
-        this.gameHandler.getGameStores(this.gameID).subscribe((value: any) => this.createStoreLinks(value.results));
+        }));
+        this.subscriptions.push(this.gameHandler.getGameStores(this.gameID).subscribe((value: any) => this.createStoreLinks(value.results)));
+        this.subscriptions.push(this.gameHandler.getGameAchievements(this.gameID).subscribe((value: any) => this.gameAchievements = this.gameJSONReader.readAchievements(value.results)));
+        this.subscriptions.push(this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results)));
+        this.subscriptions.push(this.gameHandler.getGameTrailers(this.gameID).subscribe((value: any) => this.gameTrailers = this.gameJSONReader.readTrailers(value.results)));
       }
       this.spinnerService.hide();
     });
-    this.gameHandler.getGameAchievements(this.gameID).subscribe((value: any) => this.gameAchievements = this.gameJSONReader.readAchievements(value.results));
-    this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results));
-    this.gameHandler.getGameTrailers(this.gameID).subscribe((value: any) => this.gameTrailers = this.gameJSONReader.readTrailers(value.results));
   }
   public getValues(values: any[] | undefined): string[]{
     let result: string[] = [];
@@ -118,6 +124,19 @@ export class GameDetailComponent implements OnInit{
       }
     }
     return undefined;
+  }
+  private formatReview(value: Review): void{
+    let result: string | undefined = this.formatHTML(value.contenuto);
+    value.contenuto = result ? result : value.contenuto;
+  }
+  private formatHTML(value: string): string | undefined {
+    let domParser: DOMParser = new DOMParser();
+    let result: Document = domParser.parseFromString(value, 'text/html');
+    let foundElement: HTMLParagraphElement | null = result.body.querySelector("p");
+    return foundElement?.innerText;
+  }
+  public ngOnDestroy(): void{
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
   public getGameID(): number | undefined {return this.gameID;}
 }
