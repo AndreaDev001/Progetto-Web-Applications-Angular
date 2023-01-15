@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { NewsResultsComponent } from './news-results/news-results.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewsComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    NewsResultsComponent
   ],
   imports: [
     BrowserModule,

@@ -27,8 +27,9 @@ export class NewsComponent implements OnInit {
     this.keywords = newKeywords.split(/\s+/);
     console.log("new keywords: ", this.keywords)  // todo: debug
     // todo: resetta numero di apgina corrente (la nuova ricerca deve partire da pag 1)
-    this.search()
 
+    // todo: riabilita per effettuare ricerca:
+    // this.search()
   }
 
   subscribeToNews(value: {url: string, queryParams: HttpParams}): void {

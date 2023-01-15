@@ -1,0 +1,21 @@
+<div *ngIf="totalResults===0">
+  <h3>No results</h3>
+</div>
+
+<div *ngIf="totalResults !== 0" class="container">
+
+  <div class="row">
+    <div *ngFor="let res of results" class="col-lg-3">
+      <div class="card" style="width: 18rem;">
+        <img src="{{res.urlToImage}}" width="100%" loading="lazy">
+        <div class="card-body">
+          <small>Source: {{res.source.name}}</small>
+          <h5 class="card-title">{{res.title}}</h5>
+          <p class="card-text">{{res.description}}</p>
+          <a href="{{res.url}}" target="_blank">Read more</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
