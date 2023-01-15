@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UrlBuilderService} from "../services/url-builder.service";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {NewsSearchService} from "../services/news-search.service";
 
 @Component({
   selector: 'app-news',
@@ -10,7 +12,8 @@ import {UrlBuilderService} from "../services/url-builder.service";
 export class NewsComponent implements OnInit {
 
   constructor(
-    private urlBuilder: UrlBuilderService
+    private urlBuilder: UrlBuilderService,
+    private newsSearchService: NewsSearchService
   ) {}
 
   ngOnInit(): void {
@@ -28,8 +31,16 @@ export class NewsComponent implements OnInit {
 
   }
 
-  subscribeToNews(url: string): void {
-    // todo
+  subscribeToNews(value: {url: string, queryParams: HttpParams}): void {
+    this.newsSearchService.getResults(value).subscribe(
+      (response: any) => {
+        console.log('Data from newsCompnent subscribeToNews():\n', response)
+        this.newsSearchService.passResults({
+          results: response.articles,
+          totalResults: response.totalResults
+        })
+      }
+    )
   }
 
   search() {

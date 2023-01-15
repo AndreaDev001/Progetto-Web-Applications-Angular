@@ -8,8 +8,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 export class UrlBuilderService {
   newsApiKey: string =  "6babce9602e74985ae5a69d08718eeea";
 
-  defaultUrl: string = "https://newsapi.org/v2/everything?q=videogames&language=en&pageSize=20&";
-  baseUrl: string = "https://newsapi.org/v2/everything?language=en&searchIn=title,description&pageSize=20&";
+  defaultUrl: string = "https://newsapi.org/v2/everything?q=videogames&language=en&pageSize=20";
+  baseUrl: string = "https://newsapi.org/v2/everything?language=en&searchIn=title,description&pageSize=20";
   url: string = this.defaultUrl;
 
   private httpParams = new HttpParams();
@@ -39,10 +39,16 @@ export class UrlBuilderService {
     this.httpParams = this.httpParams.append('q', paramKeywords)
   }
 
-  buildUrl(): string {
+  buildUrl(): {url: string, queryParams: HttpParams} {
     this.httpParams = this.httpParams.append('apiKey', this.newsApiKey)
     console.error(this.httpParams.toString())
+    /*
     let finalUrl = (this.url + this.httpParams.toString())  // todo: debug
+    return finalUrl
+
+     */
+
+    let finalUrl = {url: this.url, queryParams: this.httpParams}
     return finalUrl
   }
 
