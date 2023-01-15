@@ -25,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {SideBarComponent} from "./HomePage/SideBar/side-bar/side-bar.component";
 import {SideListComponent} from "./HomePage/SideBar/side-list/side-list.component";
 import { SideItemComponent } from './HomePage/SideBar/side-item/side-item.component';
+
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ResultPageComponent } from './HomePage/ResultPage/result-page/result-page.component';
 import { SortingSelectorComponent } from './HomePage/OptionBar/sorting-selector/sorting-selector.component';
@@ -36,13 +37,19 @@ import {DatePipe, NgOptimizedImage} from "@angular/common";
 import { DateSelectorComponent } from './HomePage/OptionBar/date-selector/date-selector.component';
 import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.component';
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
+import { GameDetailComponent } from './DetailsPage/game-detail/game-detail.component';
+import { ImageSliderComponent } from './DetailsPage/image-slider/image-slider.component';
+import { TextOverflowComponent } from './DetailsPage/text-overflow/text-overflow.component';
+import { GameAdditionalInfoComponent } from './DetailsPage/game-additional-info/game-additional-info.component';
+import { GameMainInfoComponent } from './DetailsPage/game-main-info/game-main-info.component';
+import { GameDetailsMediaComponent } from './DetailsPage/game-details-media/game-details-media.component';
+import { VideoSelectorComponent } from './DetailsPage/video-selector/video-selector.component';
+import { GameReviewComponent } from './DetailsPage/game-review/game-review.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import appRoutes from "./appRoutes";
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {NgxSpinnerModule} from "ngx-spinner";
-
-
 
 @NgModule({
   declarations: [
@@ -64,6 +71,14 @@ import {NgxSpinnerModule} from "ngx-spinner";
     OptionBarComponent,
     SearchBarComponent,
     OffcanvasSideBarComponent
+    GameDetailComponent,
+    ImageSliderComponent,
+    TextOverflowComponent,
+    GameAdditionalInfoComponent,
+    GameMainInfoComponent,
+    GameDetailsMediaComponent,
+    VideoSelectorComponent,
+    GameReviewComponent,
   ],
     imports: [
         BrowserModule,

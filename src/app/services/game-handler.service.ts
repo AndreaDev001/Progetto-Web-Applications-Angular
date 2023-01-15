@@ -70,6 +70,45 @@ export class GameHandlerService {
     }
     return this.search(orderingType,orderingMode,"",requiredPage);
   }
+  public getGameDetails(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getGameStores(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addStores(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getGameScreenshots(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addScreenshots(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getGameAchievements(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addAchievements(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
+  public getGameTrailers(id: number): any{
+    this.gameURLBuilder.reset();
+    this.gameURLBuilder.setRequestType(RequestType.GAMES);
+    this.gameURLBuilder.addDetails(id);
+    this.gameURLBuilder.addTrailers(id);
+    this.gameURLBuilder.addAPIKey(this.apiKEY);
+    return this.performRequest(this.gameURLBuilder.getURL());
+  }
   private loadGenres(): void{
     this.gameURLBuilder.reset()
     this.gameURLBuilder.setRequestType(RequestType.GENRES);
