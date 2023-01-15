@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UrlBuilderService} from "../services/url-builder.service";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpParams} from "@angular/common/http";
 import {NewsSearchService} from "../services/news-search.service";
+import {DateRange} from "../enum";
 
 @Component({
   selector: 'app-news',
@@ -22,6 +23,7 @@ export class NewsComponent implements OnInit {
   }
 
   keywords: string[] = [];
+  currentDateRange: DateRange = DateRange.ALL;
 
   updateKeywords(newKeywords: string) {
     this.keywords = newKeywords.split(/\s+/);
@@ -30,6 +32,13 @@ export class NewsComponent implements OnInit {
 
     // todo: riabilita per effettuare ricerca:
     this.search()
+  }
+
+  updateDateRange(dateRange: DateRange) {
+    this.currentDateRange = dateRange
+    // todo: resetta num pag corrente
+    this.search()
+    console.warn("da daterange")
   }
 
   subscribeToNews(value: {url: string, queryParams: HttpParams}): void {
@@ -47,6 +56,7 @@ export class NewsComponent implements OnInit {
 
   search() {
     this.urlBuilder.addKeywords(this.keywords)
+    this.urlBuilder.addDateFilter(this.currentDateRange)
 
     var url = this.urlBuilder.buildUrl()
 

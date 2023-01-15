@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from "@angular/common/http";
+import {DateRange} from "../enum";
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,42 @@ export class UrlBuilderService {
 
     this.httpParams = this.httpParams.append('q', paramKeywords)
   }
+
+  addDateFilter(dateRange: DateRange): void {
+    console.error('CIAOOOOOOOO')
+    if (dateRange !== DateRange.ALL) {
+      var now = new Date();
+      console.log("now: " + now)  // todo: debug
+
+      // setting from date:
+      var fromDate = new Date();
+      switch (dateRange) {
+        case DateRange.TODAY:
+          fromDate.setDate(now.getDate());
+          break;
+        case DateRange.THIS_WEEK:
+          fromDate.setDate(now.getDate() - 7);
+          break;
+        case DateRange.THIS_MONTH:
+          fromDate.setDate(1);
+          fromDate.setMonth(now.getMonth());
+          fromDate.setFullYear(now.getFullYear());
+          break;
+        case DateRange.THIS_YEAR:
+          var year = now.getFullYear();
+          fromDate.setDate(1);
+          fromDate.setMonth(0);
+          fromDate.setFullYear(year);
+          break;
+        default:
+          break;
+      }
+
+      this.httpParams = this.httpParams.append('from', fromDate.toISOString().substring(0, 10))
+      this.httpParams = this.httpParams.append('to', now.toISOString().substring(0, 10))
+    }
+  }
+
 
   buildUrl(): {url: string, queryParams: HttpParams} {
     this.httpParams = this.httpParams.append('apiKey', this.newsApiKey)
