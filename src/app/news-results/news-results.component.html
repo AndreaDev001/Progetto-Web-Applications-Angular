@@ -1,5 +1,5 @@
 <div *ngIf="totalResults===0">
-  <h3>No results</h3>
+  <app-no-results *ngIf="totalResults === 0"></app-no-results>
 </div>
 
 <div *ngIf="totalResults !== 0" class="container">

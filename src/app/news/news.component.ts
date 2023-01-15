@@ -29,7 +29,7 @@ export class NewsComponent implements OnInit {
     // todo: resetta numero di apgina corrente (la nuova ricerca deve partire da pag 1)
 
     // todo: riabilita per effettuare ricerca:
-    // this.search()
+    this.search()
   }
 
   subscribeToNews(value: {url: string, queryParams: HttpParams}): void {

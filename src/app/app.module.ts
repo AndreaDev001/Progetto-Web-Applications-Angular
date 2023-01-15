@@ -10,13 +10,15 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { NewsResultsComponent } from './news-results/news-results.component';
+import { NoResultsComponent } from './no-results/no-results.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewsComponent,
     SearchBarComponent,
-    NewsResultsComponent
+    NewsResultsComponent,
+    NoResultsComponent
   ],
   imports: [
     BrowserModule,
