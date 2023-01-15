@@ -32,7 +32,9 @@ export class GameDetailComponent implements OnInit{
     this.springHandler.forceLogin("AndreaDev01","123456");
     this.springHandler.getCurrentUsername(false).subscribe((value: any) => {
       if(value != undefined && this.gameID)
-        this.springHandler.getUserReview(value,this.gameID).subscribe((value: Review) => this.userReview = value);
+        this.springHandler.getUserReview(value,this.gameID).subscribe((value: Review) => {
+          this.userReview = value;
+        });
     })
     this.getAllValues();
   }
@@ -46,8 +48,8 @@ export class GameDetailComponent implements OnInit{
       {
         this.springHandler.existsGame(this.gameID).subscribe((value: boolean) => {
           let genre: string | undefined = this.gameDetails?.genres[0].slug;
-          if(this.gameID && genre)
-            this.springHandler.addGame(this.gameID,genre).subscribe((value: any) => console.log(value));
+          if(this.gameID && genre && this.gameDetails)
+            this.springHandler.addGame(this.gameID,genre,this.gameDetails?.original_name,this.gameDetails?.image_background).subscribe((value: any) => console.log(value));
         })
         this.gameHandler.getGameStores(this.gameID).subscribe((value: any) => this.createStoreLinks(value.results));
       }

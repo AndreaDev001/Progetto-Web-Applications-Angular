@@ -25,11 +25,13 @@ export class SpringHandlerService {
       responseType: 'text'
     });
   }
-  public addGame(gameID: number,genre: string): Observable<any>{
+  public addGame(gameID: number,genre: string,name: string,img: string): Observable<any>{
     const desiredURL: string = this.url + "/addGame";
     let params: HttpParams = new HttpParams();
     params = params.append("gameID",gameID);
     params = params.append("genere",genre);
+    params = params.append("titolo",name);
+    params = params.append("immagine",img);
     return this.httpClient.post(desiredURL,{},{params: params});
   }
   public existsGame(gameID: number): Observable<any>{
@@ -51,13 +53,11 @@ export class SpringHandlerService {
     params = params.append("gameID",gameID);
     return this.httpClient.get<Review>(desiredURL,{params: params});
   }
-  public addGameWishlist(username: string,gameID: number,name: string,img: string): Observable<any>{
+  public addGameWishlist(username: string,gameID: number): Observable<any>{
     const desiredURL: string = this.url + "/addGameWishlist";
     let params: HttpParams = new HttpParams();
     params = params.append("username",username);
     params = params.append("gameID",gameID);
-    params = params.append("titolo",name);
-    params = params.append("immagine",img);
     return this.httpClient.post(desiredURL,{},{params: params});
   }
   public removeGameWishlist(username: string,gameID: number): Observable<any>{
