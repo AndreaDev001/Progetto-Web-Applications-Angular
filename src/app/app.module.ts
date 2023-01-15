@@ -8,6 +8,7 @@ import { NewsComponent } from './news/news.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
