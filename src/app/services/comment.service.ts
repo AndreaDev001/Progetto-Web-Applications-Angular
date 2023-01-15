@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import { first, map, Observable } from 'rxjs';
+import { FeedbackType } from '../enum';
 
 
 @Injectable({
@@ -64,10 +65,4 @@ export interface Comment {
 }
 
 
-export enum FeedbackType
-{
-  like,
-  dislike,
-  none
-}
 

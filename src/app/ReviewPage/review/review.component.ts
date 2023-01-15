@@ -5,9 +5,10 @@ import { Editor, Toolbar} from 'ngx-editor';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Validators as NGXValidators } from 'ngx-editor'
 import { DomSanitizer } from '@angular/platform-browser';
-import { Comment, CommentService } from '../comment/comment.service';
-import { Review, ReviewService } from './review.service';
-import { ObserverStatus } from '../utils/observer';
+import { Comment, CommentService } from '../../services/comment.service';
+import { ReviewService } from '../../services/review.service';
+import { Review } from '../../interfaces';
+import { ObserverStatus } from '../../utils/observer';
 
 @Component({
   selector: 'app-review',

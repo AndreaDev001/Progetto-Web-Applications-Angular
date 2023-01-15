@@ -2,7 +2,7 @@ a.game-card{
   width: 100%;
   height: auto;
   margin-top: 10px;
-  background-color: #121212;
+  background-color: #212529;
   color: whitesmoke;
   transition: all 0.2s ease-in-out;
   cursor: pointer;

@@ -125,14 +125,14 @@ export interface Trailer{
 }
 export interface Review
 {
-  id: number;
+  id?: number;
   titolo:  string;
   contenuto: string,
   voto: number;
-  numeroMiPiace: number;
-  numeroNonMiPiace: number;
-  utente: string;
-  gioco: number;
+  numeroMiPiace?: number;
+  numeroNonMiPiace?: number;
+  utente?: string;
+  gioco?: number;
 }
 export interface Utente{
   email: string;

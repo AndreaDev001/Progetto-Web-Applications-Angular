@@ -5,8 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 
-import { ReviewComponent } from './review/review.component';
-import { CommentComponent } from './comment/comment.component';
+import { ReviewComponent } from './ReviewPage/review/review.component';
+import { CommentComponent } from './ReviewPage/comment/comment.component';
 
 
 
@@ -33,7 +33,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { StarComponentComponent } from './HomePage/ResultPage/star-component/star-component.component';
 import { PlatformListComponent } from './HomePage/ResultPage/platform-list/platform-list.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import { DateSelectorComponent } from './HomePage/OptionBar/date-selector/date-selector.component';
 import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.component';
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
@@ -51,6 +51,9 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import { GameReviewListComponent } from './DetailsPage/game-review-list/game-review-list.component';
 import { GameMainInfoLeftComponent } from './DetailsPage/game-main-info-left/game-main-info-left.component';
 import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/game-main-info-right.component';
+import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
+import {LazyLoadImageModule} from "ng-lazyload-image";
+import {NgxSpinnerModule} from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -71,6 +74,7 @@ import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/g
     DateSelectorComponent,
     OptionBarComponent,
     SearchBarComponent,
+    OffcanvasSideBarComponent
     GameDetailComponent,
     ImageSliderComponent,
     TextOverflowComponent,
@@ -89,6 +93,7 @@ import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/g
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,
+        LazyLoadImageModule,
         BrowserModule,
         HttpClientModule,
         ReactiveFormsModule,
@@ -132,9 +137,10 @@ import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/g
         AutosizeModule,
         FontAwesomeModule,
         NgbModule,
-        BrowserAnimationsModule,
         MatProgressSpinnerModule,
-        NgxSpinnerModule
+        NgOptimizedImage,
+        BrowserAnimationsModule,
+        NgxSpinnerModule,
     ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ObserverStatus } from '../utils/observer';
-import { Comment, CommentService, FeedbackType } from './comment.service'
+import { ObserverStatus } from '../../utils/observer';
+import { Comment, CommentService } from '../../services/comment.service'
+import { FeedbackType } from "../../enum";
 
 
 @Component({

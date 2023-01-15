@@ -13,6 +13,9 @@ export function callObserver<T>(observable : Observable<T>, resultHandler : (res
   })).subscribe(result => resultHandler?.(result, undefined));
 }
 
+/**
+ * This helps calling observers
+ */
 export class ObserverStatus
 {
   public isLoading: boolean = false;
