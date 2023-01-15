@@ -21,6 +21,7 @@ export class SearchHandlerService
   private currentMaxPage: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   public latestValues: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   private isSearching: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isIncreasingPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private currentSubscription?: Subscription;
 
   constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe) {
@@ -127,19 +128,26 @@ export class SearchHandlerService
       this.currentSubscription.unsubscribe();
     if(updateIsSearching)
        this.isSearching.next(true);
+    else
+       this.isIncreasingPage.next(true);
     if(this.currentListType.value == undefined)
     {
       if(this.currentName.value == null || this.currentName.value == "")
-        this.currentSubscription = this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
+        this.currentSubscription = this.gameHandler.search(this.currentOrderingType.value,this.currentOrderingMode.value,this.currentGenre.value,this.currentMaxPage.value,interval).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.resetSearching());
       else
-        this.currentSubscription = this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
+        this.currentSubscription = this.gameHandler.searchByName(this.currentName.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.resetSearching());
     }
     else
-      this.currentSubscription = this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.isSearching.next(false));
+      this.currentSubscription = this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.resetSearching());
+  }
+  private resetSearching(): void{
+    this.isSearching.next(false);
+    this.isIncreasingPage.next(false);
   }
   private updateResults(values: any[],searchingValue: boolean){
     this.latestValues.next(values);
     this.isSearching.next(searchingValue);
+    this.isIncreasingPage.next(false);
   }
   public increaseMaxPage(){
     this.currentMaxPage.next(this.currentMaxPage.value + 1);
@@ -166,4 +174,5 @@ export class SearchHandlerService
   public getLatestValues(value: boolean): any {return value ? this.latestValues.value : this.latestValues};
   public getIsSearching(value: boolean): any {return value ? this.isSearching.value : this.isSearching};
   public getCurrentList(value: boolean): any {return value ? this.currentListType.value : this.currentListType};
+  public getIsIncreasingPage(value: boolean): any {return value ? this.isIncreasingPage.value : this.isIncreasingPage};
 }
