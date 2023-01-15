@@ -6,7 +6,8 @@ import {GameHandlerService} from "../../services/game-handler.service";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {StoreLink, GameInfo} from "../../interfaces";
-import {catchError, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
+import {faCircleExclamation, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-game-detail',
@@ -23,21 +24,23 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   public gameTrailers?: Trailer[];
   public gameReviews?: Review[];
   public userReview?: Review;
+  private currentSubscription?: Subscription;
   private subscriptions: Subscription[] = [];
+  public failed: boolean = false;
+  public errorIcon: IconDefinition = faCircleExclamation;
 
   constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private springHandler: SpringHandlerService) {
 
   }
   public ngOnInit(): void {
-    this.spinnerService.show();
-    let gameId: string | null = this.route.snapshot.paramMap.get("id");this.gameID = Number(gameId);
-    this.springHandler.forceLogin("AndreaDev01","123456");
     this.getAllValues();
   }
   private getAllValues(): void{
-    if(!this.gameID)
-      return;
-    this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
+    this.spinnerService.show();
+    let gameId: string | null = this.route.snapshot.paramMap.get("id");
+    this.gameID = Number(gameId);
+    this.springHandler.forceLogin("AndreaDev01","123456");
+    this.currentSubscription = this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
       if(this.gameID)
       {
@@ -62,6 +65,9 @@ export class GameDetailComponent implements OnInit,OnDestroy{
         this.subscriptions.push(this.gameHandler.getGameScreenshots(this.gameID).subscribe((value: any) => this.gameScreenshots = this.gameJSONReader.readScreenshots(value.results)));
         this.subscriptions.push(this.gameHandler.getGameTrailers(this.gameID).subscribe((value: any) => this.gameTrailers = this.gameJSONReader.readTrailers(value.results)));
       }
+      this.spinnerService.hide();
+    },(error: any) => {
+      this.failed = true;
       this.spinnerService.hide();
     });
   }
@@ -137,6 +143,13 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   }
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
+    if(this.currentSubscription)
+      this.currentSubscription.unsubscribe();
+  }
+  public handeClick(): void{
+    if(this.currentSubscription)
+      this.currentSubscription.unsubscribe();
+    this.getAllValues();
   }
   public getGameID(): number | undefined {return this.gameID;}
 }

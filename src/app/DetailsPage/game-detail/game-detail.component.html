@@ -1,5 +1,5 @@
 <ngx-spinner bgColor="rgba(51,51,51,0.8)" type="ball-scale-multiple" [fullScreen]="true">
-  <h2 class = "text-white">Loading Game Details...</h2>
+  <h2 class = "text-white">Searching Game Details...</h2>
 </ngx-spinner>
 <div class = "container" *ngIf="gameDetails">
     <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
@@ -10,4 +10,9 @@
       <app-game-review-list [gameID]="gameID" [reviews]="gameReviews" [userReview]="userReview" class = "col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"></app-game-review-list>
       <app-game-additional-info class = "col-12 col-sm-12 col-md-6 col-lg- xl-6 " [achievements]="getValues(this.gameAchievements)" [developers]="getValues(this.gameDetails.developers)" [publishers]="getValues(this.gameDetails.publishers)" [tags]="getValues(this.gameDetails.tags)"></app-game-additional-info>
     </section>
+</div>
+<div class = "container text-center" style="padding-top: 20%;padding-bottom: 20%" *ngIf="failed">
+  <h1 class = "text-white" style="font-weight: bold;">Search Failed, check your internet connection</h1>
+  <fa-icon class = "text-white d-block" style="font-size: 80px" [icon]="errorIcon"></fa-icon>
+  <button class = "btn btn-lg btn-secondary" (click)="handeClick()">Reload Page</button>
 </div>
