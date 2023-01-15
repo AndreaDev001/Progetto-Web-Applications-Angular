@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import { catchError, EMPTY, mergeMap, Observable, of, throwError } from 'rxjs';
 import { ResolveFn, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Validators } from '@angular/forms';
+import { Review } from '../interfaces';
 
 
 @Injectable({
@@ -45,18 +46,6 @@ export const reviewResolver: ResolveFn<Review> = (route: ActivatedRouteSnapshot)
     }
   }));
 };
-
-export interface Review {
-  id?: number;
-  titolo : string;
-  contenuto: string;
-  voto: number;
-  numeroMiPiace?: number;
-  numeroNonMiPiace?: number;
-  utente?: string;
-  gioco?: number;
-}
-
 
 export enum FeedbackType
 {

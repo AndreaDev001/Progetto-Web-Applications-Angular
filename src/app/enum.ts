@@ -28,3 +28,10 @@ export enum SearchEventType{
   FAILED = 1,
   STARTED = 2,
 }
+
+export enum FeedbackType {
+  like,
+  dislike,
+  none
+}
+

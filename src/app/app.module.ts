@@ -5,8 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 
-import { ReviewComponent } from './review/review.component';
-import { CommentComponent } from './comment/comment.component';
+import { ReviewComponent } from './ReviewPage/review/review.component';
+import { CommentComponent } from './ReviewPage/comment/comment.component';
 
 
 
