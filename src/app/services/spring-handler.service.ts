@@ -51,11 +51,13 @@ export class SpringHandlerService {
     params = params.append("gameID",gameID);
     return this.httpClient.get<Review>(desiredURL,{params: params});
   }
-  public addGameWishlist(username: string,gameID: number): Observable<any>{
+  public addGameWishlist(username: string,gameID: number,name: string,img: string): Observable<any>{
     const desiredURL: string = this.url + "/addGameWishlist";
     let params: HttpParams = new HttpParams();
     params = params.append("username",username);
     params = params.append("gameID",gameID);
+    params = params.append("titolo",name);
+    params = params.append("immagine",img);
     return this.httpClient.post(desiredURL,{},{params: params});
   }
   public removeGameWishlist(username: string,gameID: number): Observable<any>{

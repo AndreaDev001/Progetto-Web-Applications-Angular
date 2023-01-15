@@ -54,7 +54,7 @@ export class GameMainInfoLeftComponent implements OnInit{
       if(this.containsGame)
         this.springHandler.removeGameWishlist(currentUsername,this.gameInfo.id).subscribe((value: any) => this.updateText(false));
       else
-        this.springHandler.addGameWishlist(currentUsername,this.gameInfo.id).subscribe((value: any) => this.updateText(true));
+        this.springHandler.addGameWishlist(currentUsername,this.gameInfo.id,this.gameInfo.name,this.gameInfo.image).subscribe((value: any) => this.updateText(true));
     }
   }
   private updateText(value: boolean): void{
