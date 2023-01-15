@@ -53,7 +53,6 @@ import { GameMainInfoLeftComponent } from './DetailsPage/game-main-info-left/gam
 import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/game-main-info-right.component';
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
-import {NgxSpinnerModule} from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -74,7 +73,7 @@ import {NgxSpinnerModule} from "ngx-spinner";
     DateSelectorComponent,
     OptionBarComponent,
     SearchBarComponent,
-    OffcanvasSideBarComponent
+    OffcanvasSideBarComponent,
     GameDetailComponent,
     ImageSliderComponent,
     TextOverflowComponent,
