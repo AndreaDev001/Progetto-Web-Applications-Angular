@@ -29,30 +29,42 @@ export class NewsComponent implements OnInit {
   keywords: string[] = [];
   currentDateRange: DateRange = DateRange.ALL;
   currentSorting: Sorting = Sorting.LATEST;
+  currentPage: number = 1;
 
   updateKeywords(newKeywords: string) {
     this.keywords = newKeywords.split(/\s+/);
     console.log("new keywords: ", this.keywords)  // todo: debug
-    // todo: resetta numero di apgina corrente (la nuova ricerca deve partire da pag 1)
-
-    // todo: riabilita per effettuare ricerca:
+    this.resetCurrentPage()
     this.search()
   }
 
   updateDateRange(dateRange: DateRange) {
     this.currentDateRange = dateRange
-    // todo: resetta num pag corrente
+    this.resetCurrentPage()
     this.search()
   }
 
 
   updateSorting(sorting: Sorting) {
     this.currentSorting = sorting
-    // todo: resetta num pag corrente
+    this.resetCurrentPage()
     this.search()
     console.warn("sorting: ", sorting)  // todo: debug
   }
 
+  updateCurrentPage(newCurrentPage: number): void {
+    this.currentPage = newCurrentPage
+    this.search()
+    window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    })
+  }
+
+  resetCurrentPage(): void {
+    this.currentPage = 1
+  }
 
   subscribeToNews(value: {url: string, queryParams: HttpParams}): void {
     this.newsSearchService.getResults(value).subscribe(
@@ -74,6 +86,7 @@ export class NewsComponent implements OnInit {
     this.urlBuilder.addKeywords(this.keywords)
     this.urlBuilder.addDateFilter(this.currentDateRange)
     this.urlBuilder.addSorting(this.currentSorting)
+    this.urlBuilder.addCurrentPage(this.currentPage)
 
     var url = this.urlBuilder.buildUrl()
 

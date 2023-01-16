@@ -16,6 +16,7 @@ import { SortingFilterComponent } from './sorting-filter/sorting-filter.componen
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CustomHttpInterceptor} from "./util/http-interceptor";
+import { PageNavigationComponent } from './page-navigation/page-navigation.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {CustomHttpInterceptor} from "./util/http-interceptor";
     NewsResultsComponent,
     NoResultsComponent,
     DateFilterComponent,
-    SortingFilterComponent
+    SortingFilterComponent,
+    PageNavigationComponent
   ],
   imports: [
     BrowserModule,

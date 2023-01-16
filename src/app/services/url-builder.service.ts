@@ -83,6 +83,10 @@ export class UrlBuilderService {
     }
   }
 
+  addCurrentPage(page: number) {
+    this.httpParams = this.httpParams.append('page', page)
+  }
+
 
   buildUrl(): {url: string, queryParams: HttpParams} {
     this.httpParams = this.httpParams.append('apiKey', this.newsApiKey)

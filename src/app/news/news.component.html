@@ -6,7 +6,6 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <!-- qui inserisci gli item -->
     <app-search-bar (searchValueChanged)="updateKeywords($event)"></app-search-bar>
     <app-sorting-filter (sortingValueChanged)="updateSorting($event)"></app-sorting-filter>
     <app-date-filter (dateValueChanged)="updateDateRange($event)"></app-date-filter>
@@ -22,7 +21,7 @@
 
   <div *ngIf="requestSuccess">
     <app-news-results></app-news-results>
-    <!-- impaginazione -->
+    <app-page-navigation [currentPage]="currentPage" (currentPageChanged)="updateCurrentPage($event)"></app-page-navigation>
   </div>
 
   <div *ngIf="!requestSuccess">
