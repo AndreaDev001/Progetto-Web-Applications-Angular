@@ -13,7 +13,7 @@
     <button class = "btn btn-lg btn-secondary" (click)="handleClick()">Reset Search</button>
   </div>
 </div>
-<div class="h-100 d-flex mt-2 mt-md-0 align-items-start align-items-md-center justify-content-start justify-content-md-center">
+<div class="h-100 d-flex mt-2 mt-md-0 align-items-start align-items-md-center justify-content-start justify-content-md-center" *ngIf="loadingVisible">
   <div class = "container-fluid text-center">
     <p class = "text-white text-center loadingText">Searching Games...</p>
     <mat-progress-spinner diameter=70 class = "mx-auto" color="accent" mode="indeterminate"></mat-progress-spinner>
