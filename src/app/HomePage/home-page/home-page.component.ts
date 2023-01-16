@@ -13,7 +13,7 @@ export class HomePageComponent implements OnInit,OnDestroy{
 
   private subscriptions: Subscription[] = [];
   public failed: boolean = false;
-  public errorIcon: IconDefinition = faCircleExclamation;
+
   constructor(private gameHandler: GameHandlerService,private spinnerService: NgxSpinnerService) {
 
   }
