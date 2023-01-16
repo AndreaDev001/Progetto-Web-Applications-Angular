@@ -4,7 +4,8 @@ import {GameListType, OrderingMode, OrderingType, RequestType} from "../enum";
 import {GameURLBuilderService} from "./game-urlbuilder.service";
 import {DatePipe} from '@angular/common';
 import {DateInterval} from "../interfaces";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, catchError, Subject, throwError, timeout} from "rxjs";
+import {ErrorMessage} from "@angular/compiler-cli/ngcc/src/execution/cluster/api";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class GameHandlerService {
   private readonly maxRating: number = 100;
   private loadedGenres: BehaviorSubject<any[] | undefined> = new BehaviorSubject<any[] | undefined>(undefined);
   private loadedPlatforms: BehaviorSubject<any[] | undefined> = new BehaviorSubject<any[] | undefined>(undefined);
+  private errorMessage: Subject<any> = new Subject<any>();
   constructor(private httpClient: HttpClient,private gameURLBuilder: GameURLBuilderService,private datePipe: DatePipe) {
     this.loadGenres();
     this.loadPlatforms();
@@ -26,7 +28,9 @@ export class GameHandlerService {
       responseType: 'json',
       withCredentials: false,
       params: value.queryParams,
-    });
+    }).pipe(timeout(5000),catchError(err => {
+      return throwError(() => err);
+    }))
   }
   public search(orderingType?: OrderingType,orderingMode?: OrderingMode,genre?: string,requiredPage?: number,dateInterval?: DateInterval): any{
     this.gameURLBuilder.reset();
@@ -113,14 +117,23 @@ export class GameHandlerService {
     this.gameURLBuilder.reset()
     this.gameURLBuilder.setRequestType(RequestType.GENRES);
     this.gameURLBuilder.addAPIKey(this.apiKEY);
-    this.performRequest(this.gameURLBuilder.getURL()).subscribe((result: any) => this.loadedGenres.next(result.results));
+    this.performRequest(this.gameURLBuilder.getURL()).subscribe((result: any) => this.loadedGenres.next(result.results),(error: any) => this.errorMessage.next(error.message));
   }
   private loadPlatforms(): void{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.PLATFORMS);
     this.gameURLBuilder.addAPIKey(this.apiKEY);
-    this.performRequest(this.gameURLBuilder.getURL()).subscribe((result: any) => this.loadedPlatforms.next(result.results));
+    this.performRequest(this.gameURLBuilder.getURL()).subscribe((result: any) => this.loadedPlatforms.next(result.results),(error: any) => this.errorMessage.next(error.message));
   }
-  public getGenres(value: boolean): any {return value ? this.loadedGenres.value : this.loadedGenres};
-  public getPlatforms(value: boolean): any {return value ? this.loadedPlatforms.value : this.loadedPlatforms};
+  public getGenres(value: boolean): any {
+    if(!this.loadedGenres.value)
+      this.loadGenres();
+    return value ? this.loadedGenres.value : this.loadedGenres
+  };
+  public getPlatforms(value: boolean): any {
+    if(!this.loadedPlatforms.value)
+      this.loadPlatforms();
+    return value ? this.loadedPlatforms.value : this.loadedPlatforms
+  };
+  public getErrorMessage(): Subject<any> {return this.errorMessage};
 }

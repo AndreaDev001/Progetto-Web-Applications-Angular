@@ -143,6 +143,7 @@ export class SearchHandlerService
   private resetSearching(): void{
     this.isSearching.next(false);
     this.isIncreasingPage.next(false);
+    this.latestValues.next([]);
   }
   private updateResults(values: any[],searchingValue: boolean){
     this.latestValues.next(values);
