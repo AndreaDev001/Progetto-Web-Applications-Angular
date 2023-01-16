@@ -1,5 +1,5 @@
 <div *ngIf="totalResults===0">
-  <app-no-results *ngIf="totalResults === 0"></app-no-results>
+  <app-no-results *ngIf="totalResults === 0 && !(spinnerService.visibility | async)"></app-no-results>
 </div>
 
 <div *ngIf="totalResults !== 0" class="container">

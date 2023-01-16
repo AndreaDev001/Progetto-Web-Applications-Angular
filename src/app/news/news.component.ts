@@ -3,6 +3,7 @@ import {UrlBuilderService} from "../services/url-builder.service";
 import {HttpParams} from "@angular/common/http";
 import {NewsSearchService} from "../services/news-search.service";
 import {DateRange, Sorting} from "../enum";
+import {SpinnerService} from "../services/spinner.service";
 
 @Component({
   selector: 'app-news',
@@ -14,13 +15,16 @@ export class NewsComponent implements OnInit {
 
   constructor(
     private urlBuilder: UrlBuilderService,
-    private newsSearchService: NewsSearchService
+    private newsSearchService: NewsSearchService,
+    public spinnerService: SpinnerService
   ) {}
 
   ngOnInit(): void {
     this.subscribeToNews(this.urlBuilder.buildUrl())
     this.urlBuilder.resetUrl();
   }
+
+  requestSuccess: boolean = true;
 
   keywords: string[] = [];
   currentDateRange: DateRange = DateRange.ALL;
@@ -58,8 +62,11 @@ export class NewsComponent implements OnInit {
           results: response.articles,
           totalResults: response.totalResults
         })
+        this.requestSuccess = true
+      },
+      (error: any) => {
+        this.requestSuccess = false
       }
-      // todo: gestisci errori
     )
   }
 

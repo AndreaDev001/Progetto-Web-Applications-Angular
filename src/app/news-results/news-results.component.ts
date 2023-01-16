@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NewsSearchService} from "../services/news-search.service";
+import {SpinnerService} from "../services/spinner.service";
 
 @Component({
   selector: 'app-news-results',
@@ -9,7 +10,8 @@ import {NewsSearchService} from "../services/news-search.service";
 
 export class NewsResultsComponent implements OnInit {
   constructor(
-    private newsSearchService: NewsSearchService
+    private newsSearchService: NewsSearchService,
+    public spinnerService: SpinnerService
   ) {}
 
   results: any[] = [];

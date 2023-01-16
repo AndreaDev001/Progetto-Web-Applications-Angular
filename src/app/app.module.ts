@@ -8,11 +8,14 @@ import { NewsComponent } from './news/news.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { NewsResultsComponent } from './news-results/news-results.component';
 import { NoResultsComponent } from './no-results/no-results.component';
 import { DateFilterComponent } from './date-filter/date-filter.component';
 import { SortingFilterComponent } from './sorting-filter/sorting-filter.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {CustomHttpInterceptor} from "./util/http-interceptor";
 
 @NgModule({
   declarations: [
@@ -24,15 +27,23 @@ import { SortingFilterComponent } from './sorting-filter/sorting-filter.componen
     DateFilterComponent,
     SortingFilterComponent
   ],
-    imports: [
-        BrowserModule,
-        RouterModule.forRoot(appRoutes),
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        FormsModule
-    ],
-  providers: [],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true  // ok false se c'è solo un interceptor
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

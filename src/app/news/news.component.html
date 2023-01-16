@@ -15,5 +15,19 @@
 </nav>
 
 <div class="container-fluid">
-  <app-news-results></app-news-results>
+  <div *ngIf="spinnerService.visibility | async">
+    <mat-spinner [diameter]="50"></mat-spinner>
+    <h5>Fetching news...</h5>
+  </div>
+
+  <div *ngIf="requestSuccess">
+    <app-news-results></app-news-results>
+    <!-- impaginazione -->
+  </div>
+
+  <div *ngIf="!requestSuccess">
+    <h5>Connection error</h5>
+  </div>
+
+
 </div>
