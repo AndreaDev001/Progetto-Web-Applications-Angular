@@ -53,6 +53,7 @@ import { GameMainInfoLeftComponent } from './DetailsPage/game-main-info-left/gam
 import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/game-main-info-right.component';
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
+import { ConnectionErrorComponent } from './connection-error/connection-error.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import {LazyLoadImageModule} from "ng-lazyload-image";
     GameReviewListComponent,
     GameMainInfoLeftComponent,
     GameMainInfoRightComponent,
+    ConnectionErrorComponent,
   ],
     imports: [
         BrowserModule,
