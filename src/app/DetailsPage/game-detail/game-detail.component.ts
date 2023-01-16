@@ -24,7 +24,6 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   public gameTrailers?: Trailer[];
   public gameReviews?: Review[];
   public userReview?: Review;
-  private currentSubscription?: Subscription;
   private subscriptions: Subscription[] = [];
   public failed: boolean = false;
   public errorIcon: IconDefinition = faCircleExclamation;
@@ -40,7 +39,7 @@ export class GameDetailComponent implements OnInit,OnDestroy{
     let gameId: string | null = this.route.snapshot.paramMap.get("id");
     this.gameID = Number(gameId);
     this.springHandler.forceLogin("AndreaDev01","123456");
-    this.currentSubscription = this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
+    this.subscriptions.push(this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
       if(this.gameID)
       {
@@ -69,7 +68,7 @@ export class GameDetailComponent implements OnInit,OnDestroy{
     },(error: any) => {
       this.failed = true;
       this.spinnerService.hide();
-    });
+    }));
   }
   public getValues(values: any[] | undefined): string[]{
     let result: string[] = [];
@@ -143,13 +142,9 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   }
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
-    if(this.currentSubscription)
-      this.currentSubscription.unsubscribe();
   }
   public handeClick(): void{
-    if(this.currentSubscription)
-      this.currentSubscription.unsubscribe();
-    this.getAllValues();
+    window.location.reload();
   }
   public getGameID(): number | undefined {return this.gameID;}
 }

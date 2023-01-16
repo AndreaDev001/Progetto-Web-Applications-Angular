@@ -11,8 +11,10 @@
       <app-game-additional-info class = "col-12 col-sm-12 col-md-6 col-lg- xl-6 " [achievements]="getValues(this.gameAchievements)" [developers]="getValues(this.gameDetails.developers)" [publishers]="getValues(this.gameDetails.publishers)" [tags]="getValues(this.gameDetails.tags)"></app-game-additional-info>
     </section>
 </div>
-<div class = "container text-center" style="padding-top: 20%;padding-bottom: 20%" *ngIf="failed">
-  <h1 class = "text-white" style="font-weight: bold;">Search Failed, check your internet connection</h1>
-  <fa-icon class = "text-white d-block" style="font-size: 80px" [icon]="errorIcon"></fa-icon>
-  <button class = "btn btn-lg btn-secondary" (click)="handeClick()">Reload Page</button>
+<div class="h-100 d-flex align-items-center justify-content-center" *ngIf="failed">
+  <div class = "text-center">
+    <h1 class = "text-white">Connection, check your internet connection</h1>
+    <fa-icon class = "text-white d-block" style="font-size: 60px" [icon]="errorIcon"></fa-icon>
+    <button class = "btn btn-lg btn-secondary" (click)="handeClick()">Reload Page</button>
+  </div>
 </div>
