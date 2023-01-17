@@ -64,6 +64,7 @@ import { ConnectionErrorComponent } from './connection-error/connection-error.co
 import { NewsSearchBarComponent} from "./NewsPage/news-search-bar/news-search-bar.component";
 import { HeaderComponent } from './header/header.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
     SearchBarComponent,
     NewsSearchBarComponent,
     HeaderComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
