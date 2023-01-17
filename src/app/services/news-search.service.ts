@@ -12,6 +12,7 @@ export class NewsSearchService {
   ) { }
 
   // https://newsapi.org/v2/everything?language=en&searchIn=title,description&pageSize=20&apiKey=6babce9602e74985ae5a69d08718eeea
+  // (baseUrl in urlBuilder)
   searchResults = new Subject()
 
   getResults(value: {url: string, queryParams: HttpParams}): any {
