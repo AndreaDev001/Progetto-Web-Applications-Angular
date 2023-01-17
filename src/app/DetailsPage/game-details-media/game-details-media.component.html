@@ -6,5 +6,6 @@
   </div>
 </div>
 <div class = "container-fluid" *ngIf="(!images || images.length == 0) && (!trailers || trailers.length == 0)">
+  <h2 class = "text-white text-center" style="font-weight: bold" *ngIf="name">{{name}}</h2>;
   <p class = "text-white text-center" style="font-size: 17px">No Media Found</p>
 </div>
