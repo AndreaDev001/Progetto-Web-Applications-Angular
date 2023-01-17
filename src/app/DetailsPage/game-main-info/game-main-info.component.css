@@ -1,0 +1,13 @@
+img.esrbImage{
+  width: auto;
+  height: auto;
+  padding: 20px;
+}
+p.game-name{
+  font-size: 30px;
+  font-weight: bold;
+}
+p.game-description{
+  font-size: 17px;
+  font-weight: normal;
+}

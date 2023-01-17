@@ -1,0 +1,13 @@
+button.search-button{
+  cursor: pointer;
+  background-color: #151515;
+  color: whitesmoke;
+  border-width: 0;
+  border-radius: 40px;
+  width: 8%;
+  transition: all 0.2s ease-in-out;
+}
+button.search-button:hover{
+  background-color: whitesmoke;
+  color: #151515;
+}

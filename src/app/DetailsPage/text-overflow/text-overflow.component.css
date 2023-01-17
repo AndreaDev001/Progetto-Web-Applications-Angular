@@ -1,0 +1,32 @@
+a.item{
+  padding: 10px;
+  border: 1px solid whitesmoke;
+  border-radius: 30px;
+  transition: all 0.2s ease-in-out;
+  color: whitesmoke;
+  background-color: #212529;
+  margin-left: 7px;
+  text-decoration: none;
+}
+a.item:hover{
+  color: #151515;
+  text-decoration-color: #151515;
+  text-decoration: underline;
+  background-color: whitesmoke;
+}
+span.item-text{
+  cursor: default;
+  min-width: 100px;
+}
+div.text-holder{
+  white-space: nowrap;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+fa-icon.item-icon{
+  font-size: 20px;
+}
+img.item-image{
+  width: 40px;
+  height: auto;
+}

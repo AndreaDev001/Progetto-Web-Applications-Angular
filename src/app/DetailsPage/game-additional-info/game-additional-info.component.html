@@ -1,0 +1,10 @@
+<h2 class = "text-white text-center" style="font-weight: bold">Additional Info</h2>
+<div *ngIf="isEmpty" class = "container-fluid" style="padding: 20px 0">
+  <p class = "text-white text-center" style="font-size: 17px">No additional game info found</p>
+</div>
+<div *ngIf="!isEmpty" class = "container-fluid" style="padding: 20px 0">
+    <app-text-overflow *ngIf="developers && developers.length > 0" [name]="'Developers'" [overflowItems]="createItems(developers)"></app-text-overflow>
+    <app-text-overflow *ngIf="publishers && publishers.length > 0" [name]="'Publishers'" [overflowItems]="createItems(publishers)"></app-text-overflow>
+    <app-text-overflow *ngIf="tags && tags.length > 0" [name]="'Tags'" [overflowItems]="createItems(tags)"></app-text-overflow>
+    <app-text-overflow *ngIf="achievements && achievements.length > 0"  [overflowItems]="createItems(achievements)" [name]="'Achievements'"></app-text-overflow>
+</div>

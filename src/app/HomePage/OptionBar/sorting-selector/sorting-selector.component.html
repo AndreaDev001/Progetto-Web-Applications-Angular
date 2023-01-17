@@ -1,0 +1,20 @@
+<div class = "mt-2 mt-sm-2 mt-md-2 mt-lg-0 mt-xl-0" *ngIf="shouldBeVisible">
+  <div class = "d-inline-flex">
+    <div ngbDropdown *ngIf="orderingTypeValues">
+      <button ngbDropdownToggle class="btn sort-dropdown-button" type="button" id="dropdownTypeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{currentTypeSelected}}
+      </button>
+      <div class = "sort-dropdown" ngbDropdownMenu aria-labelledby="dropdownTypeButton">
+        <button ngbDropdownItem class = "sort-item" *ngFor="let current of orderingTypeValues" (click)="updateType(current)">{{current}}</button>
+      </div>
+    </div>
+    <div class="offset-1 offset-sm-1 offset-md-1 offset-lg-1 offset-xl-1" ngbDropdown *ngIf="orderingModeValues">
+      <button class = "btn sort-dropdown-button" ngbDropdownToggle type="button" id="dropdownModeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{currentModeSelected}}
+      </button>
+      <div class = "sort-dropdown" ngbDropdownMenu aria-labelledby="dropdownModeButton">
+        <button ngbDropdownItem class = "sort-item" *ngFor="let current of orderingModeValues" (click)="updateMode(current)">{{current}}</button>
+      </div>
+    </div>
+  </div>
+</div>

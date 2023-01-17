@@ -1,0 +1,6 @@
+<div class = "mt-2 mt-sm-2 mt-md-2 md-lg-0 mt-xl-0 form-group container-fluid d-inline-flex justify-content-between">
+  <input (keydown)="handleInput($event)" type="text" class = "form-control" style="width: 90%" placeholder="Write a name..." value="{{currentName}}">
+  <button (click)="handleClick()" class = "search-button">
+    <fa-icon [icon]="searchIcon"></fa-icon>
+  </button>
+</div>

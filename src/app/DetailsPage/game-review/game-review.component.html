@@ -1,0 +1,21 @@
+<button class="container-fluid row holder" *ngIf="review" [routerLink]="'../../recensioni/' + review.id">
+  <div class = "col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="color:inherit">
+    <p class = "profile-name">{{review.utente}}</p>
+    <fa-icon *ngIf="selectedIcon" [icon]="selectedIcon" style="font-size: 55px"></fa-icon>
+    <app-star-component [rating]="review.voto" style="font-size: 25px"></app-star-component>
+  </div>
+  <div class = "col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="color: inherit">
+    <p class = "review-title">{{review.titolo}}</p>
+    <p class = "review-preview">{{createReviewPreview(review.contenuto)}}...</p>
+    <div class = "d-inline-flex w-50 justify-content-between" style="color: inherit">
+      <button class = "d-inline-block interaction-button" style="width: 48%;color: inherit">
+        <fa-icon [icon]="icons[0]" style="font-size: 25px"></fa-icon>
+        <span class="interaction-text">{{review.numeroMiPiace}}</span>
+      </button>
+      <button class = "d-inline-block interaction-button" style="width: 48%;color: inherit">
+        <fa-icon [icon]="icons[1]" style="font-size: 25px"></fa-icon>
+        <span class="interaction-text">{{review.numeroNonMiPiace}}</span>
+      </button>
+    </div>
+  </div>
+</button>
