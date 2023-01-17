@@ -11,6 +11,7 @@ export class NewsSearchService {
     private http: HttpClient
   ) { }
 
+  // https://newsapi.org/v2/everything?language=en&searchIn=title,description&pageSize=20&apiKey=6babce9602e74985ae5a69d08718eeea
   searchResults = new Subject()
 
   getResults(value: {url: string, queryParams: HttpParams}): any {
@@ -28,6 +29,7 @@ export class NewsSearchService {
   }
 
   getPassedResults(): Observable<any> {
-    return this.searchResults.asObservable()
+    //return this.searchResults.asObservable()
+    return this.searchResults
   }
 }

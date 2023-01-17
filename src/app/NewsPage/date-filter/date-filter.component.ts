@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {DateRange} from "../enum";
+import {DateRange} from "../../enum";
 
 @Component({
   selector: 'app-date-filter',

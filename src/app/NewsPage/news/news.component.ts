@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {UrlBuilderService} from "../services/url-builder.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {UrlBuilderService} from "../../services/url-builder.service";
 import {HttpParams} from "@angular/common/http";
-import {NewsSearchService} from "../services/news-search.service";
-import {DateRange, Sorting} from "../enum";
-import {SpinnerService} from "../services/spinner.service";
+import {NewsSearchService} from "../../services/news-search.service";
+import {DateRange, Sorting} from "../../enum";
+import {SpinnerService} from "../../services/spinner.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-news',
@@ -11,7 +12,9 @@ import {SpinnerService} from "../services/spinner.service";
   styleUrls: ['./news.component.css']
 })
 
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, OnDestroy {
+
+  subscriptions: Subscription[] =[]
 
   constructor(
     private urlBuilder: UrlBuilderService,
@@ -22,6 +25,10 @@ export class NewsComponent implements OnInit {
   ngOnInit(): void {
     this.subscribeToNews(this.urlBuilder.buildUrl())
     this.urlBuilder.resetUrl();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe())
   }
 
   requestSuccess: boolean = true;
@@ -66,19 +73,22 @@ export class NewsComponent implements OnInit {
     this.currentPage = 1
   }
 
+
   subscribeToNews(value: {url: string, queryParams: HttpParams}): void {
-    this.newsSearchService.getResults(value).subscribe(
-      (response: any) => {
-        console.log('Data from newsCompnent subscribeToNews():\n', response)
-        this.newsSearchService.passResults({
-          results: response.articles,
-          totalResults: response.totalResults
-        })
-        this.requestSuccess = true
-      },
-      (error: any) => {
-        this.requestSuccess = false
-      }
+    this.subscriptions.push(
+      this.newsSearchService.getResults(value).subscribe(
+        (response: any) => {
+          console.log('Data from newsCompnent subscribeToNews():\n', response)
+          this.newsSearchService.passResults({
+            results: response.articles,
+            totalResults: response.totalResults
+          })
+          this.requestSuccess = true
+        },
+        (error: any) => {
+          this.requestSuccess = false
+        }
+      )
     )
   }
 
@@ -88,7 +98,7 @@ export class NewsComponent implements OnInit {
     this.urlBuilder.addSorting(this.currentSorting)
     this.urlBuilder.addCurrentPage(this.currentPage)
 
-    var url = this.urlBuilder.buildUrl()
+    let url = this.urlBuilder.buildUrl()
 
     this.subscribeToNews(url)
     this.urlBuilder.resetUrl()

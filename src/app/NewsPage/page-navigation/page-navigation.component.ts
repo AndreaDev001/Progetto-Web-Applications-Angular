@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {NewsSearchService} from "../services/news-search.service";
+import {NewsSearchService} from "../../services/news-search.service";
 
 @Component({
   selector: 'app-page-navigation',

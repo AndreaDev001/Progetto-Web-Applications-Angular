@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Sorting} from "../enum";
+import {Sorting} from "../../enum";
 
 @Component({
   selector: 'app-sorting-filter',

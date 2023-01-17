@@ -16,15 +16,15 @@ import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { GameListComponent } from './HomePage/ResultPage/game-list/game-list.component';
 import { GameCardComponent } from './HomePage/ResultPage/game-card/game-card.component';
 import {RouterModule} from "@angular/router";
-import { NewsComponent } from './news/news.component';
+import { NewsComponent} from "./NewsPage/news/news.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { NewsResultsComponent } from './news-results/news-results.component';
-import { NoResultsComponent } from './no-results/no-results.component';
-import { DateFilterComponent } from './date-filter/date-filter.component';
-import { SortingFilterComponent } from './sorting-filter/sorting-filter.component';
+import { NewsResultsComponent} from "./NewsPage/news-results/news-results.component";
+import { NoResultsComponent} from "./NewsPage/no-results/no-results.component";
+import { DateFilterComponent} from "./NewsPage/date-filter/date-filter.component";
+import { SortingFilterComponent} from "./NewsPage/sorting-filter/sorting-filter.component";
 import {CustomHttpInterceptor} from "./util/http-interceptor";
-import { PageNavigationComponent } from './page-navigation/page-navigation.component';
+import { PageNavigationComponent} from "./NewsPage/page-navigation/page-navigation.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
@@ -61,7 +61,9 @@ import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/g
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import { ConnectionErrorComponent } from './connection-error/connection-error.component';
-import { NewsSearchBarComponent } from './news-search-bar/news-search-bar.component';
+import { NewsSearchBarComponent} from "./NewsPage/news-search-bar/news-search-bar.component";
+import { HeaderComponent } from './header/header.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,9 @@ import { NewsSearchBarComponent } from './news-search-bar/news-search-bar.compon
     GameMainInfoRightComponent,
     ConnectionErrorComponent,
     SearchBarComponent,
-    NewsSearchBarComponent
+    NewsSearchBarComponent,
+    HeaderComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,

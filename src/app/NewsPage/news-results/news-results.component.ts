@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {NewsSearchService} from "../services/news-search.service";
-import {SpinnerService} from "../services/spinner.service";
+import {NewsSearchService} from "../../services/news-search.service";
+import {SpinnerService} from "../../services/spinner.service";
 
 @Component({
   selector: 'app-news-results',

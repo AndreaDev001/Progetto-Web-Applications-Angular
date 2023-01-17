@@ -4,7 +4,7 @@ import { reviewResolver } from "./services/review.service";
 import {HomePageComponent} from "./HomePage/home-page/home-page.component";
 import {GameDetailComponent} from "./DetailsPage/game-detail/game-detail.component";
 import {RegistrationFormComponent} from "./registration-form/registration-form.component";
-import {NewsComponent} from "./news/news.component";
+import {NewsComponent} from "./NewsPage/news/news.component";
 
 const appRoutes: Routes = [
   {title: "CREAZIONE RECENSIONE", path: ":gameID/newRecensione", component: ReviewComponent},
