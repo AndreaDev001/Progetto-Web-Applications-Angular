@@ -7,13 +7,13 @@ import {AuthenticationService} from "./services/authentication.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'News';
   constructor(private authenticationService: AuthenticationService) {}
 
   sessionId: string = "";
   isLogged: Boolean = false;
 
   ngOnInit(): void {
-
     console.log("sessionId: " + this.sessionId);  // todo: debug
     const urlParams = new URLSearchParams(window.location.search); // prendo tutti i parametri contenuti NELL'URL
 

@@ -1,0 +1,17 @@
+.news-card{
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  background-color: #212529;
+  color: whitesmoke;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+}
+.news-card:hover{
+  background-color: whitesmoke;;
+  color: black;
+}
+a:hover {
+  text-decoration: none;
+}

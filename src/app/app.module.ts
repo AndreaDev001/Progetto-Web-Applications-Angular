@@ -18,7 +18,22 @@ import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { GameListComponent } from './HomePage/ResultPage/game-list/game-list.component';
 import { GameCardComponent } from './HomePage/ResultPage/game-card/game-card.component';
 import {HttpClientModule} from "@angular/common/http";
-import {RouterModule} from "@angular/router";
+import {RouterModule} from "@angular/rout
+import { NewsComponent } from './news/news.component';
+import { AppRoutingModule } from './app-routing.module';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { NewsResultsComponent } from './news-results/news-results.component';
+import { NoResultsComponent } from './no-results/no-results.component';
+import { DateFilterComponent } from './date-filter/date-filter.component';
+import { SortingFilterComponent } from './sorting-filter/sorting-filter.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {CustomHttpInterceptor} from "./util/http-interceptor";
+import { PageNavigationComponent } from './page-navigation/page-navigation.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -58,6 +73,33 @@ import { ConnectionErrorComponent } from './connection-error/connection-error.co
 @NgModule({
   declarations: [
     AppComponent,
+    NewsComponent,
+    SearchBarComponent,
+    NewsResultsComponent,
+    NoResultsComponent,
+    DateFilterComponent,
+    SortingFilterComponent,
+    PageNavigationComponent
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatCardModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true  // ok false se c'è solo un interceptor
+    }
+  ],
     RegistrationFormComponent,
     ReviewComponent,
     CommentComponent,

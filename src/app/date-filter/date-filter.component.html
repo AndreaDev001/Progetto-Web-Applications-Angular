@@ -1,0 +1,6 @@
+<div class="col">
+  <label>Publish date:</label>
+  <select [(ngModel)]="selectedDateRange" (ngModelChange)="makeNewSearch()">
+    <option *ngFor="let selected of dateRanges">{{selected}}</option>
+  </select>
+</div>
