@@ -23,6 +23,8 @@ export class NewsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log("ngOnInit")
+    this.urlBuilder.initUrl();
     this.subscribeToNews(this.urlBuilder.buildUrl())
     this.urlBuilder.resetUrl();
   }

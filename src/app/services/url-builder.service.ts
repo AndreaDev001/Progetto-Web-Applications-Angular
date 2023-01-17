@@ -17,6 +17,9 @@ export class UrlBuilderService {
 
   constructor() { }
 
+  initUrl(): void {
+    this.url = this.defaultUrl;
+  }
 
   addKeywords(keywords: String[]): void {
     let paramKeywords = "";
