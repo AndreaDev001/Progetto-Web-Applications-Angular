@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
   <div *ngIf="spinnerService.visibility | async">
-    <mat-spinner [diameter]="50"></mat-spinner>
+    <mat-progress-spinner diameter=70 class = "mx-auto" color="primary" mode="indeterminate"></mat-progress-spinner>
     <h5>Fetching news...</h5>
   </div>
 
