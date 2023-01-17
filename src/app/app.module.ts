@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 
-import {FormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -11,31 +10,24 @@ import { CommentComponent } from './ReviewPage/comment/comment.component';
 
 
 import { NgxEditorModule } from 'ngx-editor';
-import { ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {AutosizeModule} from 'ngx-autosize';
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { GameListComponent } from './HomePage/ResultPage/game-list/game-list.component';
 import { GameCardComponent } from './HomePage/ResultPage/game-card/game-card.component';
-import {HttpClientModule} from "@angular/common/http";
-import {RouterModule} from "@angular/rout
+import {RouterModule} from "@angular/router";
 import { NewsComponent } from './news/news.component';
-import { AppRoutingModule } from './app-routing.module';
-import { SearchBarComponent } from './search-bar/search-bar.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { NewsResultsComponent } from './news-results/news-results.component';
 import { NoResultsComponent } from './no-results/no-results.component';
 import { DateFilterComponent } from './date-filter/date-filter.component';
 import { SortingFilterComponent } from './sorting-filter/sorting-filter.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CustomHttpInterceptor} from "./util/http-interceptor";
 import { PageNavigationComponent } from './page-navigation/page-navigation.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
-import { AppRoutingModule } from './app-routing.module';
 
 import {SideBarComponent} from "./HomePage/SideBar/side-bar/side-bar.component";
 import {SideListComponent} from "./HomePage/SideBar/side-list/side-list.component";
@@ -69,6 +61,7 @@ import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/g
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import { ConnectionErrorComponent } from './connection-error/connection-error.component';
+import { NewsSearchBarComponent } from './news-search-bar/news-search-bar.component';
 
 @NgModule({
   declarations: [
@@ -79,27 +72,7 @@ import { ConnectionErrorComponent } from './connection-error/connection-error.co
     NoResultsComponent,
     DateFilterComponent,
     SortingFilterComponent,
-    PageNavigationComponent
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    MatCardModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: CustomHttpInterceptor,
-      multi: true  // ok false se c'è solo un interceptor
-    }
-  ],
+    PageNavigationComponent,
     RegistrationFormComponent,
     ReviewComponent,
     CommentComponent,
@@ -129,63 +102,78 @@ import { ConnectionErrorComponent } from './connection-error/connection-error.co
     GameMainInfoLeftComponent,
     GameMainInfoRightComponent,
     ConnectionErrorComponent,
+    SearchBarComponent,
+    NewsSearchBarComponent
   ],
-    imports: [
-        BrowserModule,
-        RouterModule.forRoot(appRoutes),
-        ReactiveFormsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        LazyLoadImageModule,
-        BrowserModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        InfiniteScrollModule,
-        NgxEditorModule.forRoot({
-            locals: {
-                // menu
-                bold: 'Bold',
-                italic: 'Italic',
-                code: 'Code',
-                blockquote: 'Blockquote',
-                underline: 'Underline',
-                strike: 'Strike',
-                bullet_list: 'Bullet List',
-                ordered_list: 'Ordered List',
-                heading: 'Heading',
-                h1: 'Header 1',
-                h2: 'Header 2',
-                h3: 'Header 3',
-                h4: 'Header 4',
-                h5: 'Header 5',
-                h6: 'Header 6',
-                align_left: 'Left Align',
-                align_center: 'Center Align',
-                align_right: 'Right Align',
-                align_justify: 'Justify',
-                text_color: 'Text Color',
-                background_color: 'Background Color',
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatCardModule,
+    BrowserModule,
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule,
+    HttpClientModule,
+    LazyLoadImageModule,
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    InfiniteScrollModule,
+    NgxEditorModule.forRoot({
+      locals: {
+        // menu
+        bold: 'Bold',
+        italic: 'Italic',
+        code: 'Code',
+        blockquote: 'Blockquote',
+        underline: 'Underline',
+        strike: 'Strike',
+        bullet_list: 'Bullet List',
+        ordered_list: 'Ordered List',
+        heading: 'Heading',
+        h1: 'Header 1',
+        h2: 'Header 2',
+        h3: 'Header 3',
+        h4: 'Header 4',
+        h5: 'Header 5',
+        h6: 'Header 6',
+        align_left: 'Left Align',
+        align_center: 'Center Align',
+        align_right: 'Right Align',
+        align_justify: 'Justify',
+        text_color: 'Text Color',
+        background_color: 'Background Color',
 
-                // popups, forms, others...
-                url: 'URL',
-                text: 'Text',
-                openInNewTab: 'Open in new tab',
-                insert: 'Insert',
-                altText: 'Alt Text',
-                title: 'Title',
-                remove: 'Remove',
-            },
-        }),
-        FormsModule,
-        AutosizeModule,
-        FontAwesomeModule,
-        NgbModule,
-        MatProgressSpinnerModule,
-        NgOptimizedImage,
-        BrowserAnimationsModule,
-        NgxSpinnerModule,
-    ],
-  providers: [DatePipe],
+        // popups, forms, others...
+        url: 'URL',
+        text: 'Text',
+        openInNewTab: 'Open in new tab',
+        insert: 'Insert',
+        altText: 'Alt Text',
+        title: 'Title',
+        remove: 'Remove',
+      },
+    }),
+    FormsModule,
+    AutosizeModule,
+    FontAwesomeModule,
+    NgbModule,
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule,
+
+  ],
+  providers: [DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true  // ok false se c'è solo un interceptor
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
