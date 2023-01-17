@@ -28,9 +28,9 @@ export class GameHandlerService {
       responseType: 'json',
       withCredentials: false,
       params: value.queryParams,
-    }).pipe(timeout(5000),catchError(err => {
+    }).pipe(timeout(5000),catchError( err => {
       return throwError(() => err);
-    }))
+    }));
   }
   public search(orderingType?: OrderingType,orderingMode?: OrderingMode,genre?: string,requiredPage?: number,dateInterval?: DateInterval): any{
     this.gameURLBuilder.reset();
