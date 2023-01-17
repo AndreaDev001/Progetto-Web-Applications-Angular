@@ -1,6 +1,7 @@
 <ngx-spinner bgColor="rgba(51,51,51,0.8)" type="ball-scale-multiple" [fullScreen]="true">
   <h2 class = "text-white">Searching Game Details...</h2>
 </ngx-spinner>
+<h1 class = "text-white text-center">{{this.springHandler.getCurrentUsername(true).username}}</h1>
 <div class = "container" *ngIf="gameDetails">
     <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
     <section class = "game-section" *ngIf="getTrailers(this.gameTrailers).length > 0 || getValues(this.gameScreenshots).length > 0">
