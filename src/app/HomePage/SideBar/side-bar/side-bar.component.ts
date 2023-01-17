@@ -3,7 +3,7 @@ import {GameListType, SideListType} from "../../../enum";
 import {Genre, Platform} from "../../../interfaces";
 import {GameHandlerService} from "../../../services/game-handler.service";
 import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
-import {Subscription} from "rxjs";
+import {skip, Subscription, take} from "rxjs";
 
 export interface SideItem{
   name: string,
@@ -23,7 +23,6 @@ export class SideBarComponent implements OnInit,OnDestroy{
   private subscriptions: Subscription[] = [];
   constructor(private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService) {
   }
-
   ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
@@ -33,6 +32,8 @@ export class SideBarComponent implements OnInit,OnDestroy{
       this.lists.push(value);
     }
     this.subscriptions.push(this.gameHandler.getGenres(false).subscribe((result: any[]) =>{
+      if(this.genres.length > 0)
+        return;
       let genres: Genre[] = this.gameJSONReader.readGenres(result);
       for(let current of genres){
         let name: string = current.slug;
@@ -42,6 +43,8 @@ export class SideBarComponent implements OnInit,OnDestroy{
       }
     }));
     this.subscriptions.push(this.gameHandler.getPlatforms(false).subscribe((result: any[]) => {
+      if(this.platforms.length > 0)
+        return;
       let platforms: Platform[] = this.gameJSONReader.readPlatforms(result);
       for(let current of platforms){
         let name: string = current.name;

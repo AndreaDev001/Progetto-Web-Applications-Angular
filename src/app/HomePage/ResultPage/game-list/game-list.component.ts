@@ -2,8 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
 import {Game} from "../../../interfaces";
 import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
-import {skip, Subscription} from "rxjs";
-import {NgxSpinnerService} from "ngx-spinner";
+import {Subscription} from "rxjs";
 @Component({
   selector: 'app-game-list',
   templateUrl: './game-list.component.html',
