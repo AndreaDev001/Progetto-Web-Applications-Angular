@@ -1,5 +1,5 @@
 <div class = "container-fluid d-block d-sm-block d-md-block d-lg-block d-xl-block">
-    <div *ngIf="userReview && userReview.contenuto.length > 0">
+    <div *ngIf="userReview && (userReview.contenuto && userReview.contenuto.length > 0)">
       <h2 class = "text-white text-center" style="font-weight: bold">Your Review</h2>
       <app-game-review [review]="userReview"></app-game-review>
     </div>

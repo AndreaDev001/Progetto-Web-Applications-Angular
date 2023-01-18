@@ -10,7 +10,6 @@ import {ActivatedRoute} from "@angular/router";
 export class SpringHandlerService {
 
   private readonly url: string = "http://localhost:8080";
-  private isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private currentSessionID: BehaviorSubject<String | undefined> = new BehaviorSubject<String | undefined>(undefined);
   private currentUsername: BehaviorSubject<Utente | undefined> = new BehaviorSubject<Utente | undefined>(undefined);
 
@@ -92,7 +91,6 @@ export class SpringHandlerService {
       params: params
     })
   }
-  public getIsLogged(value: boolean): any {return value ? this.isLogged.value : this.isLogged};
   public getSessionID(value: boolean): any {return value ? this.currentSessionID.value : this.currentSessionID};
   public getCurrentUsername(value: boolean): any {return value ? this.currentUsername.value : this.currentUsername};
 

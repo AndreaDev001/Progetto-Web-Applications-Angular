@@ -1,6 +1,6 @@
 img#gameImage{
   width: 100%;
-  height: 400px;
+  height: auto;
   border-radius: 30px;
 }
 p.game-name{
@@ -15,8 +15,8 @@ a.game-link{
   background-color: #212529;
 }
 a.game-link:hover{
-  background-color: whitesmoke;
-  color: #151515;
+  background-color: #6D42BA;
+  color: whitesmoke;
   text-decoration: underline;
-  text-decoration-color: #151515;
+  text-decoration-color: whitesmoke;
 }

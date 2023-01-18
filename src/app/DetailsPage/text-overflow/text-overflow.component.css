@@ -9,13 +9,13 @@ a.item{
   text-decoration: none;
 }
 a.item:hover{
-  color: #151515;
-  text-decoration-color: #151515;
+  color: whitesmoke;
+  text-decoration-color: whitesmoke;
   text-decoration: underline;
-  background-color: whitesmoke;
+  background-color: #6D42BA;
 }
 span.item-text{
-  cursor: default;
+  cursor: pointer;
   min-width: 100px;
 }
 div.text-holder{

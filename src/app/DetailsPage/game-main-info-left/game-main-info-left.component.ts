@@ -32,17 +32,17 @@ export class GameMainInfoLeftComponent implements OnInit,OnDestroy{
   }
   public ngOnInit(): void
   {
-    console.log(this.gameInfo);
     if(this.gameInfo)
     {
        this.addItem("Visit website",this.gameInfo.website,faGlobe);
        this.addItem("Visit metacritic",this.gameInfo.metacritic_url,faStar);
        this.addItem("Visit reddit",this.gameInfo.reddit_url,faReddit);
     }
-     this.subscriptions.push(this.springHandler.getIsLogged(false).subscribe((value: any) => this.isLogged = value));
      this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: any) => {
-       if(value != undefined && this.gameInfo)
-          this.springHandler.containsGameWishlist(value,this.gameInfo.id).subscribe((value: any) => this.updateText(value));
+       if(value != undefined && this.gameInfo){
+         this.isLogged = true;
+         this.subscriptions.push(this.springHandler.containsGameWishlist(value,this.gameInfo.id).subscribe((value: any) => this.updateText(value)));
+       }
      }));
   }
   private addItem(name: string,link: string | undefined,icon? : IconDefinition): void{
