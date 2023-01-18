@@ -1,12 +1,12 @@
 button.side-item-button{
-  background-color: #212529;
+  background-color: var(--background-secondary);
   color: whitesmoke;
   border-top: 1px solid grey;
   transition: all 0.2s ease-in-out;
 }
 button.side-item-selected{
-  background-color: #6D42BA;
-  color: whitesmoke;;
+  background-color: var(--secondary);
+  color: whitesmoke;
   border-top: 1px solid grey;
   transition: all 0.2s ease-in-out;
   text-decoration: underline;
@@ -17,8 +17,8 @@ span.side-item-text{
   font-size: 16px;
 }
 button.side-item-button:hover{
-  background-color: #6D42BA;
-  color: whitesmoke;;
+  background-color: var(--secondary);
+  color: whitesmoke;
   text-decoration: underline;
   text-decoration-color: whitesmoke;
 }

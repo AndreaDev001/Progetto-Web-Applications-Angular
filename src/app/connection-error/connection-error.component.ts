@@ -7,6 +7,7 @@ import {faCircleExclamation, IconDefinition} from "@fortawesome/free-solid-svg-i
   styleUrls: ['./connection-error.component.css']
 })
 export class ConnectionErrorComponent implements OnInit{
+
   public errorIcon: IconDefinition = faCircleExclamation;
 
   constructor() {

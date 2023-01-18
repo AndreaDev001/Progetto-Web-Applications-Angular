@@ -1,7 +1,7 @@
 nav
 {
   z-index: 1000;
-  background-color: #6D42BA;
+  background-color: var(--primary);
   padding-left: 2%;
   padding-right: 2%;
 }
