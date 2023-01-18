@@ -4,10 +4,10 @@ button.sort-item{
   transition: all 0.2s ease-in-out;
 }
 button.sort-item:hover{
-  background-color: whitesmoke;
-  color: #151515;
+  background-color: #6D42BA;
+  color: whitesmoke;
   text-decoration: underline;
-  text-decoration-color: #151515;
+  text-decoration-color: whitesmoke;
   padding-left: 30px;
 }
 div.sort-dropdown{
@@ -17,6 +17,12 @@ div.sort-dropdown{
 button.sort-dropdown-button{
   padding: 10px;
   background-color: #212529;
+  color: whitesmoke;
+  border: 1px solid grey;
+}
+button.sort-dropdown-button:hover{
+  padding: 10px;
+  background-color: #6D42BA;
   color: whitesmoke;
   border: 1px solid grey;
 }

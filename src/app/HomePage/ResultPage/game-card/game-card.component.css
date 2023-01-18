@@ -9,6 +9,6 @@ a.game-card{
   text-decoration: none;
 }
 a.game-card:hover{
-  background-color: whitesmoke;;
-  color: black;
+  background-color: #6D42BA;
+  color: whitesmoke;
 }

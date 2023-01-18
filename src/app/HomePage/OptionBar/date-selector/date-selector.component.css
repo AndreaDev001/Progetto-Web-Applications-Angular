@@ -4,10 +4,10 @@ button.date-item{
   transition: all 0.2s ease-in-out;
 }
 button.date-item:hover{
-  background-color: whitesmoke;
-  color: #151515;
+  background-color: #6D42BA;
+  color: whitesmoke;
   text-decoration: underline;
-  text-decoration-color: #151515;
+  text-decoration-color: whitesmoke;
   padding-left: 30px;
 }
 div.date-dropdown{
@@ -17,6 +17,12 @@ div.date-dropdown{
 button.date-dropdown-button{
   padding: 10px;
   background-color: #212529;
+  color: whitesmoke;
+  border: 1px solid grey;
+}
+button.date-dropdown-button:hover{
+  padding: 10px;
+  background-color: #6D42BA;
   color: whitesmoke;
   border: 1px solid grey;
 }
