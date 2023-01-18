@@ -12,10 +12,10 @@ a.game-link{
   color: whitesmoke;
   transition: 0.2s all ease-in-out;
   cursor: pointer;
-  background-color: #212529;
+  background-color: var(--background-secondary);
 }
 a.game-link:hover{
-  background-color: #6D42BA;
+  background-color: var(--secondary);
   color: whitesmoke;
   text-decoration: underline;
   text-decoration-color: whitesmoke;

@@ -4,7 +4,7 @@ a.item{
   border-radius: 30px;
   transition: all 0.2s ease-in-out;
   color: whitesmoke;
-  background-color: #212529;
+  background-color: var(--background-secondary);
   margin-left: 7px;
   text-decoration: none;
 }
@@ -12,7 +12,7 @@ a.item:hover{
   color: whitesmoke;
   text-decoration-color: whitesmoke;
   text-decoration: underline;
-  background-color: #6D42BA;
+  background-color: var(--secondary);
 }
 span.item-text{
   cursor: pointer;

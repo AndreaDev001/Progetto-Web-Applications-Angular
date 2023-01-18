@@ -10,7 +10,7 @@
 }
 body
 {
-  background-color: #151515;
+  background-color: var(--background-color);
 }
 ::-webkit-scrollbar {
   width: 4px;
@@ -24,4 +24,11 @@ body
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+:root
+{
+  --background-color: #151515;
+  --background-secondary: #212529;
+  --primary: #5730aa;
+  --secondary: #2c264a;
 }
