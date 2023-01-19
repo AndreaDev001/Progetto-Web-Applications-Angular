@@ -23,7 +23,4 @@ export class HeaderComponent implements OnInit,OnDestroy{
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
-  public createLink(requiredPage: string): string{
-    return "http://localhost:8080/" + requiredPage + "?" + "jsessionid=" + this.springHandler.getSessionID(true);
-  }
 }

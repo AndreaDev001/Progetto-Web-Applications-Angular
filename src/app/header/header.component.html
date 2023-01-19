@@ -22,8 +22,8 @@
           <a class="dropdown-item dropdown-link" href="http://localhost:8080/login" *ngIf="!isLogged">Login</a>
           <a class="dropdown-item dropdown-link" [routerLink]="['/registration']" *ngIf="!isLogged">Sign up</a>
           <a class="dropdown-item dropdown-link" *ngIf="isLogged">Log out</a>
-          <a class="dropdown-item dropdown-link" [href]="createLink('recommended')" *ngIf="isLogged">Recommended for you</a>
-          <a class="dropdown-item dropdown-link" [href]="createLink('wishlist')" *ngIf="isLogged">Wishlist</a>
+          <a class="dropdown-item dropdown-link" href="http://localhost:8080/recommended" *ngIf="isLogged">Recommended for you</a>
+          <a class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist" *ngIf="isLogged">Wishlist</a>
           <a class="dropdown-item dropdown-link" *ngIf="isLogged">Your Reviews</a>
         </div>
       </li>
