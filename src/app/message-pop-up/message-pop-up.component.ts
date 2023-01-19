@@ -1,22 +1,32 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Subscription} from "rxjs";
+import {AlertHandlerService} from "../services/alert-handler.service";
 
 @Component({
   selector: 'app-message-pop-up',
   templateUrl: './message-pop-up.component.html',
   styleUrls: ['./message-pop-up.component.css']
 })
-export class MessagePopUpComponent implements OnInit{
-  @Input() name?: string;
-  @Input() text?: string;
-  @Input() buttonText?: string;
+export class MessagePopUpComponent implements OnInit,OnDestroy{
+
+  public title?: string;
+  public text?: string;
+  public buttonText?: string;
+  private subscriptions: Subscription[] = [];
   @ViewChild("content") content?: any;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,private alertHandler: AlertHandlerService) {
 
   }
   public ngOnInit(): void{
-
+    this.subscriptions.push(this.alertHandler.getCurrentTitle(false).subscribe((value: any) => this.title = value));
+    this.subscriptions.push(this.alertHandler.getCurrentText(false).subscribe((value: any) => this.text = value));
+    this.subscriptions.push(this.alertHandler.getCurrentButtonText(false).subscribe((value: any) => this.buttonText = value));
+  }
+  public ngOnDestroy(): void
+  {
+     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
   public open() {
     this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' });

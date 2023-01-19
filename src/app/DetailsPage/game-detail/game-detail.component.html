@@ -11,4 +11,4 @@
       <app-game-additional-info class = "col-12 col-md-6" [achievements]="getValues(this.gameAchievements)" [developers]="getValues(this.gameDetails.developers)" [publishers]="getValues(this.gameDetails.publishers)" [tags]="getValues(this.gameDetails.tags)"></app-game-additional-info>
     </section>
 </div>
-<app-connection-error *ngIf="failed"></app-connection-error>
+<app-error *ngIf="failed" [errorMessage]="'Game not found, requested game does not exist or a connection error happened'" [errorButtonText]="'Reload Page'"></app-error>

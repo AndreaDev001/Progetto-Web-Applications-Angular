@@ -10,6 +10,7 @@ import {faReddit} from "@fortawesome/free-brands-svg-icons";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {Subscription, take} from "rxjs";
 import {MessagePopUpComponent} from "../../message-pop-up/message-pop-up.component";
+import {AlertHandlerService} from "../../services/alert-handler.service";
 export interface GameLink{
   name: string,
   link?: string,
@@ -23,19 +24,16 @@ export interface GameLink{
 export class GameMainInfoLeftComponent implements OnInit,OnDestroy{
   @Input() gameInfo?: GameInfo;
   @Input() isLogged?: boolean;
-  @ViewChild('popup') childCmp?: MessagePopUpComponent;
   public icons: IconDefinition[] = [faReddit,faGlobe,faStar,faCalendarDays,faHeartCirclePlus];
   public links: GameLink[] = [];
   private containsGame: boolean = false;
   public currentText: string = "";
-  public currentModalText: string = "";
   private subscriptions: Subscription[] = [];
 
-  constructor(private springHandler: SpringHandlerService,) {
+  constructor(private springHandler: SpringHandlerService,private alertHandler: AlertHandlerService) {
   }
   public ngOnInit(): void
   {
-    console.log(this.childCmp);
     if(this.gameInfo)
     {
        this.addItem("Visit website",this.gameInfo.website,faGlobe);
@@ -63,11 +61,13 @@ export class GameMainInfoLeftComponent implements OnInit,OnDestroy{
         this.subscriptions.push(this.springHandler.addGameWishlist(currentUsername,this.gameInfo.id).pipe(take(1)).subscribe((value: any) => this.handleResponse(true,true),(error: any) => this.handleResponse(true,false)));
     }
   }
-  private handleResponse(value: boolean,success: boolean){
+  private handleResponse(value: boolean,success: boolean)
+  {
     if(success)
     {
-      this.updateText(value);
-      this.childCmp?.open();
+       this.updateText(value);
+       let requiredValue: string = value ? "Game successfully added to wishlist" : "Game successfully removed from wishlist";
+       this.alertHandler.setAllValues("Wishlist",requiredValue,"OK",true);
     }
     else
     {
@@ -77,7 +77,6 @@ export class GameMainInfoLeftComponent implements OnInit,OnDestroy{
   private updateText(value: boolean): void{
     this.containsGame = value;
     this.currentText = this.containsGame ? "Remove from wishlist" : "Add to wishlist";
-    this.currentModalText = this.containsGame ? "Game successfully added to wishlist" : "Game successfully removed from wishlist";
   }
   public ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
