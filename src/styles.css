@@ -4,6 +4,14 @@
 /* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
 /* @import "~@angular/material/prebuilt-themes/pink-bluegrey.css"; */
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
+
+:root {
+  --background-color: #151515;
+  --background-secondary: #212529;
+  --primary: #5730aa;
+  --secondary: #2c264a;
+}
+
 *
 {
   box-sizing: border-box;
