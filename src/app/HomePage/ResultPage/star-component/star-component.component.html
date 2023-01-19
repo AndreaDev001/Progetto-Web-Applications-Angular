@@ -1,4 +1,4 @@
-<div class = "d-inline-block text-center" style="width: 100%;font-size: inherit">
-  <fa-icon style="font-size: inherit" *ngFor="let current of fullStars" [icon]="current"></fa-icon>
-  <fa-icon style="font-size: inherit" *ngFor="let current of halfStars" [icon]="current"></fa-icon>
+<div class = "d-inline-block text-center w-100">
+  <fa-icon [style.font-size]="starSize" *ngFor="let current of fullStars" [icon]="current"></fa-icon>
+  <fa-icon [style.font-size]="starSize" *ngFor="let current of halfStars" [icon]="current"></fa-icon>
 </div>

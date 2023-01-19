@@ -40,7 +40,6 @@ export class GameDetailComponent implements OnInit,OnDestroy{
     this.gameID = Number(gameId);
     this.subscriptions.push(this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
-      console.log(this.gameDetails);
       if(this.gameID)
       {
         this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: any) => {
@@ -143,8 +142,4 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
-  public handeClick(): void{
-    window.location.reload();
-  }
-  public getGameID(): number | undefined {return this.gameID;}
 }
