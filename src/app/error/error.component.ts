@@ -1,13 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {faCircleExclamation, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: 'app-connection-error',
-  templateUrl: './connection-error.component.html',
-  styleUrls: ['./connection-error.component.css']
+  selector: 'app-error',
+  templateUrl: './error.component.html',
+  styleUrls: ['./error.component.css']
 })
-export class ConnectionErrorComponent implements OnInit{
-
+export class ErrorComponent
+{
+  @Input() errorMessage?: string;
+  @Input() errorButtonText?: string;
   public errorIcon: IconDefinition = faCircleExclamation;
 
   constructor() {
