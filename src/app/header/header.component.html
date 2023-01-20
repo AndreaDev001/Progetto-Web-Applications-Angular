@@ -1,26 +1,31 @@
+
 <nav class="navbar navbar-expand-lg position-sticky top-0" >
   <a class="navbar-brand text-white" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon text-white"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ">
       <li class="nav-item active">
-        <a class="nav-link text-white" [routerLink]="['/games']">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link header-link" [routerLink]="['/games']">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white" [routerLink]="['/news']">News</a>
+        <a class="nav-link header-link" [routerLink]="['/news']">News</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white" [routerLink]="['/info']">About us</a>
+        <a class="nav-link header-link" [routerLink]="['/info']">About us</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
           Account
         </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item text-white" href="http://localhost:8080/login">Login</a>
-          <a class="dropdown-item text-white" [routerLink]="['/registration']">Sign up</a>
+        <div class="dropdown-menu" style="background-color: var(--background-secondary)">
+          <a class="dropdown-item dropdown-link" href="http://localhost:8080/login" *ngIf="!isLogged">Login</a>
+          <a class="dropdown-item dropdown-link" [routerLink]="['/registration']" *ngIf="!isLogged">Sign up</a>
+          <a class="dropdown-item dropdown-link" *ngIf="isLogged">Log out</a>
+          <a class="dropdown-item dropdown-link" href="http://localhost:8080/recommended" *ngIf="isLogged">Recommended for you</a>
+          <a class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist" *ngIf="isLogged">Wishlist</a>
+          <a class="dropdown-item dropdown-link" *ngIf="isLogged">Your Reviews</a>
         </div>
       </li>
     </ul>

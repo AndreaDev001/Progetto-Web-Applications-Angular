@@ -23,9 +23,8 @@
 -->
 
 <div *ngIf="totalResults !== 0">
-
-  <div class="card-group">
-    <div *ngFor="let res of results" class="col-lg-3 col-md-4 d-flex align-items-baseline justify-content-around">
+  <div class="row">
+    <div *ngFor="let res of results" class="col-12 col-sm-6 col-lg-4 col-xl-3 d-flex justify-content-center">
       <mat-card class="card news-card" style="width: 18rem;">
           <img mat-card-image src="{{res.urlToImage}}" width="100%" loading="lazy">
           <div class="card-body">
@@ -39,5 +38,4 @@
       </mat-card>
     </div>
   </div>
-
 </div>

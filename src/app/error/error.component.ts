@@ -6,14 +6,14 @@ import {faCircleExclamation, IconDefinition} from "@fortawesome/free-solid-svg-i
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.css']
 })
-export class ErrorComponent implements OnInit{
-
-  public errorIcon: IconDefinition = faCircleExclamation;
+export class ErrorComponent implements OnInit
+{
   @Input() errorMessage?: string;
   @Input() errorButtonText?: string;
-  constructor()
-  {
+  public errorIcon: IconDefinition = faCircleExclamation;
 
+  constructor() {
+  
   }
   public ngOnInit(): void{
 
