@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Achievement, GameDetails, Review, Screenshot, Store, Trailer} from "../../interfaces";
+import {Achievement, GameDetails, Review, Screenshot, Store, Trailer, Utente} from "../../interfaces";
 import {ActivatedRoute} from "@angular/router";
 import {GameJSONReaderService} from "../../services/game-jsonreader.service";
 import {GameHandlerService} from "../../services/game-handler.service";
@@ -28,7 +28,7 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   public failed: boolean = false;
   public errorIcon: IconDefinition = faCircleExclamation;
 
-  constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private springHandler: SpringHandlerService) {
+  constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,public springHandler: SpringHandlerService) {
 
   }
   public ngOnInit(): void {
@@ -38,7 +38,6 @@ export class GameDetailComponent implements OnInit,OnDestroy{
     this.spinnerService.show();
     let gameId: string | null = this.route.snapshot.paramMap.get("id");
     this.gameID = Number(gameId);
-    this.springHandler.forceLogin("AndreaDev01","123456");
     this.subscriptions.push(this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
       if(this.gameID)
@@ -143,8 +142,4 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
-  public handeClick(): void{
-    window.location.reload();
-  }
-  public getGameID(): number | undefined {return this.gameID;}
 }

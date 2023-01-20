@@ -8,7 +8,6 @@ import {GameInfo} from "../../interfaces";
 })
 export class GameMainInfoComponent implements OnInit{
   @Input() gameInfo?: GameInfo;
-  @Input() isLogged: boolean = false;
   constructor() {
   }
   public ngOnInit(): void{

@@ -1,7 +1,7 @@
 <div class = "container-fluid" *ngIf="gameInfo">
-    <p class = "text-white text-center game-name d-block d-sm-block d-md-none d-lg-none d-xl-none">{{gameInfo.name}}</p>
-    <img id = "gameImage"  [src]="gameInfo.image" alt = "Not Found">
-    <p class = "text-white text-center game-name d-none d-sm-none d-md-block d-lg-block d-xl-block">{{gameInfo.name}}</p>
+    <p class = "text-white text-center game-name d-block d-md-none">{{gameInfo.name}}</p>
+    <img id = "gameImage" [src]="gameInfo.image" alt = "Not Found">
+    <p class = "text-white text-center game-name d-none d-md-block">{{gameInfo.name}}</p>
     <div class = "d-inline-block w-100 text-center position-relative">
       <fa-icon class = "text-white" [icon]="icons[3]" style="font-size: 35px"></fa-icon>
       <span class = "text-white p-2" style="font-size: 20px;">{{gameInfo.released}}</span>
@@ -16,7 +16,7 @@
       </ul>
     </div>
     <div class = "w-100 text-center p-2" *ngIf="isLogged">
-      <button mat-flat-button color="primary"  (click)="handleClick()">
+      <button mat-flat-button color="primary" style="padding: 10px" (click)="handleClick()">
         <fa-icon [icon]="icons[4]" style="font-size: 20px"></fa-icon>
         <span class = "text-center p-2 wishlist-button-text">{{currentText}}</span>
       </button>

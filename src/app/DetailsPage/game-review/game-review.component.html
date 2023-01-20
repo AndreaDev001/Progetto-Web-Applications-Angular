@@ -2,7 +2,7 @@
   <div class = "col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="color:inherit">
     <p class = "profile-name">{{review.utente}}</p>
     <fa-icon *ngIf="selectedIcon" [icon]="selectedIcon" style="font-size: 55px"></fa-icon>
-    <app-star-component [rating]="review.voto" style="font-size: 25px"></app-star-component>
+    <app-star-component [hundredMax]=false [rating]="review.voto" style="font-size: 25px"></app-star-component>
   </div>
   <div class = "col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="color: inherit">
     <p class = "review-title">{{review.titolo}}</p>

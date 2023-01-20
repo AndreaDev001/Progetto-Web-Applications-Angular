@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {Review} from "../interfaces";
+import {Review, Utente} from "../interfaces";
+import {ActivatedRoute} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -9,21 +10,21 @@ import {Review} from "../interfaces";
 export class SpringHandlerService {
 
   private readonly url: string = "http://localhost:8080";
-  private isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private currentSessionID: BehaviorSubject<String | undefined> = new BehaviorSubject<String | undefined>(undefined);
-  private currentUsername: BehaviorSubject<String | undefined> = new BehaviorSubject<String | undefined>(undefined);
+  private currentUsername: BehaviorSubject<Utente | undefined> = new BehaviorSubject<Utente | undefined>(undefined);
 
-  constructor(private httpClient: HttpClient) {
-
+  constructor(private httpClient: HttpClient,private route: ActivatedRoute) {
+    this.route.queryParams.subscribe((value: any) => {
+      let sessionID: string = value['jsessionid'];
+      this.currentSessionID.next(sessionID);
+      this.getUser(sessionID);
+    })
   }
-  public getUser(sessionID: string): Observable<any>{
+  private getUser(sessionID: string): void{
     const desiredURL: string = this.url + "/getUser";
     let params: HttpParams = new HttpParams();
     params = params.append("jsessionid",sessionID);
-    return this.httpClient.get(this.url,{
-      params: params,
-      responseType: 'text'
-    });
+    this.httpClient.get<Utente>(desiredURL,{params: params}).subscribe((value: Utente) => this.currentUsername.next(value));
   }
   public addGame(gameID: number,genre: string,name: string,img: string): Observable<any>{
     const desiredURL: string = this.url + "/addGame";
@@ -90,23 +91,6 @@ export class SpringHandlerService {
       params: params
     })
   }
-  public forceLogin(username: string,password: string): Observable<any>{
-    const desiredURL: string = this.url + "/doLogin";
-    let params: HttpParams = new HttpParams();
-    params = params.append("username",username);
-    params = params.append("password",password);
-    let observable: Observable<any> = this.httpClient.post(desiredURL,{},{params: params});
-    observable.subscribe((value: any) => {
-      if(value[0] != undefined)
-      {
-        this.isLogged.next(true);
-        this.currentSessionID.next(value[0]);
-        this.currentUsername.next(value[1]);
-      }
-    })
-    return observable;
-  }
-  public getIsLogged(value: boolean): any {return value ? this.isLogged.value : this.isLogged};
   public getSessionID(value: boolean): any {return value ? this.currentSessionID.value : this.currentSessionID};
   public getCurrentUsername(value: boolean): any {return value ? this.currentUsername.value : this.currentUsername};
 
