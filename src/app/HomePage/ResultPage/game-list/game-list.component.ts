@@ -3,6 +3,8 @@ import {SearchHandlerService} from "../../../services/search-handler.service";
 import {Game} from "../../../interfaces";
 import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
 import {Subscription} from "rxjs";
+import {GameListType} from "../../../enum";
+
 @Component({
   selector: 'app-game-list',
   templateUrl: './game-list.component.html',
@@ -37,8 +39,9 @@ export class GameListComponent implements OnInit,OnDestroy{
     }));
     this.subscriptions.push(this.searchHandler.getIsIncreasingPage(false).subscribe((value: any) => this.increasingPage = value));
   }
-  public handleClick(): void{
-    this.searchHandler.setCurrentGenre("action");
+  public handleClick(): void
+  {
+    this.searchHandler.setCurrentList(GameListType.BEST_RATED);
   }
   public scroll(): void{
     if(!this.searchHandler.getIsIncreasingPage(true))
