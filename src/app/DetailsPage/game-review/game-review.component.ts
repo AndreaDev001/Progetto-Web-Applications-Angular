@@ -15,7 +15,7 @@ export class GameReviewComponent implements OnInit{
   constructor() {
   }
   public ngOnInit(){
-    this.selectedIcon = this.review && this.review.voto >= 50 ? faThumbsUp : faThumbsDown;
+    this.selectedIcon = this.review && this.review.voto >= 6 ? faThumbsUp : faThumbsDown;
   }
   public createReviewPreview(value: string): string | undefined{
     return value.substring(0,value.length / 2);

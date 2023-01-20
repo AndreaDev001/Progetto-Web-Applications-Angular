@@ -6,7 +6,7 @@
     <div class="text-center" *ngIf="!userReview || (userReview && userReview.titolo == null)">
       <h2 class = "text-white text-center" style="font-weight: bold">Your Review</h2>
       <p class = "text-white text-center" style="font-size: 17px">You haven't written a review on this game yet</p>
-      <a mat-flat-button  class = "w-50 text-white text-decoration-none" style="font-size: 17px;background-color: var(--primary)" routerLink="../../{{gameID}}/newRecensione">Write a new review</a>
+      <a class = "btn btn-lg text-decoration-none text-white" style="background-color: var(--primary)" routerLink="../../{{gameID}}/newRecensione">Write a new review</a>
     </div>
     <div *ngIf="reviews && reviews.length > 0">
       <h2 class = "text-white text-center" style="font-weight: bold;">Reviews</h2>

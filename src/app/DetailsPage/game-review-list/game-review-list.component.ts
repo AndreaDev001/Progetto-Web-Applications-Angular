@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {Review} from "../../interfaces";
 
 @Component({
@@ -8,7 +8,7 @@ import {Review} from "../../interfaces";
 })
 export class GameReviewListComponent implements OnInit {
   @Input() gameID?: number;
-  @Input() reviews?: Review[];
+  @Input() reviews?: Array<Review>;
   @Input() userReview?: Review;
 
   constructor() {
@@ -17,6 +17,10 @@ export class GameReviewListComponent implements OnInit {
   public ngOnInit(): void
   {
 
+  }
+  public ngOnChanges(changes: SimpleChanges): void{
+    if(this.reviews)
+      this.reviews = this.reviews.sort((first: Review,second: Review) => second.voto - first.voto);
   }
 }
 
