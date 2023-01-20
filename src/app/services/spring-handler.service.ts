@@ -94,11 +94,10 @@ export class SpringHandlerService {
   }
   public performLogout(): void{
     const desiredURL: string = this.url + "/logout";
-    this.httpClient.post(desiredURL,{}).subscribe((value: any) =>{
-      this.currentUsername.next(undefined);
-      this.currentSessionID.next(undefined);
-      this.router.navigate(['/games']);
-    })
+    this.currentUsername.next(undefined);
+    this.currentSessionID.next(undefined);
+    this.router.navigate(['/games']);
+    this.httpClient.post(desiredURL,{});
   }
   public getParams(): Params{
     return {jsessionid: this.currentSessionID.value};
