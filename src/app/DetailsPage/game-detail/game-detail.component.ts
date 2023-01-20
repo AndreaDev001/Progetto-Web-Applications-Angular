@@ -43,6 +43,7 @@ export class GameDetailComponent implements OnInit,OnDestroy{
       if(this.gameID)
       {
         this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: any) => {
+          console.log(value);
           if(value != undefined && this.gameID)
             this.springHandler.getUserReview(value,this.gameID).subscribe((value: Review) => {
               this.userReview = value;

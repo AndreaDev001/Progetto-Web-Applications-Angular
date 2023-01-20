@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {Review} from "../../interfaces";
+import {SpringHandlerService} from "../../services/spring-handler.service";
 
 @Component({
   selector: 'app-game-review-list',
@@ -11,7 +12,7 @@ export class GameReviewListComponent implements OnInit {
   @Input() reviews?: Array<Review>;
   @Input() userReview?: Review;
 
-  constructor() {
+  constructor(public springHandler: SpringHandlerService) {
 
   }
   public ngOnInit(): void

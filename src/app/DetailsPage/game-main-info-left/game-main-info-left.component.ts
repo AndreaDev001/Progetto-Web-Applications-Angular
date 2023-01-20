@@ -9,7 +9,6 @@ import {
 import {faReddit} from "@fortawesome/free-brands-svg-icons";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {Subscription, take} from "rxjs";
-import {MessagePopUpComponent} from "../../message-pop-up/message-pop-up.component";
 import {AlertHandlerService} from "../../services/alert-handler.service";
 export interface GameLink{
   name: string,
@@ -23,7 +22,7 @@ export interface GameLink{
 })
 export class GameMainInfoLeftComponent implements OnInit,OnDestroy{
   @Input() gameInfo?: GameInfo;
-  @Input() isLogged?: boolean;
+  public isLogged: boolean = false;
   public icons: IconDefinition[] = [faReddit,faGlobe,faStar,faCalendarDays,faHeartCirclePlus];
   public links: GameLink[] = [];
   private containsGame: boolean = false;

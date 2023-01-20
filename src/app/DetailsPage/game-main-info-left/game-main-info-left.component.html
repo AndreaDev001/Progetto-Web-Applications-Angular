@@ -16,7 +16,7 @@
       </ul>
     </div>
     <div class = "w-100 text-center p-2" *ngIf="isLogged">
-      <button mat-flat-button color="primary" style="padding: 10px" (click)="handleClick()">
+      <button class = "btn btn-lg text-white" style="background-color: var(--primary)" (click)="handleClick()">
         <fa-icon [icon]="icons[4]" style="font-size: 20px"></fa-icon>
         <span class = "text-center p-2 wishlist-button-text">{{currentText}}</span>
       </button>

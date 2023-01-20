@@ -9,14 +9,14 @@ import {AboutUsComponent} from "./about-us/about-us.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 
 const appRoutes: Routes = [
-  {title: "CREAZIONE RECENSIONE", path: ":gameID/newRecensione", component: ReviewComponent},
-  {title: "RECENSIONE",resolve: {review: reviewResolver}, path: "recensioni/:reviewID", component: ReviewComponent},
-  {path: 'games',component: HomePageComponent},
-  {path: 'games/:id',component: GameDetailComponent},
+  {title: 'Creazione recensione', path: ":gameID/newRecensione", component: ReviewComponent},
+  {title: 'Recensione',resolve: {review: reviewResolver}, path: "recensioni/:reviewID",component: ReviewComponent},
+  {title: 'Home',path: 'games',component: HomePageComponent},
+  {title: 'Info',path: 'games/:id',component: GameDetailComponent},
   {path: '',redirectTo: 'games',pathMatch: 'full'},
-  { path: 'registration', component: RegistrationFormComponent },
-  {path: 'news', component: NewsComponent},
-  {path: 'info', component: AboutUsComponent},
-  {path: '**', component: NotFoundComponent}
+  {title: 'Registration',path: 'registration', component: RegistrationFormComponent },
+  {title: 'News',path: 'news', component: NewsComponent},
+  {title: 'About Us',path: 'info', component: AboutUsComponent},
+  {title: 'Not Found',path: '**', component: NotFoundComponent}
 ];
 export default appRoutes;

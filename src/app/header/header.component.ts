@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit,OnDestroy{
   @Input() isLogged: boolean = false;
   private subscriptions: Subscription[] = [];
   public icons: IconDefinition[] = [faHouse,faNewspaper,faCircleInfo,faCircleUser];
-  constructor(private springHandler: SpringHandlerService) {
+  constructor(public springHandler: SpringHandlerService) {
 
   }
   public ngOnInit(): void{

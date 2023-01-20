@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Game} from "../../../interfaces";
 import {IconDefinition,faCalendarDays} from "@fortawesome/free-solid-svg-icons";
 import { NgOptimizedImage } from "@angular/common"
+import {SpringHandlerService} from "../../../services/spring-handler.service";
 
 @Component({
   selector: 'app-game-card',
@@ -11,7 +12,7 @@ import { NgOptimizedImage } from "@angular/common"
 export class GameCardComponent implements OnInit {
   @Input() game?: Game;
   public faCalendarDays: IconDefinition = faCalendarDays;
-  constructor() {
+  constructor(public springHandler: SpringHandlerService) {
 
   }
   public ngOnInit(): void {

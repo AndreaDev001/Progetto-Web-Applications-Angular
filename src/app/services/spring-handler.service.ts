@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Review, Utente} from "../interfaces";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,9 @@ export class SpringHandlerService {
   private currentSessionID: BehaviorSubject<String | undefined> = new BehaviorSubject<String | undefined>(undefined);
   private currentUsername: BehaviorSubject<Utente | undefined> = new BehaviorSubject<Utente | undefined>(undefined);
 
-  constructor(private httpClient: HttpClient,private route: ActivatedRoute) {
+  constructor(private httpClient: HttpClient,private route: ActivatedRoute,private router: Router) {
     this.route.queryParams.subscribe((value: any) => {
+      console.log(value['jsessionid']);
       let sessionID: string = value['jsessionid'];
       this.currentSessionID.next(sessionID);
       this.getUser(sessionID);
@@ -90,6 +91,17 @@ export class SpringHandlerService {
     return this.httpClient.get<Review[]>(desiredURL,{
       params: params
     })
+  }
+  public performLogout(): void{
+    const desiredURL: string = this.url + "/logout";
+    this.httpClient.post(desiredURL,{}).subscribe((value: any) =>{
+      this.currentUsername.next(undefined);
+      this.currentSessionID.next(undefined);
+      this.router.navigate(['/games']);
+    })
+  }
+  public getParams(): Params{
+    return {jsessionid: this.currentSessionID.value};
   }
   public getSessionID(value: boolean): any {return value ? this.currentSessionID.value : this.currentSessionID};
   public getCurrentUsername(value: boolean): any {return value ? this.currentUsername.value : this.currentUsername};
