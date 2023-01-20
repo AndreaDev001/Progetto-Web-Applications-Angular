@@ -1,3 +1,4 @@
+<app-page-navigation [currentPage]="currentPage" (currentPageChanged)="updateCurrentPage($event)"></app-page-navigation>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" routerLink="">News</a>
 
@@ -14,9 +15,9 @@
 </nav>
 
 <div class="container-fluid">
-  <div *ngIf="spinnerService.visibility | async">
+  <div *ngIf="spinnerService.visibility | async" class="text-center">
     <mat-progress-spinner diameter=70 class = "mx-auto" color="primary" mode="indeterminate"></mat-progress-spinner>
-    <h5>Fetching news...</h5>
+    <h5 class="news-fetcher">Fetching news...</h5>
   </div>
 
   <div *ngIf="requestSuccess">
@@ -25,7 +26,7 @@
   </div>
 
   <div *ngIf="!requestSuccess">
-    <h5>Connection error</h5>
+    <app-connection-error class="h-100"></app-connection-error>
   </div>
 
 

@@ -1,0 +1,33 @@
+* {
+  background-color: transparent;
+  border: transparent;
+}
+
+.pagination > li.disabled > button {
+  background-color: transparent;
+  color: grey;
+}
+
+.pagination > li.active > button {
+  background-color: var(--primary);
+  border-radius: 15px;
+}
+
+.pagination > li.active > button:hover {
+  background-color: whitesmoke;
+  border-radius: 15px;
+  color: var(--background-secondary);
+}
+
+.pagination > li > button {
+  background-color: transparent;
+  color: whitesmoke;
+}
+
+.pagination > li > button:hover {
+  color: var(--lighter);
+}
+
+.pagination {
+  padding: 30px;
+}
