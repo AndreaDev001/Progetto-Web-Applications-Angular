@@ -60,11 +60,12 @@ import { GameMainInfoLeftComponent } from './DetailsPage/game-main-info-left/gam
 import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/game-main-info-right.component';
 import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
-import { ConnectionErrorComponent } from './connection-error/connection-error.component';
 import { NewsSearchBarComponent} from "./NewsPage/news-search-bar/news-search-bar.component";
 import { HeaderComponent } from './header/header.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MessagePopUpComponent } from './message-pop-up/message-pop-up.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -104,12 +105,13 @@ import { NotFoundComponent } from './not-found/not-found.component';
     GameReviewListComponent,
     GameMainInfoLeftComponent,
     GameMainInfoRightComponent,
-    ConnectionErrorComponent,
     SearchBarComponent,
     NewsSearchBarComponent,
     HeaderComponent,
     AboutUsComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    MessagePopUpComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
