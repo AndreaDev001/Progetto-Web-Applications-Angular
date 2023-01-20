@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {faSearch, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-no-results',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
 })
 
 export class NoResultsComponent {
-
+  public icon: IconDefinition = faSearch;
 }
