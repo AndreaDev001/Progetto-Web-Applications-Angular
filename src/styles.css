@@ -13,17 +13,22 @@ body
   background-color: var(--background-color);
 }
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #151515;
 }
 ::-webkit-scrollbar-thumb {
   background: #888;
+  width: 6px;
   border-radius: 30px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+::-webkit-scrollbar-corner{
+  background: #151515;
 }
 :root
 {
