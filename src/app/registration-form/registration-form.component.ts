@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {validateEmail, validatePassword} from "../validation";
 import {AuthenticationService} from "../services/authentication.service";
+import {faEye, faEyeSlash, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-registration-form',
@@ -12,8 +13,11 @@ import {AuthenticationService} from "../services/authentication.service";
 export class RegistrationFormComponent implements OnInit {
   hidePassword: boolean = true;
   registrationForm!: FormGroup;
+  public icons: IconDefinition[] = [faEyeSlash,faEye];
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService) {
+
+  }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({

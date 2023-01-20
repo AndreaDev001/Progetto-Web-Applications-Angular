@@ -17,16 +17,20 @@ a.dropdown-link:hover{
   text-decoration-color: whitesmoke;
   padding-left: 30px;
 }
-a.header-link{
-  font-size: 17px;
-  color: whitesmoke;
+li.header-item
+{
   transition: all 0.2s ease-in-out;
+  color: whitesmoke;
+  font-size: 17px;
+}
+a.header-link{
+  color: inherit;
+  font-size: inherit;
+}
+li.header-item:hover{
+  transform:scale(1.02);
+  font-weight: bold;
 }
 a.header-link:focus{
   color: whitesmoke;
-}
-a.header-link:hover{
-  text-decoration: underline;
-  text-decoration-color: whitesmoke;
-  background-color: var(--secondary);
 }

@@ -1,82 +1,83 @@
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<div class="container-fluid">
+  <section id = "reg-holder">
+    <form style="background-color: var(--background-secondary);border-radius: 30px;padding: 2% 0" class="form" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <h1 class="text-center heading">Sign up</h1>
 
-</head>
-<body class="container-fluid">
+      <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
+        <div class = "w-50">
+          <label for="email">Email*:</label>
+          <input id="email" class="form-control"  type="email" formControlName="email" placeholder="email@example.com">
+          <span class="error-message" *ngIf="email && email.touched && email.invalid && email.errors?.['required']">
+            <small>
+              Required field
+            </small>
+          </span>
+          <span class="error-message" *ngIf="email && email.touched && email.invalid && !email.errors?.['required'] && email.errors?.['emailRequirements']">
+            <small>
+              Invalid email
+             </small>
+          </span>
+          <span class="error-message" *ngIf="email && email.errors?.['unavailable']">
+            <small>
+              There is already an account associated with this email
+            </small>
+          </span>
+        </div>
+      </section>
 
-  <div>
-    <h1 class="text-center heading">Sign up</h1>
-    <form class="form" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="email">Email*:</label>
-        <input id="email" class="form-control"  type="email" formControlName="email" placeholder="email@example.com">
-        <span class="error-message" *ngIf="email && email.touched && email.invalid && email.errors?.['required']">
-        <small>
-          Required field
-        </small>
-      </span>
-        <span class="error-message" *ngIf="email && email.touched && email.invalid && !email.errors?.['required'] && email.errors?.['emailRequirements']">
-        <small>
-          Invalid email
-        </small>
-      </span>
-        <span class="error-message" *ngIf="email && email.errors?.['unavailable']">
-        <small>
-          There is already an account associated with this email
-        </small>
-      </span>
-      </div>
+      <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
+        <div class = "w-50">
+          <label for="username">Username*:</label>
+          <input id="username" class="form-control" type="text" formControlName="username" placeholder="Enter your username">
+          <span class="error-message" *ngIf="username && username.touched && username.invalid && username.errors?.['required']">
+            <small>
+              Required field
+            </small>
+          </span>
+          <span class="error-message" *ngIf="username && username.touched && username.invalid && (username.errors?.['minlength'] || username.errors?.['maxlength'])">
+            <small>
+              Username must be between 3 and 50 characters long
+           </small>
+          </span>
+          <span class="error-message" *ngIf="username && username.errors?.['unavailable']">
+            <small>
+              This username is unavailable
+            </small>
+          </span>
+        </div>
+      </section>
 
-      <div class="form-group">
-        <label for="username">Username*:</label>
-        <input id="username" class="form-control" type="text" formControlName="username" placeholder="Enter your username">
-        <span class="error-message" *ngIf="username && username.touched && username.invalid && username.errors?.['required']">
-        <small>
-          Required field
-        </small>
-      </span>
-        <span class="error-message" *ngIf="username && username.touched && username.invalid && (username.errors?.['minlength'] || username.errors?.['maxlength'])">
-        <small>
-          Username must be between 3 and 50 characters long
-        </small>
-      </span>
-        <span class="error-message" *ngIf="username && username.errors?.['unavailable']">
-        <small>
-          This username is unavailable
-        </small>
-      </span>
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password*:</label>
-        <div class="d-inline-flex w-100 justify-content-between">
-          <input id="password" class="form-control" [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Enter your password">
-          <div class="align-middle p-1">
-            <i [class]="hidePassword ? 'far fa-eye-slash' : 'far fa-eye'" style="width: 3%" (click)="hidePassword = !hidePassword"></i>
+      <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
+         <div class = "w-50 d-inline-flex">
+           <div class = "w-75">
+             <input id="password" class="form-control" [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Enter your password">
+             <span class="error-message" *ngIf="password && password.touched && password.invalid && password.errors?.['required']">
+                <small>
+                    Required field
+                </small>
+             </span>
+             <span class="error-message" *ngIf="password && password.touched && password.invalid && !password.errors?.['required'] && password.errors?.['passwordRequirements']">
+                <small>
+                    Invalid password
+                </small>
+              <button type="button" class="btn btn-outline-danger" (click)="showPasswordRequirements()">?</button>
+            </span>
+           </div>
+           <button class = "btn align-middle p-1 text-center" (click)="hidePassword = !hidePassword">
+             <fa-icon class = "text-white" [icon]="hidePassword ? icons[0] : icons[1]"></fa-icon>
+           </button>
+          </div>
+        </section>
+      <section class = "d-flex w-100 justify-content-center">
+        <div class = "w-50 d-flex row">
+          <div class = "col-12 col-md-6 pt-1">
+            <button type="submit" class="btn button button-primary w-100" [disabled]="!registrationForm.valid">Sign up</button>
+          </div>
+          <div class = "col-12 col-md-6 pt-1">
+            <button type="button" class="btn button button-secondary w-100" (click)="goToLogin()">Back to login</button>
           </div>
         </div>
-        <span class="error-message" *ngIf="password && password.touched && password.invalid && password.errors?.['required']">
-        <small>
-          Required field
-        </small>
-      </span>
-        <span class="error-message" *ngIf="password && password.touched && password.invalid && !password.errors?.['required'] && password.errors?.['passwordRequirements']">
-        <small>
-          Invalid password
-        </small>
-        <button type="button" class="btn btn-outline-danger" (click)="showPasswordRequirements()">?</button>
-      </span>
-      </div>
-
-
-      <div>
-        <button type="submit" class="btn button button-primary" [disabled]="!registrationForm.valid">Sign up</button>
-      </div>
-
-      <div>
-        <button type="button" class="btn button button-secondary" (click)="goToLogin()">Back to login</button>
-      </div>
+      </section>
     </form>
-  </div>
-
-</body>
+  </section>
+</div>

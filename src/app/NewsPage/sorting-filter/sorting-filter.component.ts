@@ -22,5 +22,8 @@ export class SortingFilterComponent {
   makeNewSearch() {
     this.sortingValueChanged.emit(this.selectedSortingType)
   }
-
+  public updateSorting(value: Sorting): void{
+    this.selectedSortingType = value;
+    this.makeNewSearch();
+  }
 }

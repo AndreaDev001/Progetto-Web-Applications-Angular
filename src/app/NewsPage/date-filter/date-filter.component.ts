@@ -22,5 +22,8 @@ export class DateFilterComponent implements OnInit {
     console.warn("MAKE NEW SEARCH")
     this.dateValueChanged.emit(this.selectedDateRange)
   }
-
+  public updateDate(value: DateRange): void {
+    this.selectedDateRange = value;
+    this.makeNewSearch();
+  }
 }

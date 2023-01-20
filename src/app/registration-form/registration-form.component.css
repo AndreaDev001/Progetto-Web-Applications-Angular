@@ -1,7 +1,6 @@
 input.ng-invalid.ng-touched {
   border: var(--danger) 2px solid;
 }
-
 .error-message {
   color: var(--danger);
 }
@@ -15,17 +14,29 @@ input.ng-invalid.ng-touched {
   margin-left: -30px;
   cursor: pointer;
 }
-
-body {
-  background-color: var(--background-color);
-}
-
 .heading {
   color: whitesmoke;
   font-size: 44px;
 }
-
 .form {
   color: whitesmoke;
 }
-
+#reg-holder
+{
+  padding: 5% 30%;
+}
+@media screen and (max-width: 576px) {
+  #reg-holder{
+    padding: 5% 0;
+  }
+}
+@media screen and (max-width: 768px){
+  #reg-holder{
+    padding: 5% 20%;
+  }
+}
+@media screen and (max-width: 992px){
+  #reg-holder{
+    padding: 5% 10%;
+  }
+}

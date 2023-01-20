@@ -1,31 +1,20 @@
-<app-page-navigation [currentPage]="currentPage" (currentPageChanged)="updateCurrentPage($event)"></app-page-navigation>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink="">News</a>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <app-news-search-bar (searchValueChanged)="updateKeywords($event)"></app-news-search-bar>
-    <app-sorting-filter (sortingValueChanged)="updateSorting($event)"></app-sorting-filter>
-    <app-date-filter (dateValueChanged)="updateDateRange($event)"></app-date-filter>
+<div class = "row text-white" style="background-color: var(--background-color);padding: 20px 2%">
+  <app-news-search-bar class = "col-12 col-md-7"(searchValueChanged)="updateKeywords($event)"></app-news-search-bar>
+  <div class = "col-12 col-md-5">
+    <app-sorting-filter class = "d-inline-block" (sortingValueChanged)="updateSorting($event)"></app-sorting-filter>
+    <app-date-filter class = "d-inline-block" style="margin-left: 10px" (dateValueChanged)="updateDateRange($event)"></app-date-filter>
   </div>
-
-</nav>
-
+</div>
 <div class="container-fluid">
   <div *ngIf="spinnerService.visibility | async" class="text-center">
     <mat-progress-spinner diameter=70 class = "mx-auto" color="primary" mode="indeterminate"></mat-progress-spinner>
     <h5 class="news-fetcher">Fetching news...</h5>
   </div>
-
   <div *ngIf="requestSuccess">
     <app-news-results></app-news-results>
     <app-page-navigation [currentPage]="currentPage" (currentPageChanged)="updateCurrentPage($event)"></app-page-navigation>
   </div>
-
   <div *ngIf="!requestSuccess">
-    <app-connection-error class="h-100"></app-connection-error>
+    <app-error class = "h-100" [errorMessage]="'Connection error,check your internet connection'" [errorButtonText]="'Reload Page'"></app-error>
   </div>
 </div>
