@@ -24,21 +24,18 @@
 
 <div *ngIf="totalResults !== 0">
 
-  <div class="row">
-    <div *ngFor="let res of results" class="col-lg-3">
+  <div class="card-group">
+    <div *ngFor="let res of results" class="col-lg-3 col-md-4 d-flex align-items-baseline justify-content-around">
       <mat-card class="card news-card" style="width: 18rem;">
-        <mat-card-content>
           <img mat-card-image src="{{res.urlToImage}}" width="100%" loading="lazy">
           <div class="card-body">
             <small >Source: {{res.source.name}}</small>
-            <mat-card-header>
               <h5 class="card-title">{{res.title}}</h5>
-            </mat-card-header>
             <p class="card-text">{{res.description}}</p>
-            <a mat-flat-button color="primary" href="{{res.url}}" target="_blank">Read more</a>
+            <div class="d-flex justify-content-end">
+              <a mat-flat-button color="primary" href="{{res.url}}" target="_blank">Read more</a>
+            </div>
           </div>
-        </mat-card-content>
-
       </mat-card>
     </div>
   </div>
