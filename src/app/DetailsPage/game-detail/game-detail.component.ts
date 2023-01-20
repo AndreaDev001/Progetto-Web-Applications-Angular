@@ -38,9 +38,6 @@ export class GameDetailComponent implements OnInit,OnDestroy{
     this.spinnerService.show();
     let gameId: string | null = this.route.snapshot.paramMap.get("id");
     this.gameID = Number(gameId);
-    this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: Utente) => {
-
-    }))
     this.subscriptions.push(this.gameHandler.getGameDetails(this.gameID).subscribe((value: any) => {
       this.gameDetails = this.gameJSONReader.readGameDetails(value);
       if(this.gameID)
@@ -145,8 +142,4 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
-  public handeClick(): void{
-    window.location.reload();
-  }
-  public getGameID(): number | undefined {return this.gameID;}
 }

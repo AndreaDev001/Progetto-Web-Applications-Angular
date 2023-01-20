@@ -1,11 +1,10 @@
-<div *ngIf="totalResults > 0">
+<div *ngIf="totalResults > 0" class="d-flex justify-content-around">
   <ul class="pagination justify-content-center">
     <li class="page-item" [ngClass]="{'disabled': isFirstPage}">
-      <button class="page-link" (click)="loadPreviousPage()">Previous</button>
+      <button class="page-link" (click)="loadPreviousPage()" >Previous</button>
     </li>
     <li *ngFor="let page of pages" class="page-item" [ngClass]="{'active': page === currentPage}">
-      <button class="page-link" (click)="loadPage(page)">{{page}}</button>
-
+      <button class="page-link"  (click)="loadPage(page)">{{page}}</button>
     </li>
     <li class="page-item" [ngClass]="{'disabled': isLastPage}">
       <button class="page-link" (click)="loadNextPage()">Next</button>

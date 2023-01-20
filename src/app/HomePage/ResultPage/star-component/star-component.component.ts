@@ -8,6 +8,8 @@ import {faStar,faStarHalfStroke, IconDefinition} from "@fortawesome/free-solid-s
 })
 export class StarComponentComponent implements OnInit{
   @Input() rating?: number;
+  @Input() hundredMax: boolean = true;
+  @Input() starSize: number = 20;
   public fullStars: IconDefinition[] = [];
   public halfStars: IconDefinition[] = [];
   constructor() {
@@ -18,7 +20,7 @@ export class StarComponentComponent implements OnInit{
   public calculateStars(): number{
     let result: number = 0;
     if(this.rating != undefined){
-      let value: String = String(this.rating / 20);
+      let value: String = String(this.rating / (this.hundredMax ? 20 : 2));
       let splitted: string[] = value.split('.');
       let fullAmount: number = Number(splitted[0]);
       for(let i = 0;i < fullAmount;i++)

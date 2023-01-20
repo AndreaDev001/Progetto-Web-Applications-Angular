@@ -1,9 +1,9 @@
 input.ng-invalid.ng-touched {
-  border: #c30f0f 2px solid;
+  border: var(--danger) 2px solid;
 }
 
 .error-message {
-  color: #c30f0f;
+  color: var(--danger);
 }
 
 .btn-outline-danger {
@@ -14,5 +14,18 @@ input.ng-invalid.ng-touched {
 .i {
   margin-left: -30px;
   cursor: pointer;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+.heading {
+  color: whitesmoke;
+  font-size: 44px;
+}
+
+.form {
+  color: whitesmoke;
 }
 

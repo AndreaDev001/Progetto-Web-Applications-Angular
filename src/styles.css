@@ -4,30 +4,75 @@
 /* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
 /* @import "~@angular/material/prebuilt-themes/pink-bluegrey.css"; */
 /* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
+
+:root {
+  --background-color: #151515;
+  --background-secondary: #212529;
+  --primary: #5730aa;
+  --secondary: #2c264a;
+  --lighter: #b093ed;
+
+  /* aggiunti */
+  --danger: #de645b;
+  --success: #75a34e;
+  --warning: #e0a55c;
+}
 *
 {
   box-sizing: border-box;
+}
+html
+{
+   background-color: var(--background-color);
 }
 body
 {
   background-color: var(--background-color);
 }
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #151515;
 }
 ::-webkit-scrollbar-thumb {
   background: #888;
+  width: 6px;
   border-radius: 30px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-:root{
-  --background-color: #151515;
-  --background-secondary: #212529;
-  --primary: #5730aa;
-  --secondary: #2c264a;
+.button {
+  border-radius: 20px;
+}
+.button:hover {
+  transition: all .2s ease-in-out;
+  transform: scale(1.02);
+  z-index: 10;
+}
+.button-primary {
+  background-color: var(--primary);
+  border: transparent;
+  color: whitesmoke;
+}
+.button-primary:disabled {
+  background-color: var(--secondary);
+  border: transparent;
+}
+.button-primary:hover {
+  background-color: whitesmoke;
+  color: var(--secondary);
+}
+.button-secondary {
+  background-color: var(--background-secondary);
+  border-color: whitesmoke;
+  color: whitesmoke;
+}
+.button-secondary:hover {
+  background-color: whitesmoke;
+  color: var(--background-secondary);
+::-webkit-scrollbar-corner{
+  background: #151515;
 }

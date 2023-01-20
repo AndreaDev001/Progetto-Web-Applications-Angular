@@ -1,12 +1,12 @@
 <div class = "container-fluid d-block d-sm-block d-md-block d-lg-block d-xl-block">
-    <div *ngIf="userReview && userReview.contenuto.length > 0">
+    <div *ngIf="userReview && (userReview.contenuto && userReview.contenuto.length > 0)">
       <h2 class = "text-white text-center" style="font-weight: bold">Your Review</h2>
       <app-game-review [review]="userReview"></app-game-review>
     </div>
     <div class="text-center" *ngIf="!userReview || (userReview && userReview.titolo == null)">
       <h2 class = "text-white text-center" style="font-weight: bold">Your Review</h2>
       <p class = "text-white text-center" style="font-size: 17px">You haven't written a review on this game yet</p>
-      <a mat-flat-button color="primary" class = "w-50" style="font-size: 17px" routerLink="../../{{gameID}}/newRecensione">Write a new review</a>
+      <a class = "btn btn-lg text-decoration-none text-white" style="background-color: var(--primary)" routerLink="../../{{gameID}}/newRecensione">Write a new review</a>
     </div>
     <div *ngIf="reviews && reviews.length > 0">
       <h2 class = "text-white text-center" style="font-weight: bold;">Reviews</h2>

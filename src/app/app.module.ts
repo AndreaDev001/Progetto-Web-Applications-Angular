@@ -64,6 +64,7 @@ import { NewsSearchBarComponent} from "./NewsPage/news-search-bar/news-search-ba
 import { HeaderComponent } from './header/header.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MessagePopUpComponent } from './message-pop-up/message-pop-up.component';
 import { ErrorComponent } from './error/error.component';
 
 @NgModule({
@@ -109,6 +110,7 @@ import { ErrorComponent } from './error/error.component';
     HeaderComponent,
     AboutUsComponent,
     NotFoundComponent,
+    MessagePopUpComponent,
     ErrorComponent
   ],
   imports: [
