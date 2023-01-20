@@ -10,7 +10,7 @@
 <div  style="padding: 20% 0" *ngIf="!shouldBeVisible && !loadingVisible">
     <div class = "container-fluid text-center">
       <h2 class = "text-white">Research Failed,games not found</h2>
-      <button mat-flat-button color="primary" style="font-size: 17px" (click)="handleClick()">Reset Search</button>
+      <button class = "btn btn-lg text-white" style="background-color: var(--primary)" (click)="handleClick()">Reset Search</button>
     </div>
   </div>
 <div style="padding: 20% 0" *ngIf="loadingVisible">
