@@ -21,7 +21,10 @@ export class MessagePopUpComponent implements OnInit,OnDestroy{
   }
   public ngOnInit(): void{
     this.subscriptions.push(this.alertHandler.getCurrentTitle(false).subscribe((value: any) => this.title = value));
-    this.subscriptions.push(this.alertHandler.getCurrentText(false).subscribe((value: any) => this.text = value));
+    this.subscriptions.push(this.alertHandler.getCurrentText(false).subscribe((value: any) => {
+      this.text = value;
+      console.log(this.text);
+    }));
     this.subscriptions.push(this.alertHandler.getCurrentButtonText(false).subscribe((value: any) => this.buttonText = value));
   }
   public ngOnDestroy(): void

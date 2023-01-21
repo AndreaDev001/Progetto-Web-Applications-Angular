@@ -7,7 +7,7 @@
         <div class = "w-50">
           <label for="email">Email*:</label>
           <input id="email" class="form-control"  type="email" formControlName="email" placeholder="email@example.com">
-          <div class = "d-block">
+          <div class = "d-block pt-1">
              <span class="error-message" *ngIf="email && email.touched && email.invalid && email.errors?.['required']">
                 <small>Required field</small>
              </span>
@@ -25,7 +25,7 @@
         <div class = "w-50">
           <label for="username">Username*:</label>
           <input id="username" class="form-control" type="text" formControlName="username" placeholder="Enter your username">
-          <div class = "d-block">
+          <div class = "d-block pt-1">
              <span class="error-message" *ngIf="username && username.touched && username.invalid && username.errors?.['required']">
                <small>Required Field</small>
              </span>
@@ -48,7 +48,7 @@
          <div class = "w-50 d-inline-flex">
            <div class = "w-75">
              <input id="password" class="form-control" [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Enter your password">
-             <div class = "d-block">
+             <div class = "d-block pt-1">
                <span class="error-message" *ngIf="password && password.touched && password.invalid && password.errors?.['required']">
                <small>
                  Required field

@@ -1,8 +1,8 @@
-<div class = "row text-white" style="background-color: var(--background-color);padding: 20px 2%">
-  <app-news-search-bar class = "col-12 col-md-7"(searchValueChanged)="updateKeywords($event)"></app-news-search-bar>
+<div class = "row container-fluid text-white" style="background-color: var(--background-color);padding: 20px 2%">
+  <app-news-search-bar class = "col-12 col-md-7" (searchValueChanged)="updateKeywords($event)"></app-news-search-bar>
   <div class = "col-12 col-md-5">
     <app-sorting-filter class = "d-inline-block" (sortingValueChanged)="updateSorting($event)"></app-sorting-filter>
-    <app-date-filter class = "d-inline-block" style="margin-left: 10px" (dateValueChanged)="updateDateRange($event)"></app-date-filter>
+    <app-date-filter class = "d-inline-block mt-2 mt-md-0" style="margin-left: 10px" (dateValueChanged)="updateDateRange($event)"></app-date-filter>
   </div>
 </div>
 <div class="container-fluid">
