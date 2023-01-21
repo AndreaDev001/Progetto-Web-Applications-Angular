@@ -6,7 +6,7 @@
   </div>
   <div class = "col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="color: inherit">
     <p class = "review-title">{{review.titolo}}</p>
-    <p class = "review-preview">{{createReviewPreview(review.contenuto)}}...</p>
+    <p class = "review-preview">{{review.contenuto | slice: 0:review.contenuto.length / 2}}...</p>
     <div class = "d-inline-flex w-50 justify-content-between" style="color: inherit">
       <button class = "d-inline-block interaction-button" style="width: 48%;color: inherit">
         <fa-icon [icon]="icons[0]" style="font-size: 25px"></fa-icon>
