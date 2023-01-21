@@ -4,6 +4,7 @@ import {Game} from "../../../interfaces";
 import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
 import {Subscription} from "rxjs";
 import {GameListType} from "../../../enum";
+import {faCircleExclamation, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-game-list',
@@ -18,24 +19,36 @@ export class GameListComponent implements OnInit,OnDestroy{
   public loadingVisible: boolean = false;
   public increasingPage: boolean = false;
   public maxReached: boolean = false;
+  public icon: IconDefinition = faCircleExclamation;
   constructor(private searchHandler: SearchHandlerService,private gameJSONReader: GameJSONReaderService){
 
   }
   public ngOnInit(): void{
     this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: any) => this.loadingVisible = value));
     this.subscriptions.push(this.searchHandler.getLatestValues(false).subscribe((result: any[]) => {
-      if(this.searchHandler.getCurrentMaxPage(true) == 1){
+      let currentMaxPage: number = this.searchHandler.getCurrentMaxPage(true);
+      if(currentMaxPage == 1){
         this.games = [];
         window.scrollTo(0,0);
       }
-      if(result.length > 0){
+      if(result.length > 0)
+      {
         let values: Game[] = this.gameJSONReader.readGames(result);
         this.games = this.games.concat(values);
         this.shouldBeVisible = true;
-        return;
+        this.maxReached = false;
       }
-      this.games = [];
-      this.shouldBeVisible = false;
+      else
+      {
+        if(currentMaxPage == 1)
+        {
+          this.games = [];
+          this.shouldBeVisible = false;
+          this.maxReached = false;
+        }
+        else
+          this.maxReached = true;
+      }
     }));
     this.subscriptions.push(this.searchHandler.getIsIncreasingPage(false).subscribe((value: any) => this.increasingPage = value));
   }
