@@ -19,7 +19,7 @@ export class RegistrationFormComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.registrationForm = new FormGroup({
       email: new FormControl('', [Validators.required, validateEmail()]),
       username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -31,10 +31,10 @@ export class RegistrationFormComponent implements OnInit {
   get username() { return this.registrationForm.get('username'); }
   get password() { return this.registrationForm.get('password'); }
 
-  onSubmit() {
-    var email: string = this.email?.value
-    var username: string = this.username?.value
-    var password: string = this.password?.value
+  public onSubmit(): void {
+    let email: string = this.email?.value
+    let username: string = this.username?.value
+    let password: string = this.password?.value
     this.authenticationService.doRegistration(email, username, password).subscribe(
       registrationStatus => {
         if (registrationStatus === "ok") {
@@ -65,7 +65,7 @@ export class RegistrationFormComponent implements OnInit {
     )
   }
 
-  showPasswordRequirements(): void {
+  public showPasswordRequirements(): void {
     alert('Password must contain at least:\n'+
       '- a lowercase character,\n' +
       '- an uppercase character,\n' +
@@ -73,7 +73,6 @@ export class RegistrationFormComponent implements OnInit {
       '- a digit\n' +
       'Password can\'t contain space and must be at least 8 characters long');
   }
-
   goToLogin(): void {
     window.open("http://localhost:8080/login", "_self");
   }
