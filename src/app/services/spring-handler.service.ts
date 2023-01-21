@@ -13,7 +13,7 @@ export class SpringHandlerService {
   private currentSessionID: BehaviorSubject<String | undefined> = new BehaviorSubject<String | undefined>(undefined);
   private currentUsername: BehaviorSubject<Utente | undefined> = new BehaviorSubject<Utente | undefined>(undefined);
 
-  constructor(private httpClient: HttpClient,private route: ActivatedRoute,private router: Router) {
+  constructor(private httpClient: HttpClient,private route: ActivatedRoute) {
     this.route.queryParams.subscribe((value: any) => {
       console.log(value['jsessionid']);
       let sessionID: string = value['jsessionid'];
@@ -96,7 +96,6 @@ export class SpringHandlerService {
     const desiredURL: string = this.url + "/logout";
     this.currentUsername.next(undefined);
     this.currentSessionID.next(undefined);
-    this.router.navigate(['/games']);
     this.httpClient.post(desiredURL,{});
   }
   public getParams(): Params{

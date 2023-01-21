@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg position-sticky top-0" >
   <a class="navbar-brand text-white" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon text-white"></span>
+    <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ">
@@ -22,7 +22,7 @@
         <div class="dropdown-menu" style="background-color: var(--background-secondary)">
           <a class="dropdown-item dropdown-link" href="http://localhost:8080/login" *ngIf="!isLogged">Login</a>
           <a class="dropdown-item dropdown-link" [routerLink]="['/registration']" [queryParams]="this.springHandler.getParams()"  *ngIf="!isLogged">Sign up</a>
-          <a class="dropdown-item dropdown-link" (click)="this.springHandler.performLogout()" *ngIf="isLogged">Log out</a>
+          <a class="dropdown-item dropdown-link" [routerLink]="['/games']" (click)="this.springHandler.performLogout()" *ngIf="isLogged">Log out</a>
           <a class="dropdown-item dropdown-link" href="http://localhost:8080/recommended" *ngIf="isLogged">Recommended for you</a>
           <a class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist" *ngIf="isLogged">Wishlist</a>
           <a class="dropdown-item dropdown-link" *ngIf="isLogged">Your Reviews</a>

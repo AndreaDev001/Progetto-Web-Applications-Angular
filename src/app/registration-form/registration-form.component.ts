@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {validateEmail, validatePassword} from "../validation";
 import {AuthenticationService} from "../services/authentication.service";
 import {faEye, faEyeSlash, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {AlertHandlerService} from "../services/alert-handler.service";
 
 @Component({
   selector: 'app-registration-form',
@@ -15,11 +16,11 @@ export class RegistrationFormComponent implements OnInit {
   registrationForm!: FormGroup;
   public icons: IconDefinition[] = [faEyeSlash,faEye];
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,private alertHandler: AlertHandlerService) {
 
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.registrationForm = new FormGroup({
       email: new FormControl('', [Validators.required, validateEmail()]),
       username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -31,19 +32,19 @@ export class RegistrationFormComponent implements OnInit {
   get username() { return this.registrationForm.get('username'); }
   get password() { return this.registrationForm.get('password'); }
 
-  onSubmit() {
-    var email: string = this.email?.value
-    var username: string = this.username?.value
-    var password: string = this.password?.value
+  public onSubmit(): void {
+    let email: string = this.email?.value
+    let username: string = this.username?.value
+    let password: string = this.password?.value
     this.authenticationService.doRegistration(email, username, password).subscribe(
       registrationStatus => {
         if (registrationStatus === "ok") {
-          alert("You've successfully registered! You can now log in")
+          this.alertHandler.setAllValues("Registration","You've successfully registered! You can now log in","OK",true);
           window.open("http://localhost:8080/login", "_self");
         }
         else {
           if (registrationStatus === "emptyFields") {
-            alert("All fields are mandatory")
+            this.alertHandler.setAllValues("Registration","All fields are mandatory","OK",true);
           }
           if (registrationStatus === "unavailableUsername") {
             this.registrationForm.controls['username'].setErrors({'unavailable' : true});
@@ -65,15 +66,14 @@ export class RegistrationFormComponent implements OnInit {
     )
   }
 
-  showPasswordRequirements(): void {
-    alert('Password must contain at least:\n'+
+  public showPasswordRequirements(): void {
+    this.alertHandler.setAllValues("Registration",'Password must contain at least:\n'+
       '- a lowercase character,\n' +
       '- an uppercase character,\n' +
       '- a special character,\n' +
       '- a digit\n' +
-      'Password can\'t contain space and must be at least 8 characters long');
+      'Password can\'t contain space and must be at least 8 characters long',"OK",true);
   }
-
   goToLogin(): void {
     window.open("http://localhost:8080/login", "_self");
   }

@@ -1,13 +1,15 @@
 <ng-template #content let-modal>
-  <div class="modal-header firstModal">
-    <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body secondModal">
-    <p>{{text}}</p>
-  </div>
-  <div class="modal-footer thirdModal">
-    <button mat-flat-button color="primary" type="button" class="text-white" (click)="modal.close('Save click')">{{buttonText}}</button>
+  <div class = "d-block">
+    <div class="modal-header firstModal">
+      <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body secondModal">
+      <p style="white-space: pre-line">{{text}}</p>
+    </div>
+    <div class="modal-footer thirdModal" style="border: 0">
+      <button class = "btn btn-lg button button-primary" style="background-color: var(--primary)" type="button" (click)="modal.close('Save click')">{{buttonText}}</button>
+    </div>
   </div>
 </ng-template>
 <hr />

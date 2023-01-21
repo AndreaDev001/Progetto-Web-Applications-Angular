@@ -20,6 +20,9 @@ input.ng-invalid.ng-touched {
 }
 .form {
   color: whitesmoke;
+  background-color: var(--background-secondary);
+  border-radius: 30px;
+  padding: 2% 0;
 }
 #reg-holder
 {
