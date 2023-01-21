@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ObserverStatus } from '../../utils/observer';
 import { Comment, CommentService } from '../../services/comment.service'
 import { FeedbackType } from "../../enum";
+import { Utente } from 'src/app/interfaces';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class CommentComponent implements OnInit{
 
 
   @Input() comment!: Comment;
-  @Input() loggedUser?: string;
+  @Input() loggedUser?: Utente;
   @Output() onDelete = new EventEmitter<Comment>();
   currentFeedback : FeedbackType = FeedbackType.none;
   editMode: boolean = false;
@@ -33,13 +34,12 @@ export class CommentComponent implements OnInit{
 
   ngOnInit(): void {
 
-    if(this.loggedUser !== this.comment.utente)
+    if(this.loggedUser?.username !== this.comment.utente)
       return;
-    console.log("EEEIEIEIIEEIIE");
     this.service.getCommentFeedback(this.comment.id).subscribe(feedback => {
       this.currentFeedback = feedback;
-      console.log(feedback);
     });
+
 
   }
 
@@ -61,35 +61,38 @@ export class CommentComponent implements OnInit{
 
   changeFeedback(feedback : FeedbackType)
   {
+    if(this.loggedUser === null || this.loggedUser === undefined)
+    {
+      window.open('http://localhost:8080/login', '_blank');
+      return;
+    }
+    this.isUpdatingFeedback = true;
+    this.service.changeFeedback(this.comment.id, feedback == FeedbackType.like, this.loggedUser.username).subscribe(feedback =>
+      {
+        let resultFeedback = FeedbackType[feedback as keyof typeof FeedbackType]
+        this.isUpdatingFeedback = false;
+        this.updateFeedbackCount(resultFeedback, true);
+        this.updateFeedbackCount(this.currentFeedback, false);
+        this.currentFeedback = resultFeedback;
 
-      this.isUpdatingFeedback = true;
-      this.service.changeFeedback(this.comment.id, feedback == FeedbackType.like).subscribe(feedback =>
-        {
-          let resultFeedback = FeedbackType[feedback as keyof typeof FeedbackType]
-          this.isUpdatingFeedback = false;
-          this.updateFeedbackCount(resultFeedback, true);
-          this.updateFeedbackCount(this.currentFeedback, false);
-          this.currentFeedback = resultFeedback;
-
-      });
-  }
-
-  resize(element : any) {
-    console.log(element);
-    element.style.height = "0px";
-    element.style.height = (element.scrollHeight + 10)+"px";
-
-    console.log(this.comment.contenuto);
+    });
   }
 
   editStatus = new ObserverStatus();
 
   editComment()
   {
-    this.editStatus.call(this.service.editComment(this.comment.id, this.commentTextControl.value!), () =>
+    if(this.loggedUser === undefined)
+      return;
+    this.editStatus.call(this.service.editComment(this.comment.id, this.commentTextControl.value!, this.loggedUser.username), () =>
     {
       this.comment.contenuto = this.commentTextControl.value!;
       this.setEditMode(false);
     });
+  }
+
+  public getFormattedDate() : string
+  {
+    return new Date(this.comment.data).toLocaleString();
   }
 }

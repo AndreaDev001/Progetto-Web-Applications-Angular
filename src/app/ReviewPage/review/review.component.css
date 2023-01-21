@@ -29,13 +29,9 @@
 .content
 {
   width: 90%;
-  margin: 30px auto;
+  margin: 0px auto;
 }
 
-.NgxEditor
-{
-  background-color: red !important;
-}
 
 .NgxEditor__ImageWrapper
 {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
-import { first, map, Observable } from 'rxjs';
+import { EMPTY, first, map, Observable } from 'rxjs';
 import { FeedbackType } from '../enum';
+import { Utente } from '../interfaces';
 
 
 @Injectable({
@@ -20,11 +21,12 @@ export class CommentService {
       return this.httpClient.get<Comment[]>("http://localhost:8080/getComments", {params: queryParams});
   }
 
-  public changeFeedback(commentID: number, isLike : boolean) : Observable<string>
+  public changeFeedback(commentID: number, isLike : boolean, username: string) : Observable<string>
   {
       return this.httpClient.post<string>("http://localhost:8080/changeFeedback", {
         commento: commentID,
-        tipo: isLike
+        tipo: isLike,
+        utente: username
       }, {responseType: 'text' as any});
   }
 
@@ -35,20 +37,22 @@ export class CommentService {
     return this.httpClient.get<string>("http://localhost:8080/getCommentFeedback", {responseType: 'text' as any, params: queryParams}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
   }
 
-  public addComment(reviewID : number, contenuto : string) : Observable<number>
+  public addComment(reviewID : number, contenuto : string, username: string) : Observable<number>
   {
-      return this.httpClient.post<number>("http://localhost:8080/addComment", {
+    return this.httpClient.post<number>("http://localhost:8080/addComment", {
         contenuto: contenuto,
-        recensione: reviewID
+        recensione: reviewID,
+        utente: username
       });
   }
 
-  public editComment(commentID : number, contenuto : string) : Observable<number>
+  public editComment(commentID : number, contenuto : string, username: string) : Observable<number>
   {
-      return this.httpClient.post<number>("http://localhost:8080/editComment", {
-        id: commentID,
-        contenuto: contenuto
-      });
+    return this.httpClient.post<number>("http://localhost:8080/editComment", {
+      id: commentID,
+      contenuto: contenuto,
+      utente: username
+    });
   }
 
   public deleteComment(commentID : number) : Observable<boolean>
@@ -62,6 +66,7 @@ export interface Comment {
   contenuto : string;
   numeroMiPiace: number;
   numeroNonMiPiace: number;
+  data: string;
 }
 
 

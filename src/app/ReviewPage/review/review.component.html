@@ -1,7 +1,7 @@
-<div class="banner" style="background-image: linear-gradient(0deg, white 5%, rgba(255, 255, 255, 0.271) 100%), url('https://media.rawg.io/media/games/34e/34e100b1f648de99f32d477065f04653.jpg');">
+<div class="banner" style="background-image: linear-gradient(0deg, rgba(0,0,0,1) 8%, rgba(0,0,0,0.29939308487066707) 100%), url('{{game.image}}');">
 
 
-
+  <h1>{{review.data}}</h1>
   <div class="content">
     <section id="review_section" class="d-flex flex-column justify-content-center align-items-center">
       <form class="w-100" (ngSubmit)="(isNewReview() ? publishReview() : editReview())" [formGroup]="form" *ngIf="this.isEditMode; else htmlReview">
@@ -43,7 +43,7 @@
       <h1>{{review.voto}}/10</h1>
       </ng-template>
 
-      <button *ngIf="!this.isNewReview() && review.utente === loggedUser" [disabled]="this.publishReviewStatus.isLoading" (click)="this.setEditMode(!this.isEditMode)">{{!this.isEditMode ? "MODIFICA" : "ANNULLA MODIFICHE"}}</button>
+      <button *ngIf="!this.isNewReview() && loggedUser !== null && loggedUser?.username === review.utente" [disabled]="this.publishReviewStatus.isLoading" (click)="this.setEditMode(!this.isEditMode)">{{!this.isEditMode ? "MODIFICA" : "ANNULLA MODIFICHE"}}</button>
 
 
     </section >
@@ -51,12 +51,12 @@
 
 
       <h3>Sezione Commenti</h3>
-      <section *ngIf="this.loggedUser !== undefined; else athenticationText">
+      <section *ngIf="this.loggedUser !== null && this.loggedUser !== undefined; else authenticationText">
         <textarea [formControl]="newCommentFormControl" placeholder="Scrivi commento..." class="w-100 ny-4" autosize [minRows]="1" [maxRows]="15" style="resize: none;"></textarea>
         <button [disabled]="this.addCommentStatus.isLoading || newCommentFormControl.invalid" (click)="addComment()">PUBBLICA</button>
       </section>
-      <ng-template #athenticationText>
-        <h5>Per poter commentare devi esserti autenticato; Esegui il <a href="">login</a></h5>
+      <ng-template #authenticationText>
+        <h5>To comment you must be <a href="http://localhost:8080/login">logged in</a></h5>
       </ng-template>
       <app-comment class="my-2" *ngFor="let comment of comments" [comment]="comment" [loggedUser]="this.loggedUser" (onDelete)="deleteComment($event)"></app-comment>
     </section>
