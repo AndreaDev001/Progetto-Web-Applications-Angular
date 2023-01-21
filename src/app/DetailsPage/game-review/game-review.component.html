@@ -1,4 +1,4 @@
-<button class="container-fluid row holder" *ngIf="review" [routerLink]="'../../recensioni/' + review.id">
+<button class="container-fluid row holder" *ngIf="review" [routerLink]="'../../recensioni/' + review.id" [queryParams]="this.springHandler.getParams()">
   <div class = "col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="color:inherit">
     <p class = "profile-name">{{review.utente}}</p>
     <fa-icon *ngIf="selectedIcon" [icon]="selectedIcon" style="font-size: 55px"></fa-icon>

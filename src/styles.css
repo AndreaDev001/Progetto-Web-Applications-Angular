@@ -44,6 +44,10 @@ body
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+*:focus
+{
+  outline: none;
+}
 .button {
   border-radius: 20px;
 }
