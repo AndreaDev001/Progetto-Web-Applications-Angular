@@ -133,6 +133,7 @@ export interface Review
   numeroNonMiPiace?: number;
   utente?: string;
   gioco?: number;
+  data?: string;
 }
 export interface Utente{
   username: string;
