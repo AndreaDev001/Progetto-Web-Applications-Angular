@@ -4,7 +4,10 @@
       <mat-progress-spinner diameter="50" class = "mx-auto" color="primary" mode="indeterminate"></mat-progress-spinner>
     </div>
     <div *ngIf="maxReached" class = "col-12 mt-2">
-      <p class = "text-white text-center" style="font-size: 20px">No more games found</p>
+      <div class = "text-white text-center p-2">
+        <fa-icon class = "d-inline-block" style="font-size: 25px" [icon]="icon"></fa-icon>
+        <span style="font-size: 20px;margin-left: 10px">No more games found</span>
+      </div>
     </div>
 </div>
 <div  style="padding: 20% 0" *ngIf="!shouldBeVisible && !loadingVisible">

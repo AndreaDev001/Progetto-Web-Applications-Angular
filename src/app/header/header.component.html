@@ -25,7 +25,7 @@
           <a class="dropdown-item dropdown-link" [routerLink]="['/games']" (click)="this.springHandler.performLogout()" *ngIf="isLogged">Log out</a>
           <a class="dropdown-item dropdown-link" href="http://localhost:8080/recommended" *ngIf="isLogged">Recommended for you</a>
           <a class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist" *ngIf="isLogged">Wishlist</a>
-          <a class="dropdown-item dropdown-link" *ngIf="isLogged">Your Reviews</a>
+          <a class="dropdown-item dropdown-link" [routerLink]="['/reviews']" [queryParams]="this.springHandler.getParams()" *ngIf="isLogged">Your Reviews</a>
         </div>
       </li>
     </ul>

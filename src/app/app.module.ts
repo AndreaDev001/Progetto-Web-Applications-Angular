@@ -66,7 +66,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MessagePopUpComponent } from './message-pop-up/message-pop-up.component';
 import { ErrorComponent } from './error/error.component';
-
+import { ProfileReviewListComponent } from './UserReviews/profile-review-list/profile-review-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,7 +111,8 @@ import { ErrorComponent } from './error/error.component';
     AboutUsComponent,
     NotFoundComponent,
     MessagePopUpComponent,
-    ErrorComponent
+    ErrorComponent,
+    ProfileReviewListComponent,
   ],
   imports: [
     BrowserModule,
