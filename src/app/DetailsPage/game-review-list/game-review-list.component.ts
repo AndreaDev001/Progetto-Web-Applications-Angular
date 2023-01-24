@@ -17,7 +17,7 @@ export class GameReviewListComponent implements OnInit {
   }
   public ngOnInit(): void
   {
-
+    console.log(this.userReview);
   }
   public ngOnChanges(changes: SimpleChanges): void{
     if(this.reviews)
