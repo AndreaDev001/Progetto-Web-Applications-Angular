@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
-import { EMPTY, first, map, Observable } from 'rxjs';
+import {HttpClient, HttpParams} from "@angular/common/http";
+import { map, Observable } from 'rxjs';
 import { FeedbackType } from '../enum';
-import { Utente } from '../interfaces';
+import { FeedbackContainer, Utente } from '../interfaces';
 
 
 @Injectable({
@@ -21,19 +21,20 @@ export class CommentService {
       return this.httpClient.get<Comment[]>("http://localhost:8080/getComments", {params: queryParams});
   }
 
-  public changeFeedback(commentID: number, isLike : boolean, username: string) : Observable<string>
+  public changeFeedback(commentID: number, isLike : boolean, username: string) : Observable<FeedbackType>
   {
       return this.httpClient.post<string>("http://localhost:8080/changeFeedback", {
         commento: commentID,
         tipo: isLike,
         utente: username
-      }, {responseType: 'text' as any});
+      }, {responseType: 'text' as any}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
   }
 
-  public getCommentFeedback(commentID: number): Observable<FeedbackType>
+  public getCommentFeedback(username: string, commentID: number): Observable<FeedbackType>
   {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("commentID", commentID);
+    queryParams = queryParams.append("username", username);
     return this.httpClient.get<string>("http://localhost:8080/getCommentFeedback", {responseType: 'text' as any, params: queryParams}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
   }
 
@@ -60,12 +61,10 @@ export class CommentService {
     return this.httpClient.delete<boolean>("http://localhost:8080/deleteComment/" + commentID);
   }
 }
-export interface Comment {
+export interface Comment extends FeedbackContainer {
   id: number;
   utente: string;
   contenuto : string;
-  numeroMiPiace: number;
-  numeroNonMiPiace: number;
   data: string;
 }
 
