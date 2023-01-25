@@ -67,6 +67,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { MessagePopUpComponent } from './message-pop-up/message-pop-up.component';
 import { ErrorComponent } from './error/error.component';
 import { ProfileReviewListComponent } from './UserReviews/profile-review-list/profile-review-list.component';
+import { FeedbackComponent } from './ReviewPage/feedback/feedback.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,6 +114,7 @@ import { ProfileReviewListComponent } from './UserReviews/profile-review-list/pr
     MessagePopUpComponent,
     ErrorComponent,
     ProfileReviewListComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

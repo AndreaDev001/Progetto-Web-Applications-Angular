@@ -9,7 +9,7 @@
 
 #review
 {
-  background-color: white;
+  background-color: var(--background-secondary);
   box-shadow: 0px -1px 14px 0px rgba(0,0,0,0.93);
   border-radius: 9px;
   padding: 0px 10px;
@@ -37,4 +37,7 @@
 {
   max-width: 100% !important;
 }
+
+
+
 

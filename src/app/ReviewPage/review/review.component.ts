@@ -7,18 +7,20 @@ import { Validators as NGXValidators } from 'ngx-editor'
 import { DomSanitizer } from '@angular/platform-browser';
 import { Comment, CommentService } from '../../services/comment.service';
 import { ReviewService } from '../../services/review.service';
-import { Review, Utente } from '../../interfaces';
+import { FeedbackStrategy, Review, Utente } from '../../interfaces';
 import { ObserverStatus } from '../../utils/observer';
 import { SpringHandlerService } from 'src/app/services/spring-handler.service';
 import { HttpParams } from '@angular/common/http';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { FeedbackType } from 'src/app/enum';
+import { EMPTY, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.css']
 })
-export class ReviewComponent implements OnInit, OnDestroy  {
+export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
   //this tells if the user is editing the review or not
   isEditMode: boolean = false;
 
@@ -28,7 +30,7 @@ export class ReviewComponent implements OnInit, OnDestroy  {
 
   loggedUser ?: Utente;
 
-  review: Review = {titolo: "", contenuto:"", voto: 0};
+  review: Review = {titolo: "", contenuto:"", voto: 0, currentFeedback: FeedbackType.none, numeroMiPiace: 0, numeroNonMiPiace: 0};
   //the editor instance
   editor!: Editor;
   votes : number[] = [0,1,2,3,4,5,6,7,8,9,10];
@@ -90,13 +92,14 @@ export class ReviewComponent implements OnInit, OnDestroy  {
     });
   }
 
+  ngOnDestroy(): void {
+    this.editor.destroy();
+  }
+
+
   isNewReview() : boolean
   {
     return this.review.id === undefined;
-  }
-
-  ngOnDestroy(): void {
-    this.editor.destroy();
   }
 
   setEditMode(canEdit: boolean)
@@ -114,11 +117,10 @@ export class ReviewComponent implements OnInit, OnDestroy  {
 
   publishReviewStatus = new ObserverStatus();
 
-
   //called when a new review is published
   publishReview()
   {
-    if(this.loggedUser?.username === null)
+    if(this.loggedUser === null || this.loggedUser === undefined)
     {
       this.alertService.setAllValues("Publish Error", "You are not logged in", "Ok", true);
       return;
@@ -145,6 +147,49 @@ export class ReviewComponent implements OnInit, OnDestroy  {
     });
   }
 
+  reportReviewStatus = new ObserverStatus();
+  reportReview()
+  {
+    if(this.loggedUser === null || this.loggedUser === undefined)
+    {
+      this.alertService.setAllValues("Report Error", "You are not logged in", "Ok", true);
+      return;
+    }
+    this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
+    {
+      this.alertService.setAllValues("Report Status", "Report failed!", "Ok", true);
+    });
+  }
+
+  deleteReviewStatus = new ObserverStatus();
+  deleteReview()
+  {
+    if(this.loggedUser === null || this.loggedUser === undefined)
+      return;
+
+    this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
+    {
+      this.alertService.setAllValues("Report Status", "Review Deleted Succssesfully", "Ok", true);
+    });
+  }
+
+  public onFeedbackChange(feedback : FeedbackType) : Observable<FeedbackType>
+  {
+    if(this.review.id === undefined || this.loggedUser === undefined || this.loggedUser === null)
+      return EMPTY;
+
+    return this.reviewS.changeFeedback(this.review.id, feedback === FeedbackType.like, this.loggedUser.username);
+  }
+
+  public getInitialFeedback() : Observable<FeedbackType>
+  {
+    if(this.review.id === undefined || this.loggedUser === undefined || this.loggedUser?.username !== this.review.utente)
+      return EMPTY;
+    return this.reviewS.getFeedback(this.loggedUser?.username, this.review.id);
+  }
+
+  //COMMENT SECTION
+
   loadCommentsStatus = new ObserverStatus();
 
   loadNewComments()
@@ -166,7 +211,14 @@ export class ReviewComponent implements OnInit, OnDestroy  {
 
     this.addCommentStatus.call(this.commentS.addComment(this.review.id!, this.newCommentFormControl.value!, this.loggedUser.username), (commentID) =>
     {
-        this.comments.unshift({contenuto: this.newCommentFormControl.value!, id: commentID, numeroMiPiace: 0, numeroNonMiPiace: 0, utente: this.loggedUser?.username!, data: new Date().toISOString()})
+        this.comments.unshift({
+          contenuto: this.newCommentFormControl.value!,
+          id: commentID,
+          numeroMiPiace: 0,
+          numeroNonMiPiace: 0,
+          utente: this.loggedUser?.username!,
+          data: new Date().toISOString(),
+          currentFeedback: FeedbackType.none})
         this.newCommentFormControl.reset();
     });
 
