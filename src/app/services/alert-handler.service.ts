@@ -11,17 +11,18 @@ export class AlertHandlerService
   private currentTitle: BehaviorSubject<String | undefined> = new BehaviorSubject<String | undefined>(undefined);
   private currentText: BehaviorSubject<String | undefined> = new BehaviorSubject<String | undefined>(undefined);
   private currentButtonText: BehaviorSubject<String | undefined> = new BehaviorSubject<String | undefined>(undefined);
-
+  private currentCallback: BehaviorSubject<() => void> = new BehaviorSubject(() => {});
   constructor() {
 
   }
   public show(): void{
     this.currentAlert.value?.open();
   }
-  public setAllValues(title: string,text: string,buttonText: string,open: boolean): void{
+  public setAllValues(title: string,text: string,buttonText: string,callback: () => void,open: boolean): void{
     this.currentTitle.next(title);
     this.currentText.next(text);
     this.currentButtonText.next(buttonText);
+    this.currentCallback.next(callback);
     if(open)
       this.show();
   }
@@ -29,7 +30,7 @@ export class AlertHandlerService
   public getCurrentTitle(value: boolean): any {return value ? this.currentTitle.value : this.currentTitle};
   public getCurrentText(value: boolean): any {return value ? this.currentText.value: this.currentText};
   public getCurrentButtonText(value: boolean): any {return value ? this.currentButtonText.value : this.currentButtonText};
-
+  public getCurrentCallback(value: boolean): any {return value ? this.currentCallback.value() : this.currentCallback};
   public setCurrentAlert(value: any): void{
     this.currentAlert.next(value);
   }
@@ -41,5 +42,8 @@ export class AlertHandlerService
   }
   public setCurrentButtonText(value: string): void{
     this.currentButtonText.next(value);
+  }
+  public setCurrentCallback(value: () => void){
+    this.currentCallback.next(value);
   }
 }

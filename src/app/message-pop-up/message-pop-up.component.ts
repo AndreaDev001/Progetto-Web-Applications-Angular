@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {Subscription} from "rxjs";
 import {AlertHandlerService} from "../services/alert-handler.service";
 
@@ -13,7 +13,9 @@ export class MessagePopUpComponent implements OnInit,OnDestroy{
   public title?: string;
   public text?: string;
   public buttonText?: string;
+  public currentCallback: () => void = () => {};
   private subscriptions: Subscription[] = [];
+  private currentRef?: NgbModalRef;
   @ViewChild("content") content?: any;
 
   constructor(private modalService: NgbModal,private alertHandler: AlertHandlerService) {
@@ -23,24 +25,19 @@ export class MessagePopUpComponent implements OnInit,OnDestroy{
     this.subscriptions.push(this.alertHandler.getCurrentTitle(false).subscribe((value: any) => this.title = value));
     this.subscriptions.push(this.alertHandler.getCurrentText(false).subscribe((value: any) => {
       this.text = value;
-      console.log(this.text);
     }));
+    this.subscriptions.push(this.alertHandler.getCurrentCallback(false).subscribe((value: () => void) => {
+      this.currentCallback = value;
+    }))
     this.subscriptions.push(this.alertHandler.getCurrentButtonText(false).subscribe((value: any) => this.buttonText = value));
   }
   public ngOnDestroy(): void
   {
      this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
-  public open() {
-    this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' });
-  }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  public open(): void{
+    this.currentRef  = this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' });
+    this.currentRef.closed.subscribe(() => this.currentCallback());
+    this.currentRef.dismissed.subscribe(() => this.currentCallback());
   }
 }
