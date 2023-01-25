@@ -1,21 +1,21 @@
 <button class="container-fluid row holder" *ngIf="review" [routerLink]="'../../recensioni/' + review.id" [queryParams]="this.springHandler.getParams()">
-  <div class = "col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="color:inherit">
+  <div class = "col-12 col-sm-4" style="color:inherit">
     <p class = "profile-name">{{review.utente}}</p>
     <fa-icon *ngIf="selectedIcon" [icon]="selectedIcon" style="font-size: 55px"></fa-icon>
     <app-star-component [hundredMax]=false [rating]="review.voto" style="font-size: 25px"></app-star-component>
   </div>
-  <div class = "col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8" style="color: inherit">
+  <div class = "col-12 col-sm-8"  style="color: inherit">
     <p class = "review-title">{{review.titolo}}</p>
     <p class = "review-preview">{{review.contenuto | slice: 0:review.contenuto.length / 2}}...</p>
     <div class = "d-inline-flex w-50 justify-content-between" style="color: inherit">
-      <button class = "d-inline-block interaction-button" style="width: 48%;color: inherit">
+      <div class = "d-inline-block feedback-element">
         <fa-icon [icon]="icons[0]" style="font-size: 25px"></fa-icon>
-        <span class="interaction-text">{{review.numeroMiPiace}}</span>
-      </button>
-      <button class = "d-inline-block interaction-button" style="width: 48%;color: inherit">
+        <span>{{review.numeroMiPiace}}</span>
+      </div>
+      <div class = "d-inline-block feedback-element">
         <fa-icon [icon]="icons[1]" style="font-size: 25px"></fa-icon>
-        <span class="interaction-text">{{review.numeroNonMiPiace}}</span>
-      </button>
+        <span>{{review.numeroNonMiPiace}}</span>
+      </div>
     </div>
   </div>
 </button>
