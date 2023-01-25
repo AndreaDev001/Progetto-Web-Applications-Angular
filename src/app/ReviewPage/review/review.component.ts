@@ -122,7 +122,7 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
   {
     if(this.loggedUser === null || this.loggedUser === undefined)
     {
-      this.alertService.setAllValues("Publish Error", "You are not logged in", "Ok", true);
+      this.alertService.setAllValues("Publish Error", "You are not logged in", true);
       return;
     }
 
@@ -132,7 +132,7 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
     {
       this.router.navigate(["/recensioni", reviewID], {queryParams: {jsessionid: this.springService.getSessionID(true)}});
     }, (error) => {
-      this.alertService.setAllValues("Publish Error", "Something went wrong, retry later", "Ok", true);
+      this.alertService.setAllValues("Publish Error", "Something went wrong, retry later", true);
     });
 
   }
@@ -152,12 +152,12 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
   {
     if(this.loggedUser === null || this.loggedUser === undefined)
     {
-      this.alertService.setAllValues("Report Error", "You are not logged in", "Ok", true);
+      this.alertService.setAllValues("Report Error", "You are not logged in", true);
       return;
     }
     this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
     {
-      this.alertService.setAllValues("Report Status", "Report failed!", "Ok", true);
+      this.alertService.setAllValues("Report Status", "Report failed!", true);
     });
   }
 
@@ -169,7 +169,9 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
 
     this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
     {
-      this.alertService.setAllValues("Report Status", "Review Deleted Succssesfully", "Ok", true);
+      this.alertService.addOption({name: "OK",callback: () => {}});
+      this.alertService.addOption({name: "CANCEL",callback: () => {}});
+      this.alertService.setAllValues("Report Status", "Review Deleted Succssesfully",  true);
     });
   }
 
