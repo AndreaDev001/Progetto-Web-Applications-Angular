@@ -3,7 +3,7 @@
   <h1 class = "text-white" style="font-weight: bold">{{owner}}'s Reviews</h1>
   <div class = "d-block" *ngIf="this.userReviews.length == 0">
     <p class = "text-white" style="font-size: 20px">You haven't written a review yet</p>
-    <button class = "btn btn-lg button button-primary">Back to home page</button>
+    <a class = "btn btn-lg button button-primary" [routerLink]="['/games']" [queryParams]="springHandler.getParams()">Back to home page</a >
   </div>
   <div class = "d-block pt-3" *ngIf="this.userReviews.length > 0">
     <h4 class = "text-white">Here you can see all the reviews written by you</h4>
