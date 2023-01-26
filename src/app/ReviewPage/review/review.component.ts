@@ -82,7 +82,6 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
       {
         this.review = data["review"];
         this.loadNewComments();
-        console.log(this.review);
       }
       this.springService.getGame(this.review.gioco!).subscribe(result => {
         this.game.image = result.immagine;
@@ -155,25 +154,37 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
       this.alertService.setAllValues("Report Error", "You are not logged in", true);
       return;
     }
-    this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
+    this.reportReviewStatus.call(this.reviewS.report(this.review, this.loggedUser.username, "ee"), (result) =>
     {
-      this.alertService.setAllValues("Report Status", "Report failed!", true);
+      this.alertService.setAllValues("Report Status", "Report submitted successfully", true);
+    }, (error) => {
+      if(error.error.sqlError)
+        this.alertService.setAllValues("Report Status", "Review is already reported", true);
+      else
+        this.alertService.setAllValues("Report Status", "Review Report failed, retry later", true);
     });
   }
 
   deleteReviewStatus = new ObserverStatus();
-  deleteReview()
-  {
-    if(this.loggedUser === null || this.loggedUser === undefined)
-      return;
 
-    this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
-    {
-      this.alertService.addOption({name: "OK",callback: () => {}});
-      this.alertService.addOption({name: "CANCEL",callback: () => {}});
-      this.alertService.setAllValues("Report Status", "Review Deleted Succssesfully",  true);
-    });
+  deleteReviewPrompt()
+  {
+    this.alertService.resetOptions();
+    this.alertService.addOption({name: "CANCEL",callback: () => {}});
+    this.alertService.addOption({name: "CONFIRM",className: "button btn button-danger", callback: () => {
+      if(this.loggedUser === null || this.loggedUser === undefined)
+        return;
+
+      this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
+      {
+        this.alertService.resetOptions();
+        this.alertService.addOption({name: "CONFIRM",callback: () => { this.router.navigate(["/"], {queryParams: {jsessionid: this.springService.getSessionID(true)}})}});
+        this.alertService.setAllValues("Delete Review", "Review deleted successfully",  true);
+      });
+    }});
+    this.alertService.setAllValues("Delete Review", "Are you sure to delete this review? (It cannot be undone)",  true);
   }
+
 
   public onFeedbackChange(feedback : FeedbackType) : Observable<FeedbackType>
   {
@@ -185,8 +196,9 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
 
   public getInitialFeedback() : Observable<FeedbackType>
   {
-    if(this.review.id === undefined || this.loggedUser === undefined || this.loggedUser?.username !== this.review.utente)
+    if(this.review.id === undefined || this.loggedUser === undefined)
       return EMPTY;
+    console.log("TRY GET FEEDBACK");
     return this.reviewS.getFeedback(this.loggedUser?.username, this.review.id);
   }
 

@@ -6,6 +6,7 @@ import { FeedbackType } from "../../enum";
 import { FeedbackStrategy, Utente } from 'src/app/interfaces';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { EMPTY, Observable } from 'rxjs';
+import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { EMPTY, Observable } from 'rxjs';
 export class CommentComponent implements FeedbackStrategy{
 
 
-  constructor(private service : CommentService){}
+  constructor(private service : CommentService, private alertService : AlertHandlerService){}
 
 
   @Input() comment!: Comment;
@@ -28,21 +29,6 @@ export class CommentComponent implements FeedbackStrategy{
   editMode: boolean = false;
 
   commentTextControl = new FormControl("", [Validators.required]);
-
-  @ViewChild(FeedbackComponent)
-  feed : FeedbackComponent | undefined;
-
-  ngAfterViewInit(): void {
-
-    if(this.loggedUser?.username !== this.comment.utente)
-      return;
-    this.service.getCommentFeedback(this.loggedUser.username, this.comment.id).subscribe(feedback => {
-      if(this.feed !== undefined)
-        this.feed.feedback.currentFeedback = feedback;
-    });
-
-
-  }
 
   setEditMode(editMode : boolean)
   {
@@ -61,7 +47,7 @@ export class CommentComponent implements FeedbackStrategy{
 
   public getInitialFeedback() : Observable<FeedbackType>
   {
-    if(this.loggedUser?.username !== this.comment.utente)
+    if(this.loggedUser === null || this.loggedUser === undefined)
       return EMPTY;
     return this.service.getCommentFeedback(this.loggedUser.username, this.comment.id);
   }
@@ -77,5 +63,16 @@ export class CommentComponent implements FeedbackStrategy{
       this.comment.contenuto = this.commentTextControl.value!;
       this.setEditMode(false);
     });
+  }
+
+
+  deleteComment()
+  {
+    this.alertService.resetOptions();
+    this.alertService.addOption({name: "CANCEL",callback: () => {}});
+    this.alertService.addOption({name: "CONFIRM",className: "button btn button-danger",callback: () => {
+      this.onDelete.emit(this.comment);
+    }});
+    this.alertService.setAllValues("Delete Comment", "Are you sure to delete this comment?",  true);
   }
 }
