@@ -16,8 +16,8 @@
         </svg>
       </button>
       <ul class="dropdown-menu">
-        <li class="dropdown-item" (click)="setEditMode(true)">Modifica</li>
-        <li class="dropdown-item" (click)="this.onDelete.emit(this.comment)">Elimina</li>
+        <li class="dropdown-item" (click)="setEditMode(true)">Edit</li>
+        <li class="dropdown-item" (click)="deleteComment()">Delete</li>
       </ul>
     </div>
   </section>

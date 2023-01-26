@@ -69,7 +69,6 @@ export const reviewResolver: ResolveFn<Review> = (route: ActivatedRouteSnapshot)
 
   return cs.getReview(parseInt(id)).pipe(mergeMap(review => {
     if (review) {
-      console.log(review);
       return of(review);
     } else {  // id not found
       router.navigate(['/notFound']);
