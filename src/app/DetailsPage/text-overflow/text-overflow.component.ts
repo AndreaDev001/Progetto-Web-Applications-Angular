@@ -18,6 +18,7 @@ export class TextOverflowComponent implements OnInit{
   @Input() nameImage?: string;
   @Input() name?: string;
   @Input() overflowItems?: overflowItem[];
+  @Input() newWindow: boolean = false;
 
   constructor() {
   }

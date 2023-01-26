@@ -5,11 +5,12 @@
     </div>
     <div class="text-center text-white" *ngIf="!userReview || (userReview && userReview.titolo == null)">
       <h2 style="font-weight: bold">Your Review</h2>
-      <p  style="font-size: 17px">You haven't written a review on this game yet</p>
-      <a class = "btn btn-lg text-white" style="background-color: var(--primary)" routerLink="../../{{gameID}}/newRecensione" [queryParams]="this.springHandler.getParams()">Write a new review</a>
+      <p  style="font-size: 17px" [innerText]="isLogged ? 'You haven\' t written a review on this game yet' : 'To write a review you have to be logged in'">You haven't written a review on this game yet</p>
+      <button class = "btn btn-lg button button-primary" *ngIf=isLogged routerLink="../../{{gameID}}/newRecensione" [queryParams]="this.springHandler.getParams()">Write a new review</button>
+      <button class = "btn btn-lg button button-primary" *ngIf="!isLogged" (click)="goToLogin()">Login</button>
     </div>
     <div *ngIf="reviews && reviews.length > 0" class = "text-white text-center">
-      <h2 style="font-weight: bold;">Reviews</h2>
+      <h2 style="font-weight: bold">Reviews</h2>
       <app-game-review *ngFor="let current of reviews" [review]="current"></app-game-review>
     </div>
     <div *ngIf="!reviews || (reviews && reviews.length == 0)" class = "text-white text-center">
