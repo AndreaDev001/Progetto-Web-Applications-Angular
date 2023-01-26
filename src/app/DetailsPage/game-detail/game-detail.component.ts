@@ -131,13 +131,20 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   }
   private formatReview(value: Review): void{
     let result: string | undefined = this.formatHTML(value.contenuto);
+    console.log("Result:" + result);
     value.contenuto = result ? result : value.contenuto;
   }
   private formatHTML(value: string): string | undefined {
     let domParser: DOMParser = new DOMParser();
-    let result: Document = domParser.parseFromString(value, 'text/html');
-    let foundElement: HTMLParagraphElement | null = result.body.querySelector("p");
-    return foundElement?.innerText;
+    let document: Document = domParser.parseFromString(value,'text/html');
+    let all: HTMLCollectionOf<Element> = document.body.getElementsByTagName("*");
+    for(let i = 0;i < all.length;i++)
+    {
+      let currentElement: Element = all[i];
+      if(currentElement.textContent != undefined && currentElement.textContent != "")
+        return currentElement.textContent;
+    }
+    return "Text not found";
   }
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
