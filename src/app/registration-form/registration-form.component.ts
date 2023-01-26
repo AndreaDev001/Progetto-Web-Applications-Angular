@@ -42,7 +42,7 @@ export class RegistrationFormComponent implements OnInit {
           this.alertHandler.resetOptions();
           this.alertHandler.addOption({name: "OK",callback: this.goToLogin})
           this.alertHandler.setCurrentDismissCallback(this.goToLogin);
-          this.alertHandler.setCurrentDismissCallback(this.goToLogin);
+          this.alertHandler.setCurrentCloseCallback(this.goToLogin);
           this.alertHandler.setAllValues("Registration","You've successfully registered! You can now log in",true);
         }
         else {
