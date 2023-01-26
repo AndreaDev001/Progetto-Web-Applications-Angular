@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
-import { catchError, EMPTY, mergeMap, Observable, of, throwError } from 'rxjs';
+import { map, EMPTY, mergeMap, Observable, of } from 'rxjs';
 import { ResolveFn, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Validators } from '@angular/forms';
 import { Review } from '../interfaces';
 
 
@@ -29,6 +28,37 @@ export class ReviewService {
   {
     return this.httpClient.post<boolean>("http://localhost:8080/editReview", review);
   }
+
+  delete(review: Review) : Observable<void>
+  {
+    return this.httpClient.delete<void>("http://localhost:8080/deleteReview/" + review.id);
+  }
+
+  report(review: Review, username: string, motivazione: string) : Observable<any>
+  {
+    return this.httpClient.post<any>("http://localhost:8080/reportReview", {
+      recensione: review,
+      utente: username,
+      motivazione: motivazione
+    });
+  }
+
+  public changeFeedback(reviewID: number, isLike : boolean, username: string) : Observable<FeedbackType>
+  {
+      return this.httpClient.post<string>("http://localhost:8080/changeReviewFeedback", {
+        recensione: reviewID,
+        tipo: isLike,
+        utente: username
+      }, {responseType: 'text' as any}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
+  }
+
+  public getFeedback(user : string, reviewID: number): Observable<FeedbackType>
+  {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("user", user)
+    queryParams = queryParams.append("reviewID", reviewID);
+    return this.httpClient.get<string>("http://localhost:8080/getReviewFeedback", {responseType: 'text' as any, params: queryParams}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
+  }
 }
 
 export const reviewResolver: ResolveFn<Review> = (route: ActivatedRouteSnapshot) : Observable<Review> =>  {
@@ -39,9 +69,10 @@ export const reviewResolver: ResolveFn<Review> = (route: ActivatedRouteSnapshot)
 
   return cs.getReview(parseInt(id)).pipe(mergeMap(review => {
     if (review) {
+      console.log(review);
       return of(review);
     } else {  // id not found
-      router.navigate(['/']);
+      router.navigate(['/notFound']);
       return EMPTY;
     }
   }));

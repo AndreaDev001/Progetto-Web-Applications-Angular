@@ -1,0 +1,34 @@
+<app-error *ngIf="!isLogged" [errorMessage]="'You have to be logged in to use this page'" [errorButtonText]="'Back to home'"></app-error>
+<div class = "container pt-4" *ngIf="isLogged">
+  <h1 class = "text-white" style="font-weight: bold">{{owner}}'s Reviews</h1>
+  <div class = "d-block" *ngIf="this.userReviews.length == 0">
+    <p class = "text-white" style="font-size: 20px">You haven't written a review yet</p>
+    <button class = "btn btn-lg button button-primary">Back to home page</button>
+  </div>
+  <div class = "d-block pt-3" *ngIf="this.userReviews.length > 0">
+    <h4 class = "text-white">Here you can see all the reviews written by you</h4>
+    <table class = "table table-borderless rounded rounded-4 overflow-hidden">
+      <caption class = "text-white">List of Reviews, you can see more about a single review by clicking on it</caption>
+      <thead>
+         <tr id = "profile-review-header" class = "text-center">
+           <th scope="col">#</th>
+           <th scope="col">Title</th>
+           <th scope="col">Preview</th>
+           <th scope="col">Vote</th>
+           <th scope="col">Like Count</th>
+           <th scope="col">Dislike Count</th>
+         </tr>
+      </thead>
+      <tbody>
+      <tr class = "profile-review text-center" *ngFor="let current of this.userReviews;let i = index" (click)="handleClick(current)">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{current.titolo}}</td>
+        <td>{{current.contenuto | slice: 0: current.contenuto.length / 2}}...</td>
+        <td>{{current.voto}}</td>
+        <td>{{current.numeroMiPiace}}</td>
+        <td>{{current.numeroNonMiPiace}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

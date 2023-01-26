@@ -39,12 +39,15 @@ export class RegistrationFormComponent implements OnInit {
     this.authenticationService.doRegistration(email, username, password).subscribe(
       registrationStatus => {
         if (registrationStatus === "ok") {
-          this.alertHandler.setAllValues("Registration","You've successfully registered! You can now log in","OK",true);
-          window.open("http://localhost:8080/login", "_self");
+          this.alertHandler.resetOptions();
+          this.alertHandler.addOption({name: "OK",callback: this.goToLogin})
+          this.alertHandler.setCurrentDismissCallback(this.goToLogin);
+          this.alertHandler.setCurrentCloseCallback(this.goToLogin);
+          this.alertHandler.setAllValues("Registration","You've successfully registered! You can now log in",true);
         }
         else {
           if (registrationStatus === "emptyFields") {
-            this.alertHandler.setAllValues("Registration","All fields are mandatory","OK",true);
+            this.alertHandler.setAllValues("Registration","All fields are mandatory",true);
           }
           if (registrationStatus === "unavailableUsername") {
             this.registrationForm.controls['username'].setErrors({'unavailable' : true});
@@ -72,7 +75,7 @@ export class RegistrationFormComponent implements OnInit {
       '- an uppercase character,\n' +
       '- a special character,\n' +
       '- a digit\n' +
-      'Password can\'t contain space and must be at least 8 characters long',"OK",true);
+      'Password can\'t contain space and must be at least 8 characters long',true);
   }
   goToLogin(): void {
     window.open("http://localhost:8080/login", "_self");

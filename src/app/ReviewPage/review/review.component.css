@@ -9,7 +9,7 @@
 
 #review
 {
-  background-color: white;
+  background-color: var(--background-secondary);
   box-shadow: 0px -1px 14px 0px rgba(0,0,0,0.93);
   border-radius: 9px;
   padding: 0px 10px;
@@ -29,16 +29,15 @@
 .content
 {
   width: 90%;
-  margin: 30px auto;
+  margin: 0px auto;
 }
 
-.NgxEditor
-{
-  background-color: red !important;
-}
 
 .NgxEditor__ImageWrapper
 {
   max-width: 100% !important;
 }
+
+
+
 

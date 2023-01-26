@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameHandlerService} from "../../services/game-handler.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {skip, Subscription} from "rxjs";
+import {AlertHandlerService} from "../../services/alert-handler.service";
 
 @Component({
   selector: 'app-home-page',

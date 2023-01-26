@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {Subscription} from "rxjs";
-import {AlertHandlerService} from "../services/alert-handler.service";
+import {AlertHandlerService, AlertOption} from "../services/alert-handler.service";
 
 @Component({
   selector: 'app-message-pop-up',
@@ -14,33 +14,36 @@ export class MessagePopUpComponent implements OnInit,OnDestroy{
   public text?: string;
   public buttonText?: string;
   private subscriptions: Subscription[] = [];
+  private currentRef?: NgbModalRef;
+  public options: AlertOption[] = [];
+  public currentCloseCallback: () => void = () => {};
+  public currentDismissCallback: () => void = () => {};
   @ViewChild("content") content?: any;
 
   constructor(private modalService: NgbModal,private alertHandler: AlertHandlerService) {
 
   }
   public ngOnInit(): void{
+    this.subscriptions.push(this.alertHandler.getAlertOptions(false).subscribe((value: AlertOption[]) => this.options = value));
     this.subscriptions.push(this.alertHandler.getCurrentTitle(false).subscribe((value: any) => this.title = value));
-    this.subscriptions.push(this.alertHandler.getCurrentText(false).subscribe((value: any) => {
-      this.text = value;
-      console.log(this.text);
-    }));
-    this.subscriptions.push(this.alertHandler.getCurrentButtonText(false).subscribe((value: any) => this.buttonText = value));
+    this.subscriptions.push(this.alertHandler.getCurrentText(false).subscribe((value: any) => this.text = value));
+    this.subscriptions.push(this.alertHandler.getCurrentCloseCallback(false).subscribe((value: () => void) => this.currentCloseCallback = value));
+    this.subscriptions.push(this.alertHandler.getCurrentDismissCallback(false).subscribe((value: () => void) => this.currentDismissCallback = value));
   }
   public ngOnDestroy(): void
   {
      this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
-  public open() {
-    this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' });
+  public open(): void{
+    this.currentRef  = this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' });
+    this.currentRef.dismissed.subscribe(() => this.currentDismissCallback());
   }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  public call(option: AlertOption): void{
+    this.currentRef?.close();
+    option.callback();
+  }
+  public defaultCloseOperation(): void {
+    this.currentRef?.close();
+    this.currentCloseCallback();
   }
 }

@@ -11,14 +11,19 @@ import {faCircleInfo, faCircleUser, faHouse, faNewspaper, IconDefinition} from "
 })
 export class HeaderComponent implements OnInit,OnDestroy{
 
-  @Input() isLogged: boolean = false;
+  public isLogged: boolean = false;
+  public isAdmin: boolean = false;
   private subscriptions: Subscription[] = [];
   public icons: IconDefinition[] = [faHouse,faNewspaper,faCircleInfo,faCircleUser];
   constructor(public springHandler: SpringHandlerService) {
 
   }
   public ngOnInit(): void{
-    this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: Utente) => this.isLogged = value != undefined));
+    this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: Utente) => {
+      this.isLogged = value != undefined;
+      if(this.isLogged)
+        this.isAdmin = value.amministratore;
+    }));
   }
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());

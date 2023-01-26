@@ -1,14 +1,20 @@
-<div class="banner" style="background-image: linear-gradient(0deg, white 5%, rgba(255, 255, 255, 0.271) 100%), url('https://media.rawg.io/media/games/34e/34e100b1f648de99f32d477065f04653.jpg');">
+<div class="banner text-white" style="background-image: linear-gradient(0deg, var(--background-color) 8%, rgba(25, 25, 25,0.4) 100%), url('{{game.image}}');">
 
 
-
+  <app-feedback [feedback]="this.review" [target]="this"></app-feedback>
+  
+  <div class="d-flex" *ngIf="!this.isNewReview()">
+    <button class="btn button button-primary" (click)="reportReview()">Report</button>
+    <button *ngIf="this.review.utente !== undefined && this.review.utente === this.loggedUser?.username" class="btn button button-danger" (click)="deleteReview()">Delete Review</button>
+    <h4 class="text-muted">{{this.review.data | date:'EEEE, MMMM d, y, h:mm:ss a'}}</h4>
+  </div>
   <div class="content">
     <section id="review_section" class="d-flex flex-column justify-content-center align-items-center">
       <form class="w-100" (ngSubmit)="(isNewReview() ? publishReview() : editReview())" [formGroup]="form" *ngIf="this.isEditMode; else htmlReview">
 
         <div class="form-group">
           <label for="exampleFormControlInput1">Title</label>
-          <input maxlength="40" formControlName="titolo" type="text" class="form-control" placeholder="titolo" >
+          <input maxlength="40" formControlName="titolo" type="text" class="whitesmoke-text form-control background-secondary-color" placeholder="titolo" >
           <div *ngIf="form.controls.titolo.errors  && (form.dirty || form.touched)" class="text-danger">
             Title is required
           </div>
@@ -18,7 +24,7 @@
         <div *ngIf="form.hasError('required', 'title')">EEEE</div>
         <div class="NgxEditor__Wrapper">
           <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
-          <ngx-editor placeholder="scrivi qui bello" [editor]="editor" formControlName="contenuto"> </ngx-editor>
+          <ngx-editor placeholder="write review..." [editor]="editor" formControlName="contenuto"> </ngx-editor>
         </div>
         <div *ngIf="form.invalid && (form.dirty || form.touched)" class="text-danger">
           <div *ngIf="form.hasError('minlength', 'contenuto')">
@@ -29,11 +35,11 @@
           </div>
         </div>
 
-        <select class="form-select form-select-sm" formControlName="voto">
+        <select class="form-select form-select-sm background-secondary-color whitesmoke-text" formControlName="voto">
           <option *ngFor="let vote of votes" [value]="vote">{{vote}}/10</option>
         </select>
 
-        <button style="text-align: center;"  type="submit" [disabled]="form.invalid || !form.dirty || this.publishReviewStatus.isLoading">{{!isNewReview() ? 'CONFERMA MODIFICHE' : 'PUBBLICA' }}</button>
+        <button class="btn button button-primary mt-2" style="text-align: center;"  type="submit" [disabled]="form.invalid || !form.dirty || this.publishReviewStatus.isLoading">{{!isNewReview() ? 'SUBMIT' : 'PUBLISH' }}</button>
       </form>
 
 
@@ -43,22 +49,24 @@
       <h1>{{review.voto}}/10</h1>
       </ng-template>
 
-      <button *ngIf="!this.isNewReview() && review.utente === loggedUser" [disabled]="this.publishReviewStatus.isLoading" (click)="this.setEditMode(!this.isEditMode)">{{!this.isEditMode ? "MODIFICA" : "ANNULLA MODIFICHE"}}</button>
+      <button class="btn button button-secondary" *ngIf="!this.isNewReview() && loggedUser !== null && loggedUser?.username === review.utente" [disabled]="this.publishReviewStatus.isLoading" (click)="this.setEditMode(!this.isEditMode)">{{!this.isEditMode ? "EDIT" : "DISCARD CHANGES"}}</button>
 
 
     </section >
     <section class="" *ngIf="!this.isNewReview()" [immediateCheck]="true" infiniteScroll (scrolled)="loadNewComments()" id="commentsSection">
 
 
-      <h3>Sezione Commenti</h3>
-      <section *ngIf="this.loggedUser !== undefined; else athenticationText">
-        <textarea [formControl]="newCommentFormControl" placeholder="Scrivi commento..." class="w-100 ny-4" autosize [minRows]="1" [maxRows]="15" style="resize: none;"></textarea>
-        <button [disabled]="this.addCommentStatus.isLoading || newCommentFormControl.invalid" (click)="addComment()">PUBBLICA</button>
-      </section>
-      <ng-template #athenticationText>
-        <h5>Per poter commentare devi esserti autenticato; Esegui il <a href="">login</a></h5>
+      <div>
+        <h3>Comment Section</h3>
+        <section *ngIf="this.loggedUser !== null && this.loggedUser !== undefined; else authenticationText">
+          <textarea [formControl]="newCommentFormControl" placeholder="Write comment..." class="w-100 ny-4 background-secondary-color whitesmoke-text" autosize [minRows]="1" [maxRows]="15" style="resize: none;border: unset;"></textarea>
+          <button class="btn button button-primary" [disabled]="this.addCommentStatus.isLoading || newCommentFormControl.invalid" (click)="addComment()">PUBBLICA</button>
+        </section>
+      </div>
+      <ng-template #authenticationText>
+        <h5>To comment you must be <a href="http://localhost:8080/login">logged in</a></h5>
       </ng-template>
-      <app-comment class="my-2" *ngFor="let comment of comments" [comment]="comment" [loggedUser]="this.loggedUser" (onDelete)="deleteComment($event)"></app-comment>
+      <app-comment *ngFor="let comment of comments" [comment]="comment" [loggedUser]="this.loggedUser" (onDelete)="deleteComment($event)"></app-comment>
     </section>
 
 

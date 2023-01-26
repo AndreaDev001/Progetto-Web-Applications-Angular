@@ -61,6 +61,12 @@ export class SpringHandlerService {
     params = params.append("gameID",gameID);
     return this.httpClient.get<Review>(desiredURL,{params: params});
   }
+  public getUserReviews(username: string): Observable<Review[]>{
+    const desiredURL: string = this.url + "/getUserReviews";
+    let params: HttpParams = new HttpParams();
+    params = params.append("username",username);
+    return this.httpClient.get<Review[]>(desiredURL,{params: params});
+  }
   public addGameWishlist(username: string,gameID: number): Observable<any>{
     const desiredURL: string = this.url + "/addGameWishlist";
     let params: HttpParams = new HttpParams();

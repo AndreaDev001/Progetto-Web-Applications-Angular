@@ -7,15 +7,20 @@ import { Validators as NGXValidators } from 'ngx-editor'
 import { DomSanitizer } from '@angular/platform-browser';
 import { Comment, CommentService } from '../../services/comment.service';
 import { ReviewService } from '../../services/review.service';
-import { Review } from '../../interfaces';
+import { FeedbackStrategy, Review, Utente } from '../../interfaces';
 import { ObserverStatus } from '../../utils/observer';
+import { SpringHandlerService } from 'src/app/services/spring-handler.service';
+import { HttpParams } from '@angular/common/http';
+import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { FeedbackType } from 'src/app/enum';
+import { EMPTY, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.css']
 })
-export class ReviewComponent implements OnInit, OnDestroy  {
+export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
   //this tells if the user is editing the review or not
   isEditMode: boolean = false;
 
@@ -23,14 +28,17 @@ export class ReviewComponent implements OnInit, OnDestroy  {
   comments: Comment[] = [];
   loadedTimes : number = 0;
 
-  loggedUser ?: string = "pier";
+  loggedUser ?: Utente;
 
-  review: Review = {titolo: "", contenuto:"", voto: 0};
+  review: Review = {titolo: "", contenuto:"", voto: 0, currentFeedback: FeedbackType.none, numeroMiPiace: 0, numeroNonMiPiace: 0};
   //the editor instance
   editor!: Editor;
   votes : number[] = [0,1,2,3,4,5,6,7,8,9,10];
 
   newCommentFormControl = new FormControl("", [Validators.required]);
+
+  backgroundImage = '';
+  game : {image : string, title: string} = {image: "", title: ""};
 
   //toolbar configuration used inside the html editor
   toolbar: Toolbar = [
@@ -50,32 +58,48 @@ export class ReviewComponent implements OnInit, OnDestroy  {
     voto: new FormControl(0, [Validators.required]),
   });
 
-  constructor (private commentS: CommentService, private reviewS : ReviewService, private route: ActivatedRoute, private router: Router,private location: Location, public sanitizer: DomSanitizer){
+  constructor (private commentS: CommentService, private reviewS : ReviewService, private route: ActivatedRoute, private router: Router,private location: Location, public sanitizer: DomSanitizer, public springService: SpringHandlerService, private alertService: AlertHandlerService){
   }
 
   ngOnInit(): void {
-    //check by reading the route date if this is a new review to be published
+
+
+    this.springService.getCurrentUsername(false).subscribe((value: Utente | undefined) => {
+      this.loggedUser = value;
+    });
 
     this.editor = new Editor();
     this.route.data.subscribe(data => {
-
+      //check by reading the route date if this is a new review to be published
       if(data["review"] === undefined)
+      {
         this.setEditMode(true);
+        const gameID = this.route.snapshot.paramMap.get("gameID");
+        if(gameID !== null)
+          this.review.gioco = parseInt(gameID);
+      }
       else
+      {
         this.review = data["review"];
-      this.loadNewComments();
+        this.loadNewComments();
+        console.log(this.review);
+      }
+      this.springService.getGame(this.review.gioco!).subscribe(result => {
+        this.game.image = result.immagine;
+        this.game.title = result.titolo;
+      });
+
     });
-
-
-  }
-
-  isNewReview() : boolean
-  {
-    return this.review.id === undefined;
   }
 
   ngOnDestroy(): void {
     this.editor.destroy();
+  }
+
+
+  isNewReview() : boolean
+  {
+    return this.review.id === undefined;
   }
 
   setEditMode(canEdit: boolean)
@@ -87,18 +111,28 @@ export class ReviewComponent implements OnInit, OnDestroy  {
       this.form.controls.titolo.setValue(this.review.titolo);
       this.form.controls.contenuto.setValue(this.review.contenuto);
       this.form.controls.voto.setValue(this.review.voto);
+
     }
   }
 
   publishReviewStatus = new ObserverStatus();
 
-
   //called when a new review is published
   publishReview()
   {
+    if(this.loggedUser === null || this.loggedUser === undefined)
+    {
+      this.alertService.setAllValues("Publish Error", "You are not logged in", true);
+      return;
+    }
+
+    this.review.utente = this.loggedUser?.username;
+
     this.publishReviewStatus.call(this.reviewS.publish({...this.review, ...<Review>this.form.value}), (reviewID) =>
     {
-      this.router.navigate(["/recensioni", reviewID]);
+      this.router.navigate(["/recensioni", reviewID], {queryParams: {jsessionid: this.springService.getSessionID(true)}});
+    }, (error) => {
+      this.alertService.setAllValues("Publish Error", "Something went wrong, retry later", true);
     });
 
   }
@@ -112,6 +146,51 @@ export class ReviewComponent implements OnInit, OnDestroy  {
         this.review = reviewSubmit;
     });
   }
+
+  reportReviewStatus = new ObserverStatus();
+  reportReview()
+  {
+    if(this.loggedUser === null || this.loggedUser === undefined)
+    {
+      this.alertService.setAllValues("Report Error", "You are not logged in", true);
+      return;
+    }
+    this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
+    {
+      this.alertService.setAllValues("Report Status", "Report failed!", true);
+    });
+  }
+
+  deleteReviewStatus = new ObserverStatus();
+  deleteReview()
+  {
+    if(this.loggedUser === null || this.loggedUser === undefined)
+      return;
+
+    this.reportReviewStatus.call(this.reviewS.delete(this.review), (result) =>
+    {
+      this.alertService.addOption({name: "OK",callback: () => {}});
+      this.alertService.addOption({name: "CANCEL",callback: () => {}});
+      this.alertService.setAllValues("Report Status", "Review Deleted Succssesfully",  true);
+    });
+  }
+
+  public onFeedbackChange(feedback : FeedbackType) : Observable<FeedbackType>
+  {
+    if(this.review.id === undefined || this.loggedUser === undefined || this.loggedUser === null)
+      return EMPTY;
+
+    return this.reviewS.changeFeedback(this.review.id, feedback === FeedbackType.like, this.loggedUser.username);
+  }
+
+  public getInitialFeedback() : Observable<FeedbackType>
+  {
+    if(this.review.id === undefined || this.loggedUser === undefined || this.loggedUser?.username !== this.review.utente)
+      return EMPTY;
+    return this.reviewS.getFeedback(this.loggedUser?.username, this.review.id);
+  }
+
+  //COMMENT SECTION
 
   loadCommentsStatus = new ObserverStatus();
 
@@ -129,12 +208,19 @@ export class ReviewComponent implements OnInit, OnDestroy  {
 
   addComment()
   {
-    if(this.isNewReview())
+    if(this.loggedUser === undefined)
       return;
 
-    this.addCommentStatus.call(this.commentS.addComment(this.review.id!, this.newCommentFormControl.value!), (commentID) =>
+    this.addCommentStatus.call(this.commentS.addComment(this.review.id!, this.newCommentFormControl.value!, this.loggedUser.username), (commentID) =>
     {
-        this.comments.unshift({contenuto: this.newCommentFormControl.value!, id: commentID, numeroMiPiace: 0, numeroNonMiPiace: 0, utente: this.loggedUser!})
+        this.comments.unshift({
+          contenuto: this.newCommentFormControl.value!,
+          id: commentID,
+          numeroMiPiace: 0,
+          numeroNonMiPiace: 0,
+          utente: this.loggedUser?.username!,
+          data: new Date().toISOString(),
+          currentFeedback: FeedbackType.none})
         this.newCommentFormControl.reset();
     });
 

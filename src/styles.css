@@ -110,3 +110,63 @@ button.custom-dropdown-button:hover{
   color: whitesmoke;
   border: 1px solid grey;
 }
+
+
+a:visited {
+  color: var(--lighter);
+}
+
+
+.background-color
+{
+  background-color: var(--background-color) !important;
+}
+
+.background-secondary-color
+{
+  background-color: var(--background-secondary) !important;
+}
+
+.secondary
+{
+  background-color: var(--secondary) !important;
+}
+
+.whitesmoke-text
+{
+  color: whitesmoke !important;
+}
+
+
+.NgxEditor
+{
+  background-color: var(--background-secondary) !important;
+  color: whitesmoke !important;
+}
+
+.NgxEditor__MenuBar {
+
+  background-color: var(--secondary) !important;
+}
+
+.NgxEditor__Popup,
+.NgxEditor__Dropdown--DropdownMenu
+{
+  background-color: var(--secondary) !important;
+}
+
+.button-danger {
+  background-color: var(--danger);
+  border: transparent;
+  color: whitesmoke;
+}
+
+.button-danger:hover {
+  background-color: whitesmoke;
+  color: var(--danger);
+}
+.button-danger:disabled {
+  background-color: var(--danger);
+}
+
+

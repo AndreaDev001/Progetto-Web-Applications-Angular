@@ -66,7 +66,9 @@ export class GameMainInfoLeftComponent implements OnInit,OnDestroy{
     {
        this.updateText(value);
        let requiredValue: string = value ? "Game successfully added to wishlist" : "Game successfully removed from wishlist";
-       this.alertHandler.setAllValues("Wishlist",requiredValue,"OK",true);
+       this.alertHandler.resetOptions();
+       this.alertHandler.addOption({name: "OK",className: "btn btn-lg button button-primary",callback: () => {}});
+       this.alertHandler.setAllValues("Wishlist",requiredValue,true);
     }
     else
     {

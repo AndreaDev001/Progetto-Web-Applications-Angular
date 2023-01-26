@@ -1,0 +1,13 @@
+tr.profile-review{
+  background-color: var(--background-secondary);
+  color: whitesmoke;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+tr.profile-review:hover{
+  background-color: var(--secondary);
+}
+tr#profile-review-header{
+  background-color: var(--primary);
+  color: whitesmoke;
+}

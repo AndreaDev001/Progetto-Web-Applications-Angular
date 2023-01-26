@@ -1,0 +1,21 @@
+
+.likeSelected
+{
+  background-color: var(--primary);
+  color: var(--primary) !important;
+  transform: scale(1.2);
+}
+
+.dislikeSelected
+{
+  background-color: var(--danger);
+  color: var(--danger) !important;
+  transform: scale(1.2);
+}
+
+.feedbackButton
+{
+  background-color: transparent;
+  border: transparent;
+  color: whitesmoke;
+}

@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ObserverStatus } from '../../utils/observer';
 import { Comment, CommentService } from '../../services/comment.service'
 import { FeedbackType } from "../../enum";
+import { FeedbackStrategy, Utente } from 'src/app/interfaces';
+import { FeedbackComponent } from '../feedback/feedback.component';
+import { EMPTY, Observable } from 'rxjs';
 
 
 @Component({
@@ -13,33 +16,31 @@ import { FeedbackType } from "../../enum";
 
 
 
-export class CommentComponent implements OnInit{
+export class CommentComponent implements FeedbackStrategy{
 
-
-  public FeedbackTypeEnum = FeedbackType;
 
   constructor(private service : CommentService){}
 
 
   @Input() comment!: Comment;
-  @Input() loggedUser?: string;
+  @Input() loggedUser?: Utente;
   @Output() onDelete = new EventEmitter<Comment>();
-  currentFeedback : FeedbackType = FeedbackType.none;
   editMode: boolean = false;
-  isUpdatingFeedback: boolean = false;
 
   commentTextControl = new FormControl("", [Validators.required]);
 
+  @ViewChild(FeedbackComponent)
+  feed : FeedbackComponent | undefined;
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
 
-    if(this.loggedUser !== this.comment.utente)
+    if(this.loggedUser?.username !== this.comment.utente)
       return;
-    console.log("EEEIEIEIIEEIIE");
-    this.service.getCommentFeedback(this.comment.id).subscribe(feedback => {
-      this.currentFeedback = feedback;
-      console.log(feedback);
+    this.service.getCommentFeedback(this.loggedUser.username, this.comment.id).subscribe(feedback => {
+      if(this.feed !== undefined)
+        this.feed.feedback.currentFeedback = feedback;
     });
+
 
   }
 
@@ -50,43 +51,28 @@ export class CommentComponent implements OnInit{
       this.commentTextControl.setValue(this.comment.contenuto);
   }
 
-
-  private updateFeedbackCount(feedback : FeedbackType, increase : boolean)
+  public onFeedbackChange(feedback : FeedbackType) : Observable<FeedbackType>
   {
-    if(feedback === FeedbackType.like)
-      this.comment.numeroMiPiace += increase ? 1 : -1;
-    else if(feedback === FeedbackType.dislike)
-      this.comment.numeroNonMiPiace += increase ? 1 : -1;
+    if(this.loggedUser === undefined || this.loggedUser === null)
+      return EMPTY;
+
+    return this.service.changeFeedback(this.comment.id, feedback === FeedbackType.like, this.loggedUser.username);
   }
 
-  changeFeedback(feedback : FeedbackType)
+  public getInitialFeedback() : Observable<FeedbackType>
   {
-
-      this.isUpdatingFeedback = true;
-      this.service.changeFeedback(this.comment.id, feedback == FeedbackType.like).subscribe(feedback =>
-        {
-          let resultFeedback = FeedbackType[feedback as keyof typeof FeedbackType]
-          this.isUpdatingFeedback = false;
-          this.updateFeedbackCount(resultFeedback, true);
-          this.updateFeedbackCount(this.currentFeedback, false);
-          this.currentFeedback = resultFeedback;
-
-      });
-  }
-
-  resize(element : any) {
-    console.log(element);
-    element.style.height = "0px";
-    element.style.height = (element.scrollHeight + 10)+"px";
-
-    console.log(this.comment.contenuto);
+    if(this.loggedUser?.username !== this.comment.utente)
+      return EMPTY;
+    return this.service.getCommentFeedback(this.loggedUser.username, this.comment.id);
   }
 
   editStatus = new ObserverStatus();
 
   editComment()
   {
-    this.editStatus.call(this.service.editComment(this.comment.id, this.commentTextControl.value!), () =>
+    if(this.loggedUser === undefined)
+      return;
+    this.editStatus.call(this.service.editComment(this.comment.id, this.commentTextControl.value!, this.loggedUser.username), () =>
     {
       this.comment.contenuto = this.commentTextControl.value!;
       this.setEditMode(false);
