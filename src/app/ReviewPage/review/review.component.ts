@@ -14,6 +14,7 @@ import { HttpParams } from '@angular/common/http';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { FeedbackType } from 'src/app/enum';
 import { EMPTY, Observable } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-review',
@@ -50,6 +51,10 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
     ['link', 'image'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
+  //report section
+  openedReportModal ?: any;
+  reportFormControl = new FormControl("", [Validators.required]);
+
 
   //controls applied inside the review editor
   form = new FormGroup({
@@ -58,11 +63,10 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
     voto: new FormControl(0, [Validators.required]),
   });
 
-  constructor (private commentS: CommentService, private reviewS : ReviewService, private route: ActivatedRoute, private router: Router,private location: Location, public sanitizer: DomSanitizer, public springService: SpringHandlerService, private alertService: AlertHandlerService){
+  constructor (public modalService: NgbModal, private commentS: CommentService, private reviewS : ReviewService, private route: ActivatedRoute, private router: Router,private location: Location, public sanitizer: DomSanitizer, public springService: SpringHandlerService, private alertService: AlertHandlerService){
   }
 
   ngOnInit(): void {
-
 
     this.springService.getCurrentUsername(false).subscribe((value: Utente | undefined) => {
       this.loggedUser = value;
@@ -147,23 +151,38 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
   }
 
   reportReviewStatus = new ObserverStatus();
-  reportReview()
+  openReportReview(reportModal : any)
   {
     if(this.loggedUser === null || this.loggedUser === undefined)
     {
       this.alertService.setAllValues("Report Error", "You are not logged in", true);
       return;
     }
-    this.reportReviewStatus.call(this.reviewS.report(this.review, this.loggedUser.username, "ee"), (result) =>
-    {
-      this.alertService.setAllValues("Report Status", "Report submitted successfully", true);
-    }, (error) => {
-      if(error.error.sqlError)
-        this.alertService.setAllValues("Report Status", "Review is already reported", true);
-      else
-        this.alertService.setAllValues("Report Status", "Review Report failed, retry later", true);
-    });
+    this.openedReportModal = this.modalService.open(reportModal);
   }
+
+  closeReportReview(confirm : boolean)
+  {
+    if(confirm)
+    {
+      if(this.loggedUser === null || this.loggedUser === undefined || this.reportFormControl.value === null)
+        return;
+      this.reportReviewStatus.call(this.reviewS.report(this.review, this.loggedUser.username, this.reportFormControl.value), (result) =>
+      {
+        this.alertService.resetOptions();
+        this.alertService.setAllValues("Report Status", "Report submitted successfully", true);
+      }, (error) => {
+        this.alertService.resetOptions();
+        if(error.error.sqlError)
+          this.alertService.setAllValues("Report Status", "Review is already reported", true);
+        else
+          this.alertService.setAllValues("Report Status", "Review Report failed, retry later", true);
+      });
+    }
+    this.reportFormControl.reset();
+    this.openedReportModal.close();
+  }
+
 
   deleteReviewStatus = new ObserverStatus();
 

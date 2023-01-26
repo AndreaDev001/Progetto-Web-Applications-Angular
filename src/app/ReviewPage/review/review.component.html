@@ -1,8 +1,30 @@
+
+<!-- report modal-->
+
+<ng-template #reportModal let-modal>
+  <div class = "d-block whitesmoke-text">
+    <div class="modal-header secondary">
+      <h4 class="modal-title" id="modal-basic-title">Report Form</h4>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="closeReportReview(false)"></button>
+    </div>
+    <div class="modal-body background-secondary-color">
+      <label for="reasonTextArea">Report reason:</label>
+      <textarea class="form-control secondary whitesmoke-text" id="reasonTextArea" [formControl]="reportFormControl" rows="3"></textarea>
+      <p *ngIf="reportFormControl.invalid && (reportFormControl.dirty || reportFormControl.touched)" style="color: var(--danger);">Report reason is required</p>
+    </div>
+    <div class="modal-footer background-secondary-color" style="border: 0">
+      <button class="btn button button-primary" type="button" (click)="closeReportReview(false)" >CLOSE</button>
+      <button class="btn button button-danger" [disabled]="reportFormControl.invalid" type="submit" (click)="closeReportReview(true)">CONFIRM</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- review section-->
 <div class="banner text-white" style="background-image: linear-gradient(0deg, var(--background-color) 8%, rgba(25, 25, 25,0.4) 100%), url('{{game.image}}');">
 
   <div class="d-flex" *ngIf="!this.isNewReview()">
     <app-feedback [feedback]="this.review" [target]="this"></app-feedback>
-    <button class="btn button button-primary" (click)="reportReview()">Report</button>
+    <button class="btn button button-primary" (click)="openReportReview(reportModal)">Report</button>
     <button *ngIf="this.review.utente !== undefined && this.review.utente === this.loggedUser?.username" class="btn button button-danger" (click)="deleteReviewPrompt()">Delete Review</button>
     <h4 class="text-muted">{{this.review.data | date:'EEEE, MMMM d, y, h:mm:ss a'}}</h4>
   </div>
