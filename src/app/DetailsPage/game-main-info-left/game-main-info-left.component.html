@@ -7,16 +7,16 @@
       <span class = "text-white p-2" style="font-size: 20px;">{{gameInfo.released}}</span>
     </div>
     <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke;font-size: 35px"></app-star-component>
-    <div style="border: 1px solid whitesmoke;border-radius: 15px;background-color: #212529">
+    <div class = "border-1 rounded-3" style="background-color: var(--background-secondary)">
       <ul class = "list-group gameLinks" style="padding: 20px 0" *ngIf="links.length > 0">
-        <a class = "list-group-item game-link" *ngFor="let current of links" [href]="current.link">
+        <a class = "list-group-item game-link" *ngFor="let current of links" [href]="current.link" target="_blank">
           <fa-icon *ngIf="current.icon" [icon]="current.icon" style="font-size: 17px"></fa-icon>
           {{current.name}}
         </a>
       </ul>
     </div>
     <div class = "w-100 text-center p-2" *ngIf="isLogged">
-      <button class = "btn btn-lg text-white" style="background-color: var(--primary)" (click)="handleClick()">
+      <button class = "btn btn-lg button button-primary" (click)="handleClick()">
         <fa-icon [icon]="icons[4]" style="font-size: 20px"></fa-icon>
         <span class = "text-center p-2 wishlist-button-text">{{currentText}}</span>
       </button>
