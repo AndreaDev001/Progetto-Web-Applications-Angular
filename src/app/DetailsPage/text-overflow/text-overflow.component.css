@@ -4,6 +4,7 @@ a.item{
   border-radius: 30px;
   transition: all 0.2s ease-in-out;
   color: whitesmoke;
+  text-align: center;
   background-color: var(--background-secondary);
   margin-left: 7px;
   text-decoration: none;
@@ -16,6 +17,7 @@ a.item:hover{
 }
 span.item-text{
   cursor: pointer;
+  padding: 0 5px;
   min-width: 100px;
 }
 div.text-holder{
