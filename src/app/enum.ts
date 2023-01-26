@@ -21,7 +21,6 @@ export enum OrderingMode{
   DESCENDED = "descended"
 }
 export enum GameListType{
-  SUGGESTED = "suggested",
   BEST_RATED = "best rated",
   JUST_RELEASED = "just released",
 }

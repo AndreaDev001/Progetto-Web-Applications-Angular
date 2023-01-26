@@ -111,8 +111,6 @@ export class SearchHandlerService
         this.currentOrderingType.next(OrderingType.RELEASED);
         this.currentOrderingMode.next(OrderingMode.DESCENDED);
         break;
-      case GameListType.SUGGESTED:
-        throw new Error("Not yet implemented");
     }
     this.update();
   }
