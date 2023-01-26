@@ -39,9 +39,12 @@ export class ProfileReviewListComponent implements OnInit,OnDestroy{
     let domParser: DOMParser = new DOMParser();
     for(let current of this.userReviews){
       let document: Document = domParser.parseFromString(current.contenuto,'text/html');
-      let element: HTMLParagraphElement | null = document.body.querySelector("p");
-      if(element != null)
-        current.contenuto = element.innerText;
+      let all: HTMLCollectionOf<Element> = document.getElementsByTagName("*");
+      for(let i = 0;i < all.length;i++){
+        let currentElement: Element = all[i];
+        if(currentElement.innerHTML != undefined && currentElement.innerHTML != "")
+          current.contenuto = currentElement.innerHTML;
+      }
     }
   }
   public handleClick(review: Review): void{
