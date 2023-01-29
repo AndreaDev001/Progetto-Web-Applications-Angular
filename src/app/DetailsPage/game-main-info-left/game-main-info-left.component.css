@@ -9,6 +9,7 @@ p.game-name{
 }
 a.game-link{
   font-size: 17px;
+  border: 0;
   color: whitesmoke;
   transition: 0.2s all ease-in-out;
   cursor: pointer;
