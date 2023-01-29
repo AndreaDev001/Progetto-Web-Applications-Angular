@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Game} from "../../../interfaces";
 import {IconDefinition,faCalendarDays} from "@fortawesome/free-solid-svg-icons";
 import { NgOptimizedImage } from "@angular/common"
@@ -9,7 +9,7 @@ import {SpringHandlerService} from "../../../services/spring-handler.service";
   templateUrl: './game-card.component.html',
   styleUrls: ['./game-card.component.css']
 })
-export class GameCardComponent implements OnInit {
+export class GameCardComponent implements OnInit{
   @Input() game?: Game;
   public faCalendarDays: IconDefinition = faCalendarDays;
   constructor(public springHandler: SpringHandlerService) {
