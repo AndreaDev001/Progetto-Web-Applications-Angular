@@ -148,7 +148,6 @@ export interface FeedbackContainer
   numeroNonMiPiace: number;
   currentFeedback: FeedbackType;
 }
-
 //this interface is used by the feedback component to decide how to update itself
 //we could see this as a strategy pattern used by the component
 export interface FeedbackStrategy
@@ -158,4 +157,13 @@ export interface FeedbackStrategy
 
   //this is called when the component is initialized
   getInitialFeedback: () => Observable<FeedbackType>
+}
+export interface FigureCaption{
+  img: string,
+  caption: string,
+}
+export interface StringLink{
+  url: string,
+  name: string,
+  spring: boolean,
 }

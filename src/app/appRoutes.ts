@@ -5,7 +5,7 @@ import {HomePageComponent} from "./HomePage/home-page/home-page.component";
 import {GameDetailComponent} from "./DetailsPage/game-detail/game-detail.component";
 import {RegistrationFormComponent} from "./registration-form/registration-form.component";
 import {NewsComponent} from "./NewsPage/news/news.component";
-import {AboutUsComponent} from "./about-us/about-us.component";
+import {AboutUsComponent} from "./AboutUs/about-us/about-us.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {ProfileReviewListComponent} from "./UserReviews/profile-review-list/profile-review-list.component";
 
