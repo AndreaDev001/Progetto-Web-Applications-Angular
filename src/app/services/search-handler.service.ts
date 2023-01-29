@@ -38,10 +38,8 @@ export class SearchHandlerService
         }
         this.currentOrderingType.next((!result.orderingType || !result.orderingMode) ? OrderingType.METACRITIC : result.orderingType);
         this.currentOrderingMode.next((!result.orderingType || !result.orderingMode) ? OrderingMode.DESCENDED: result.orderingMode);
-        if(result.minDate && result.maxDate){
-          this.startDate.next(new Date(result.minDate));
-          this.endDate.next(new Date(result.maxDate));
-        }
+        this.startDate.next((result.minDate && result.maxDate) ? new Date(result.minDate) : new Date(0));
+        this.endDate.next((result.minDate && result.maxDate) ? new Date(result.maxDate) : new Date());
         this.performSearch(true);
       });
   }
