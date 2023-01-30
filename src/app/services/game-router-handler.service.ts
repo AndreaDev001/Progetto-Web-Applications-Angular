@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {OrderingMode, OrderingType} from "../enum";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
 
@@ -24,8 +24,8 @@ export class GameRouterHandlerService {
         this.currentParamType.next(this.readParams())
     });
     this.router.events.subscribe((value: any) => {
-      if(router.url === "/games")
-          this.currentParamType.next(this.readParams())
+      if(value instanceof NavigationEnd && this.router.url === "/games")
+        this.currentParamType.next(this.readParams());
     });
   }
   private readParams(): ParamType{
