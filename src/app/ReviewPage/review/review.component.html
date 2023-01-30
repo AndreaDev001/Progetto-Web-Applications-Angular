@@ -1,6 +1,5 @@
 
 <!-- report modal-->
-
 <ng-template #reportModal let-modal>
   <div class = "d-block whitesmoke-text">
     <div class="modal-header secondary">
@@ -18,15 +17,6 @@
     </div>
   </div>
 </ng-template>
-
-
-<!--
-
-   <button class="btn button button-primary" (click)="openReportReview(reportModal)">Report</button>
-  <button *ngIf="this.review.utente !== undefined && this.review.utente === this.loggedUser?.username" class="btn button button-danger" (click)="deleteReviewPrompt()">Delete Review</button>
-  <button class="btn button button-secondary" [disabled]="this.publishReviewStatus.isLoading" (click)="this.setEditMode(true)">EDIT</button>
-
--->
 
 <!-- review section-->
 <div class="banner text-white" style="background-image: linear-gradient(0deg, var(--background-color) 8%, rgba(25, 25, 25,0.4) 100%), url('{{game.image}}');">
