@@ -68,8 +68,6 @@ export class GameHandlerService {
         orderingType = OrderingType.RELEASED;
         orderingMode = OrderingMode.DESCENDED;
         break;
-      case GameListType.SUGGESTED:
-        break;
     }
     return this.search(orderingType,orderingMode,"",requiredPage);
   }
