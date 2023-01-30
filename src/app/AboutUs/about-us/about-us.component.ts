@@ -13,19 +13,18 @@ export class AboutUsComponent implements OnInit{
 
   public firstSectionLinks: StringLink[] = [{name: "Ricercare Giochi",spring: false,url: "/games"},
     {name: "Visualizzazione dettagli gioco",spring: false, url: "/games/320"},
-    {name: "Visualizzazione recensioni proprie",spring: false,url: "/reviews"}];
+    {name: "Visualizzazione recensioni proprie (Profilo)",spring: false,url: "/reviews"}];
   public secondSectionLinks: StringLink[] = [{name: "Gestire Recensioni",spring: false,url: "/games"},
     {name: "Gestire Commenti",spring: false,url: "/games"},
-    {name: "Segnalare Recensioni",spring: false,url: "/games"}]
+    {name: "Segnalare Recensioni",spring: false,url: "/games"},
+    {name: "Gestire wishlist (Profilo)",spring: true,url:"/wishlist"}];
   public thirdSectionLinks: StringLink[] = [{name: "Ricercare Notizie",spring: false,url: "/news"},
-    {name: "Autenticazione",spring: true,url: "http://localhost:8080/login"}];
-  public fourthSectionLinks: StringLink[] = [{name: "Gestione Utenti",spring: true,url: "http://localhost:8080/userList"},
-    {name: "Gestione Segnalazioni",spring: true,url: "http://localhost:8080/reports"},
-    {name: "Raccomandati per te",spring: true,url:"http://localhost:8080/recommended"}]
-  public icons: IconDefinition[] = [faGithub,faAngular,faJava,faKey];
-  public gameAPIKeys: string[] = ["API KEY","API KEY","API KEY","API KEY","API KEY"];
-  public newsAPIKeys: string[] = ["API KEY","API KEY","API KEY","API KEY","API KEY"];
-
+    {name: "Login",spring: true,url: "http://localhost:8080/login"},
+    {name: "Registrazione",spring: false,url: "/registration"},
+    {name: "Cambio password",spring: true,url: "http://localhost:8080/recoverAccount"}];
+  public fourthSectionLinks: StringLink[] = [{name: "Gestione Utenti (Admin)",spring: true,url: "http://localhost:8080/userList"},
+    {name: "Gestione Segnalazioni (Admin)",spring: true,url: "http://localhost:8080/reports"},
+    {name: "Raccomandati per te (Profilo)",spring: true,url:"http://localhost:8080/recommended"}]
   constructor() {
   }
   public ngOnInit(): void{
