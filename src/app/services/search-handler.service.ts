@@ -30,6 +30,7 @@ export class SearchHandlerService
   private handleParams(): void
   {
       this.gameRouterHandler.getCurrentParamType().subscribe((result: ParamType) => {
+        this.currentSubscription?.unsubscribe();
         if(!result.name){
           this.currentGenre.next(result.genre ? result.genre : "action");
           this.currentName.next(undefined);
