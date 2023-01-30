@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { faAngular, faGithub, faJava } from '@fortawesome/free-brands-svg-icons';
-import {faA, faCircleUser, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {faA, faCircleUser, faKey, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {FigureCaption} from "../../interfaces";
 import {StringLink} from "../../interfaces";
 
@@ -22,7 +22,9 @@ export class AboutUsComponent implements OnInit{
   public fourthSectionLinks: StringLink[] = [{name: "Gestione Utenti",spring: true,url: "http://localhost:8080/userList"},
     {name: "Gestione Segnalazioni",spring: true,url: "http://localhost:8080/reports"},
     {name: "Raccomandati per te",spring: true,url:"http://localhost:8080/recommended"}]
-  public icons: IconDefinition[] = [faGithub,faAngular,faJava];
+  public icons: IconDefinition[] = [faGithub,faAngular,faJava,faKey];
+  public gameAPIKeys: string[] = ["API KEY","API KEY","API KEY","API KEY","API KEY"];
+  public newsAPIKeys: string[] = ["API KEY","API KEY","API KEY","API KEY","API KEY"];
 
   constructor() {
   }
