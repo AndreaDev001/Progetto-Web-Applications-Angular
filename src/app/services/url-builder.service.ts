@@ -9,7 +9,7 @@ import {DateRange, Sorting} from "../enum";
 export class UrlBuilderService {
   newsApiKey: string =  "6babce9602e74985ae5a69d08718eeea";
 
-  defaultUrl: string = "https://newsapi.org/v2/everything?q=videogames&language=en&pageSize=20";
+  defaultUrl: string = "https://newsapi.org/v2/everything?q=rpg&language=en&pageSize=20";
   baseUrl: string = "https://newsapi.org/v2/everything?language=en&searchIn=title,description&pageSize=20";
   url: string = this.defaultUrl;
 

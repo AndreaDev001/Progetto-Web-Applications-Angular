@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NewsSearchService} from "../../services/news-search.service";
 import {SpinnerService} from "../../services/spinner.service";
+import {faArrowRight, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-news-results',
@@ -16,6 +17,7 @@ export class NewsResultsComponent implements OnInit {
 
   results: any[] = [];
   totalResults = 0;
+  public faArrow: IconDefinition = faArrowRight;
 
   ngOnInit(): void {
     this.newsSearchService.getPassedResults().subscribe(

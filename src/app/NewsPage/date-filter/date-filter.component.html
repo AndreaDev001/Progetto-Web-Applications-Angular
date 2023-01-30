@@ -1,4 +1,7 @@
-<label class = "text-white">Publish Date:</label>
+<label class = "text-white">
+  <fa-icon [icon]="dateIcon"></fa-icon>
+  Publish Date:
+</label>
 <div ngbDropdown class="d-inline-block" style="margin-left: 10px">
   <button type="button" class="custom-dropdown-button" style="padding: 5px" id="dropdownToggle" ngbDropdownToggle>
     {{selectedDateRange}}

@@ -2,37 +2,19 @@
   <app-no-results *ngIf="totalResults === 0 && !(spinnerService.visibility | async)"></app-no-results>
 </div>
 
-<!--
-<div *ngIf="totalResults !== 0" class="container">
-
-  <div class="row">
-    <div *ngFor="let res of results" class="col-lg-3">
-      <div class="card news-card" style="width: 18rem;">
-        <img src="{{res.urlToImage}}" width="100%" loading="lazy">
-        <div class="card-body">
-          <small >Source: {{res.source.name}}</small>
-          <h5 class="card-title">{{res.title}}</h5>
-          <p class="card-text">{{res.description}}</p>
-          <a mat-flat-button color="primary" href="{{res.url}}" target="_blank">Read more</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
--->
-
 <div class="container" *ngIf="totalResults !== 0">
   <div class="row">
     <div *ngFor="let res of results" class="col-12 col-sm-6 col-lg-4 col-xl-3 d-flex justify-content-center">
       <mat-card class="card news-card">
           <img mat-card-image src="{{res.urlToImage}}" width="100%" loading="lazy">
           <div class="card-body">
-            <small >Source: {{res.source.name}}</small>
-              <h5 class="card-title">{{res.title}}</h5>
+            <small style="font-style: italic">Source: {{res.source.name}}</small>
+              <h5 class="card-title pb-3 pt-1">{{res.title}}</h5>
             <p class="card-text">{{res.description}}</p>
-            <div class="d-flex justify-content-end">
-              <a class = "btn button button-primary" href="{{res.url}}" target="_blank">Read more</a>
+            <div class="d-flex justify-content-end align-baseline pt-2 pb-2">
+              <a class = "btn button button-primary" href="{{res.url}}" target="_blank">Read more
+                <fa-icon [icon]="faArrow" class="m-1"></fa-icon>
+              </a>
             </div>
           </div>
       </mat-card>

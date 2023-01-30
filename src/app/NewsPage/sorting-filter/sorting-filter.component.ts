@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Sorting} from "../../enum";
+import {faSort, faSortAmountUp, faSortAsc, faSortUp, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-sorting-filter',
@@ -11,6 +12,7 @@ export class SortingFilterComponent {
 
   sortingTypes?: Sorting[] = []
   selectedSortingType = Sorting.LATEST
+  public sortIcon: IconDefinition = faSortAmountUp;
 
   ngOnInit(): void {
     // init sorting dropdown

@@ -5,7 +5,9 @@
 
       <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
         <div class = "w-50">
-          <label for="email">Email*:</label>
+          <label for="email">
+            Email*:
+          </label>
           <input id="email" class="form-control"  type="email" formControlName="email" placeholder="email@example.com">
           <div class = "d-block pt-1">
              <span class="error-message" *ngIf="email && email.touched && email.invalid && email.errors?.['required']">
@@ -23,7 +25,9 @@
 
       <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">
         <div class = "w-50">
-          <label for="username">Username*:</label>
+          <label for="username">
+            Username*:
+          </label>
           <input id="username" class="form-control" type="text" formControlName="username" placeholder="Enter your username">
           <div class = "d-block pt-1">
              <span class="error-message" *ngIf="username && username.touched && username.invalid && username.errors?.['required']">
@@ -41,7 +45,9 @@
 
       <div class = "d-flex justify-content-center w-100">
         <div class = "w-50">
-          <label for="password">Password:</label>
+          <label for="password">
+            Password:
+          </label>
         </div>
       </div>
       <section class="form-group d-flex w-100 justify-content-center" style="padding: 0.2% 0">

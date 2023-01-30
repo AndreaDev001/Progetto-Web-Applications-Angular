@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DateRange} from "../../enum";
+import {faCalendarDays, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-date-filter',
@@ -10,6 +11,7 @@ import {DateRange} from "../../enum";
 export class DateFilterComponent implements OnInit {
   dateRanges: DateRange[] = [];
   selectedDateRange: DateRange = DateRange.ALL;
+  public dateIcon: IconDefinition = faCalendarDays;
 
   ngOnInit() {
     // init Dates dropdown
@@ -22,6 +24,7 @@ export class DateFilterComponent implements OnInit {
     console.warn("MAKE NEW SEARCH")
     this.dateValueChanged.emit(this.selectedDateRange)
   }
+
   public updateDate(value: DateRange): void {
     this.selectedDateRange = value;
     this.makeNewSearch();

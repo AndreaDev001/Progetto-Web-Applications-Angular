@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NewsSearchService} from "../../services/news-search.service";
+import {faChevronLeft, faChevronRight, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-page-navigation',
@@ -13,6 +14,9 @@ export class PageNavigationComponent implements OnInit {
   isFirstPage: boolean = true;
   isLastPage: boolean = false;
   @Input() currentPage: number = 1;
+
+  public chevronRight: IconDefinition = faChevronRight;
+  public chevronLeft: IconDefinition = faChevronLeft;
 
   constructor(
     private newsSearchService: NewsSearchService

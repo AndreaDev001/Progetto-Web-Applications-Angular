@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {validateEmail, validatePassword} from "../validation";
 import {AuthenticationService} from "../services/authentication.service";
-import {faEye, faEyeSlash, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {faAt, faEye, faEyeSlash, faKey, faUser, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {AlertHandlerService} from "../services/alert-handler.service";
 
 @Component({
