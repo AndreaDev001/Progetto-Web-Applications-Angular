@@ -35,3 +35,6 @@ li.header-item:hover{
 a.header-link:focus{
   color: whitesmoke;
 }
+fa-icon{
+  font-size: 17px;
+}

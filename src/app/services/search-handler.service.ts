@@ -30,8 +30,15 @@ export class SearchHandlerService
   private handleParams(): void
   {
       this.gameRouterHandler.getCurrentParamType().subscribe((result: ParamType) => {
-        this.currentGenre.next(result.genre);
-        this.currentName.next(result.name);
+        if(!result.name){
+          this.currentGenre.next(result.genre ? result.genre : "action");
+          this.currentName.next(undefined);
+        }
+        else
+        {
+          this.currentName.next(result.name);
+          this.currentGenre.next(undefined);
+        }
         if(result.orderingType == undefined || result.orderingMode == undefined){
           this.currentOrderingType.next(OrderingType.METACRITIC);
           this.currentOrderingMode.next(OrderingMode.DESCENDED);

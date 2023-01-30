@@ -1,7 +1,5 @@
 <nav class="navbar navbar-expand-lg position-sticky top-0">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <a class = "navbar-brand"></a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active header-item px-1">
@@ -21,7 +19,7 @@
         <a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
           Account
         </a>
-        <div class="dropdown-menu" style="background-color: var(--background-secondary)">
+        <div class="dropdown-menu px-1" style="background-color: var(--background-secondary)">
           <a class="dropdown-item dropdown-link" href="http://localhost:8080/login" *ngIf="!isLogged">Login</a>
           <a class="dropdown-item dropdown-link" [routerLink]="['/registration']" [queryParams]="this.springHandler.getParams()"  *ngIf="!isLogged">Sign up</a>
           <a class="dropdown-item dropdown-link" [routerLink]="['/games']" (click)="this.springHandler.performLogout()" *ngIf="isLogged">Log out</a>
