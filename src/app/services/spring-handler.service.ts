@@ -25,7 +25,9 @@ export class SpringHandlerService {
     const desiredURL: string = this.url + "/getUser";
     let params: HttpParams = new HttpParams();
     params = params.append("jsessionid",sessionID);
-    this.httpClient.get<Utente>(desiredURL,{params: params}).subscribe((value: Utente) => this.currentUsername.next(value));
+    this.httpClient.get<Utente>(desiredURL,{params: params}).subscribe((value: Utente) => this.currentUsername.next(value),(error: any) => {
+
+    });
   }
   public addGame(gameID: number,genre: string,name: string,img: string): Observable<any>{
     const desiredURL: string = this.url + "/addGame";
@@ -99,10 +101,15 @@ export class SpringHandlerService {
     })
   }
   public performLogout(): void{
-    const desiredURL: string = this.url + "/logout";
-    this.currentUsername.next(undefined);
-    this.currentSessionID.next(undefined);
-    this.httpClient.post(desiredURL,{});
+    if(this.currentSessionID.value)
+    {
+      const desiredURL: string = this.url + "/performLogout";
+      let params: HttpParams = new HttpParams();
+      params = params.append("sessionId",this.currentSessionID.value.toString());
+      this.currentUsername.next(undefined);
+      this.currentSessionID.next(undefined);
+      this.httpClient.get(desiredURL,{params: params}).subscribe((value: any) => {});
+    }
   }
   public getParams(): Params{
     return {jsessionid: this.currentSessionID.value};
