@@ -8,7 +8,7 @@
     </div>
     <app-star-component [rating]="gameInfo.rating" style="color: whitesmoke;font-size: 35px"></app-star-component>
     <div class = "border-1 rounded-3" style="background-color: var(--background-secondary)">
-      <ul class = "list-group gameLinks" style="padding: 20px 0" *ngIf="links.length > 0">
+      <ul class = "list-group list-group-flush gameLinks" style="padding: 20px 0" *ngIf="links.length > 0">
         <a class = "list-group-item game-link" *ngFor="let current of links" [href]="current.link" target="_blank">
           <fa-icon *ngIf="current.icon" [icon]="current.icon" style="font-size: 17px"></fa-icon>
           {{current.name}}
