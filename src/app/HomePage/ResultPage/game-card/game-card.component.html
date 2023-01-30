@@ -1,5 +1,5 @@
 <a class = "card game-card text-center" *ngIf="game" [routerLink]="[game.id]" [queryParams]="this.springHandler.getParams()">
-  <img class = "card-img-top" style="width: 100%;height: auto" [lazyLoad]="game.img" [defaultImage]="'assets/images/not-found.png'">
+  <img class = "card-img-top" style="width: 100%;height: auto" [lazyLoad]="game.img" [defaultImage]="'/assets/images/notfound.jpeg'">
   <div class = "card-body">
     <app-platform-list [platforms]="game.platforms"></app-platform-list>
     <h3 class = "card-title">{{game.name}}</h3>

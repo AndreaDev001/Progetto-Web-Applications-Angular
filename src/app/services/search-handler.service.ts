@@ -47,6 +47,7 @@ export class SearchHandlerService
         this.currentOrderingMode.next((!result.orderingType || !result.orderingMode) ? OrderingMode.DESCENDED: result.orderingMode);
         this.startDate.next((result.minDate && result.maxDate) ? new Date(result.minDate) : new Date(0));
         this.endDate.next((result.minDate && result.maxDate) ? new Date(result.maxDate) : new Date());
+        this.currentMaxPage.next(1);
         this.performSearch(true);
       });
   }
