@@ -15,20 +15,24 @@
         <a class="nav-link header-link" [routerLink]="['/info']" [queryParams]="this.springHandler.getParams()">About us</a>
       </li>
       <li class="nav-item dropdown header-item px-1">
-        <fa-icon class = "d-inline-block" [icon]="icons[3]"></fa-icon>
-        <a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          Account
-        </a>
-        <div class="dropdown-menu px-1" style="background-color: var(--background-secondary)">
-          <a class="dropdown-item dropdown-link" href="http://localhost:8080/login" *ngIf="!isLogged">Login</a>
-          <a class="dropdown-item dropdown-link" [routerLink]="['/registration']" [queryParams]="this.springHandler.getParams()"  *ngIf="!isLogged">Sign up</a>
-          <a class="dropdown-item dropdown-link" [routerLink]="['/games']" (click)="this.springHandler.performLogout()" *ngIf="isLogged">Log out</a>
-          <a class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist" *ngIf="isLogged">Wishlist</a>
-          <a class="dropdown-item dropdown-link" href="http://localhost:8080/recommended" *ngIf="isLogged">Recommended for you</a>
-          <a class="dropdown-item dropdown-link" [routerLink]="['/reviews']" [queryParams]="this.springHandler.getParams()" *ngIf="isLogged">Your Reviews</a>
-          <a class="dropdown-item dropdown-link" *ngIf="isLogged && isAdmin" href="http://localhost:8080/userList">Users List</a>
-          <a class="dropdown-item dropdown-link" *ngIf="isLogged && isAdmin" href="http://localhost:8080/reports">Reports List</a>
-        </div>
+          <fa-icon class = "d-inline-block" [icon]="icons[3]"></fa-icon>
+          <a class="nav-link dropdown-toggle header-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            Account
+          </a>
+          <div class="dropdown-menu px-1" style="background-color: var(--background-secondary)">
+            <a class="dropdown-item dropdown-link" href="http://localhost:8080/login" *ngIf="!isLogged">Login</a>
+            <a class="dropdown-item dropdown-link" [routerLink]="['/registration']" [queryParams]="this.springHandler.getParams()"  *ngIf="!isLogged">Sign up</a>
+            <a class="dropdown-item dropdown-link" [routerLink]="['/games']" (click)="this.springHandler.performLogout()" *ngIf="isLogged">Log out</a>
+            <a class="dropdown-item dropdown-link" href="http://localhost:8080/wishlist" *ngIf="isLogged">Wishlist</a>
+            <a class="dropdown-item dropdown-link" href="http://localhost:8080/recommended" *ngIf="isLogged">Recommended for you</a>
+            <a class="dropdown-item dropdown-link" [routerLink]="['/reviews']" [queryParams]="this.springHandler.getParams()" *ngIf="isLogged">Your Reviews</a>
+            <a class="dropdown-item dropdown-link" *ngIf="isLogged && isAdmin" href="http://localhost:8080/userList">Users List</a>
+            <a class="dropdown-item dropdown-link" *ngIf="isLogged && isAdmin" href="http://localhost:8080/reports">Reports List</a>
+          </div>
+      </li>
+      <li class="nav-item header-item px-1" *ngIf="isLogged">
+        <fa-icon class = "d-inline-block" [icon]="icons[4]"></fa-icon>
+        <a class = "nav-link header-link">Logged in</a>
       </li>
     </ul>
   </div>

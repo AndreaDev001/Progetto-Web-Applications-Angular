@@ -2,7 +2,15 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {SpringHandlerService} from "../services/spring-handler.service";
 import {Utente} from "../interfaces";
-import {faPeopleGroup, faCircleUser, faHouse, faNewspaper, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {
+  faPeopleGroup,
+  faCircleUser,
+  faHouse,
+  faNewspaper,
+  IconDefinition,
+  faIdCard
+} from "@fortawesome/free-solid-svg-icons";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -14,7 +22,7 @@ export class HeaderComponent implements OnInit,OnDestroy{
   public isLogged: boolean = false;
   public isAdmin: boolean = false;
   private subscriptions: Subscription[] = [];
-  public icons: IconDefinition[] = [faHouse,faNewspaper,faPeopleGroup,faCircleUser];
+  public icons: IconDefinition[] = [faHouse,faNewspaper,faPeopleGroup,faCircleUser,faIdCard];
   constructor(public springHandler: SpringHandlerService) {
 
   }
