@@ -1,0 +1,11 @@
+a.repository-item{
+  background-color: var(--secondary);
+  transition: all 0.2s ease-in-out;
+  color: whitesmoke;
+  padding: 0 20px;
+  cursor: pointer;
+}
+a.repository-item:hover{
+  padding-left: 40px;
+  text-decoration: underline;
+}

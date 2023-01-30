@@ -1,0 +1,18 @@
+li.func-description{
+  background-color: var(--secondary);
+  text-underline-offset: 5px;
+  cursor: pointer;
+  color: whitesmoke;
+  transition: all 0.2s ease-in-out;
+}
+li.func-description:hover{
+  text-decoration: underline;
+  padding-left: 30px;
+}
+a.func-link{
+  background-color: inherit;
+  text-decoration: inherit;
+  width: 100%;
+  color: inherit;
+  border: 0;
+}

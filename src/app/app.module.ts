@@ -62,12 +62,13 @@ import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanv
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import { NewsSearchBarComponent} from "./NewsPage/news-search-bar/news-search-bar.component";
 import { HeaderComponent } from './header/header.component';
-import { AboutUsComponent } from './about-us/about-us.component';
+import { AboutUsComponent} from "./AboutUs/about-us/about-us.component";
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MessagePopUpComponent } from './message-pop-up/message-pop-up.component';
 import { ErrorComponent } from './error/error.component';
 import { ProfileReviewListComponent } from './UserReviews/profile-review-list/profile-review-list.component';
 import { FeedbackComponent } from './ReviewPage/feedback/feedback.component';
+import { AboutUsSectionComponent } from './AboutUs/about-us-section/about-us-section.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,7 +115,8 @@ import { FeedbackComponent } from './ReviewPage/feedback/feedback.component';
     MessagePopUpComponent,
     ErrorComponent,
     ProfileReviewListComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    AboutUsSectionComponent
   ],
   imports: [
     BrowserModule,

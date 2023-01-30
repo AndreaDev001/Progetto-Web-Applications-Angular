@@ -1,0 +1,48 @@
+<section class = "container py-4">
+  <section class = "py-3">
+    <div class = "card text-center text-white" style="background-color: var(--background-secondary);">
+      <div class = "card-header" style="background-color: var(--secondary);">
+        <fa-icon [icon]="icons[0]" style="font-size: 40px"></fa-icon>
+        <h3 style="font-weight: bold;">Repositories</h3>
+      </div>
+      <div class = "card-body">
+        <ul class = "list-group-item text-start p-2">
+          <a class = "list-group-item mt-2 repository-item" href="https://github.com/AndreaDev001/Progetto-Web-Applications-Angular" target="_blank">
+            <fa-icon class = "px-1" [icon]="icons[1]" style="font-size: 30px"></fa-icon>
+            Angular
+          </a>
+          <a class = "list-group-item mt-2 repository-item" href="https://github.com/AndreaDev001/Progetto-Web-Applications-Spring" target="_blank">
+            <fa-icon class = "px-1" [icon]="icons[2]" style="font-size: 30px"></fa-icon>
+            Spring
+          </a>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class = "py-3">
+    <div class = "row">
+      <div class = "col-12 col-md-4">
+        <img src="/assets/images/verde.png" class = "w-100 h-auto" alt="Not Found">
+      </div>
+      <app-about-us-section [name]="'Andrea Marchio'" [matricola]="'223401'" [stringLinks]="firstSectionLinks" [techUsed]="['Angular','Spring (Rest Controller)','Dao']" class = "col-12 col-md-8"></app-about-us-section>
+    </div>
+    <div class = "row mt-4">
+      <div class = "col-12 col-md-4">
+        <img src="/assets/images/rosso.png" class = "w-100 h-auto" alt="Not Found">
+      </div>
+      <app-about-us-section class = "col-12 col-md-8" [name]="'Pierluigi Altimari'" [matricola]="'219886'" [stringLinks]="secondSectionLinks" [techUsed]="['Angular','Spring (Rest Controller)','Dao','Thymeleaf']"></app-about-us-section>
+    </div>
+    <div class = "row mt-4">
+      <div class = "col-12 col-md-4">
+        <img src="/assets/images/blu.png" alt="Not Found" class = "w-100 h-auto">
+      </div>
+      <app-about-us-section class = "col-12 col-md-8" [name]="'Francesca Filice'" [matricola]="'220119'" [stringLinks]="thirdSectionLinks" [techUsed]="['Angular','Spring (Servlet)', 'Spring (Rest Controller)']"></app-about-us-section>
+    </div>
+    <div class = "row mt-4">
+      <div class = "col-12 col-md-4">
+        <img src="/assets/images/giallo.png" alt="Not Found" class = "w-100 h-auto">
+      </div>
+      <app-about-us-section class = "col-12 col-md-8" [name]="'Piero Stalteri'" [matricola]="'220248'" [stringLinks]="fourthSectionLinks" [techUsed]="['Angular','Spring (Servlet)','Dao']"></app-about-us-section>
+    </div>
+  </section>
+</section>

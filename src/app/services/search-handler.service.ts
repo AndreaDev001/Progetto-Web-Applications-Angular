@@ -30,18 +30,25 @@ export class SearchHandlerService
   private handleParams(): void
   {
       this.gameRouterHandler.getCurrentParamType().subscribe((result: ParamType) => {
-        this.currentGenre.next(result.genre);
-        this.currentName.next(result.name);
+        this.currentSubscription?.unsubscribe();
+        if(!result.name){
+          this.currentGenre.next(result.genre ? result.genre : "action");
+          this.currentName.next(undefined);
+        }
+        else
+        {
+          this.currentName.next(result.name);
+          this.currentGenre.next(undefined);
+        }
         if(result.orderingType == undefined || result.orderingMode == undefined){
           this.currentOrderingType.next(OrderingType.METACRITIC);
           this.currentOrderingMode.next(OrderingMode.DESCENDED);
         }
         this.currentOrderingType.next((!result.orderingType || !result.orderingMode) ? OrderingType.METACRITIC : result.orderingType);
         this.currentOrderingMode.next((!result.orderingType || !result.orderingMode) ? OrderingMode.DESCENDED: result.orderingMode);
-        if(result.minDate && result.maxDate){
-          this.startDate.next(new Date(result.minDate));
-          this.endDate.next(new Date(result.maxDate));
-        }
+        this.startDate.next((result.minDate && result.maxDate) ? new Date(result.minDate) : new Date(0));
+        this.endDate.next((result.minDate && result.maxDate) ? new Date(result.maxDate) : new Date());
+        this.currentMaxPage.next(1);
         this.performSearch(true);
       });
   }

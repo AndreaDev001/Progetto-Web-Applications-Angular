@@ -19,13 +19,14 @@ a.dropdown-link:hover{
 }
 li.header-item
 {
-  transition: all 0.2s ease-in-out;
   color: whitesmoke;
+  transition: all 0.2s ease-in-out;
   font-size: 17px;
 }
 a.header-link{
   color: inherit;
   font-size: inherit;
+  display: inline-block;
 }
 li.header-item:hover{
   transform:scale(1.02);
@@ -33,4 +34,7 @@ li.header-item:hover{
 }
 a.header-link:focus{
   color: whitesmoke;
+}
+fa-icon{
+  font-size: 17px;
 }

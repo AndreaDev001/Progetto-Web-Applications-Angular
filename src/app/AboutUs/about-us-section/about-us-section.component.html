@@ -1,0 +1,27 @@
+<div class = "card text-white" style="background-color: var(--background-secondary)">
+    <div class = "card-header text-center" style="background-color: var(--secondary)">
+      <fa-icon class = "px-2" [icon]="userIcon" style="font-size: 30px"></fa-icon>
+      <h3 class = "px-2 d-inline-block" style="font-weight: bold">{{name}}</h3>
+      <h3 class = "px-2 d-inline-block" style="font-weight: bold">{{matricola}}</h3>
+    </div>
+    <div class = "card-body text-start py-2">
+      <ul class = "list-group list-group-flush" style="list-style-type: none">
+        <li class = "func-description mt-2" *ngFor="let current of stringLinks">
+          <a *ngIf=!current.spring [routerLink]="[current.url]" [queryParams]="springHandler.getParams()" class = "list-group-item func-link">{{current.name}}</a>
+          <a *ngIf="current.spring" [href]="current.url" class = "list-group-item func-link">{{current.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class = "row p-2">
+      <div class = "col-12 col-md-6" *ngFor="let current of pictureCaptions">
+        <figure class = "w-100">
+          <img [src]="current.img" class = "w-100 h-auto rounded-3">
+          <figcaption class = "text-white text-center">{{current.caption}}</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class = "card-footer text-white py-2" style="background-color: var(--secondary)">
+      <app-text-overflow [name]="'Elenco delle tecnologie utilizzate'" [overflowItems]="createItems()"></app-text-overflow>
+    </div>
+</div>
+

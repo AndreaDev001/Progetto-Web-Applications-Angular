@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, Input, OnDestroy} from '@angular/core';
 import {SideListType} from "../../../enum";
 import {SideItem} from "../side-bar/side-bar.component";
 import {SearchHandlerService} from "../../../services/search-handler.service";
@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
   templateUrl: './side-list.component.html',
   styleUrls: ['./side-list.component.css']
 })
-export class SideListComponent implements OnInit,OnDestroy{
+export class SideListComponent implements AfterViewChecked,OnDestroy{
   @Input() name?: string;
   @Input() listType?: SideListType;
   @Input() values?: SideItem[];
@@ -18,7 +18,7 @@ export class SideListComponent implements OnInit,OnDestroy{
   constructor(private searchHandler: SearchHandlerService){
 
   }
-  public ngOnInit(): void{
+  public ngAfterViewChecked(): void {
     this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => this.updateCurrentSelection()));
   }
   private updateCurrentSelection(): void{

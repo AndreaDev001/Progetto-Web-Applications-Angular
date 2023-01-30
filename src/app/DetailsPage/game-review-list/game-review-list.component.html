@@ -1,13 +1,12 @@
 <div class = "container-fluid d-block">
-    <div *ngIf="userReview && (userReview.contenuto && userReview.contenuto.length > 0)">
+    <div *ngIf="isLogged && userReview && (userReview.contenuto && userReview.contenuto.length > 0)">
       <h2 class = "text-white text-center" style="font-weight: bold">Your Review</h2>
       <app-game-review [review]="userReview"></app-game-review>
     </div>
     <div class="text-center text-white" *ngIf="!userReview || (userReview && userReview.titolo == null)">
       <h2 style="font-weight: bold">Your Review</h2>
-      <p  style="font-size: 17px" [innerText]="isLogged ? 'You haven\' t written a review on this game yet' : 'To write a review you have to be logged in'">You haven't written a review on this game yet</p>
-      <button class = "btn btn-lg button button-primary" *ngIf=isLogged routerLink="../../{{gameID}}/newRecensione" [queryParams]="this.springHandler.getParams()">Write a new review</button>
-      <button class = "btn btn-lg button button-primary" *ngIf="!isLogged" (click)="goToLogin()">Login</button>
+      <p style="font-size: 17px">{{currentText}}</p>
+      <button class = "btn btn-lg button button-primary" (click)="handleClick()">{{currentButtonText}}</button>
     </div>
     <div *ngIf="reviews && reviews.length > 0" class = "text-white text-center">
       <h2 style="font-weight: bold">Reviews</h2>

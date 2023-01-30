@@ -19,7 +19,14 @@ export class GameRouterHandlerService {
 
   private currentParamType: Subject<ParamType> = new BehaviorSubject<ParamType>({});
   constructor(private activatedRoute: ActivatedRoute,private router: Router) {
-    this.activatedRoute.queryParams.subscribe((result: any) => this.currentParamType.next(this.readParams()));
+    this.activatedRoute.queryParams.subscribe((result: any) => {
+      if(router.url.split("?")[0] === "/games")
+        this.currentParamType.next(this.readParams())
+    });
+    this.router.events.subscribe((value: any) => {
+      if(router.url === "/games")
+          this.currentParamType.next(this.readParams())
+    });
   }
   private readParams(): ParamType{
     let orderingType = this.activatedRoute.snapshot.queryParams['orderingType'];
