@@ -166,7 +166,7 @@ export class GameJSONReaderService {
     let slug: string = value.slug;
     let img: string = value.background_image;
     if(img == null)
-       img = "https://adriaticaindustriale.it/wp-content/uploads/2020/02/not-found.png";
+       img = "https://i.imgur.com/EtG4HeX.jpg";
     let released: string = value.released;
     let rating: number = value.rating;
     let metacritic: number = value.metacritic;

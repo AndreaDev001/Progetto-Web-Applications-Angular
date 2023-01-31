@@ -30,24 +30,14 @@ export class SearchHandlerService
   private handleParams(): void
   {
       this.gameRouterHandler.getCurrentParamType().subscribe((result: ParamType) => {
-        this.currentSubscription?.unsubscribe();
-        if(!result.name){
+        this.currentName.next(result.name);
+        if(!this.currentListType.value && !this.currentName.value){
+          this.currentOrderingType.next((!result.orderingType || !result.orderingMode) ? OrderingType.METACRITIC : result.orderingType);
+          this.currentOrderingMode.next((!result.orderingType || !result.orderingMode) ? OrderingMode.DESCENDED: result.orderingMode);
           this.currentGenre.next(result.genre ? result.genre : "action");
-          this.currentName.next(undefined);
+          this.startDate.next((result.minDate && result.maxDate) ? new Date(result.minDate) : new Date(0));
+          this.endDate.next((result.minDate && result.maxDate) ? new Date(result.maxDate) : new Date());
         }
-        else
-        {
-          this.currentName.next(result.name);
-          this.currentGenre.next(undefined);
-        }
-        if(result.orderingType == undefined || result.orderingMode == undefined){
-          this.currentOrderingType.next(OrderingType.METACRITIC);
-          this.currentOrderingMode.next(OrderingMode.DESCENDED);
-        }
-        this.currentOrderingType.next((!result.orderingType || !result.orderingMode) ? OrderingType.METACRITIC : result.orderingType);
-        this.currentOrderingMode.next((!result.orderingType || !result.orderingMode) ? OrderingMode.DESCENDED: result.orderingMode);
-        this.startDate.next((result.minDate && result.maxDate) ? new Date(result.minDate) : new Date(0));
-        this.endDate.next((result.minDate && result.maxDate) ? new Date(result.maxDate) : new Date());
         this.currentMaxPage.next(1);
         this.performSearch(true);
       });
