@@ -38,7 +38,6 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
 
   newCommentFormControl = new FormControl("", [Validators.required]);
 
-  backgroundImage = '';
   game : {image : string, title: string} = {image: "", title: ""};
 
   //toolbar configuration used inside the html editor
@@ -70,6 +69,7 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
 
     this.springService.getCurrentUsername(false).subscribe((value: Utente | undefined) => {
       this.loggedUser = value;
+      console.log(this.loggedUser);
     });
 
     this.editor = new Editor();

@@ -169,4 +169,9 @@ a:visited {
   background-color: var(--danger);
 }
 
+blockquote
+{
+  border-left: 3px solid whitesmoke;
+}
+
 

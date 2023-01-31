@@ -16,7 +16,7 @@
         </svg>
       </button>
       <ul class="dropdown-menu">
-        <li class="dropdown-item" (click)="setEditMode(true)">Edit</li>
+        <li *ngIf="!this.loggedUser?.bandito" class="dropdown-item" (click)="setEditMode(true)">Edit</li>
         <li class="dropdown-item" (click)="deleteComment()">Delete</li>
       </ul>
     </div>

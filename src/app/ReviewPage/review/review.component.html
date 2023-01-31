@@ -1,6 +1,5 @@
 
 <!-- report modal-->
-
 <ng-template #reportModal let-modal>
   <div class = "d-block whitesmoke-text">
     <div class="modal-header secondary">
@@ -22,12 +21,19 @@
 <!-- review section-->
 <div class="banner text-white" style="background-image: linear-gradient(0deg, var(--background-color) 8%, rgba(25, 25, 25,0.4) 100%), url('{{game.image}}');">
 
-  <div class="d-flex" *ngIf="!this.isNewReview()">
-    <app-feedback [feedback]="this.review" [target]="this"></app-feedback>
-    <button class="btn button button-primary" (click)="openReportReview(reportModal)">Report</button>
-    <button *ngIf="this.review.utente !== undefined && this.review.utente === this.loggedUser?.username" class="btn button button-danger" (click)="deleteReviewPrompt()">Delete Review</button>
-    <h4 class="text-muted">{{this.review.data | date:'EEEE, MMMM d, y, h:mm:ss a'}}</h4>
-  </div>
+  <header *ngIf="!isNewReview()" class="d-flex p-2">
+    <div class="w-50 text-muted">
+      <span class="whitesmoke-text w-100">Review: <a [routerLink]="['/games', this.review.gioco]" [queryParams]="{jsessionid: this.springService.getSessionID(true)}">{{game.title}}</a></span>
+      <div class="whitesmoke-text w-100">Written by: <span style="color: var(--lighter);">{{this.review.utente}}</span></div>
+      <div class="whitesmoke-text w-100 text-muted">Date: {{this.review.data | date:'EEEE, MMMM d, y, h:mm:ss a'}}</div>
+    </div>
+    <section class="text-right w-50">
+      <button class="btn button button-primary" (click)="openReportReview(reportModal)">Report</button>
+      <button *ngIf="this.review.utente !== undefined && this.review.utente === this.loggedUser?.username" class="btn button button-danger" (click)="deleteReviewPrompt()">Delete Review</button>
+      <button *ngIf="this.review.utente !== undefined && this.review.utente === this.loggedUser?.username" class="btn button button-secondary" [disabled]="this.isEditMode" (click)="this.setEditMode(true)">EDIT</button>
+    </section>
+  </header>
+
   <div class="content">
     <section id="review_section" class="d-flex flex-column justify-content-center align-items-center">
       <form class="w-100" (ngSubmit)="(isNewReview() ? publishReview() : editReview())" [formGroup]="form" *ngIf="this.isEditMode; else htmlReview">
@@ -59,32 +65,35 @@
           <option *ngFor="let vote of votes" [value]="vote">{{vote}}/10</option>
         </select>
 
-        <button class="btn button button-primary mt-2" style="text-align: center;"  type="submit" [disabled]="form.invalid || !form.dirty || this.publishReviewStatus.isLoading">{{!isNewReview() ? 'SUBMIT' : 'PUBLISH' }}</button>
+        <section class="mt-2">
+          <button *ngIf="!isNewReview()" class="btn button button-secondary" [disabled]="this.publishReviewStatus.isLoading" (click)="this.setEditMode(false)">DISCARD CHANGES</button>
+          <button class="btn button button-primary" style="text-align: center;"  type="submit" [disabled]="form.invalid || !form.dirty || this.publishReviewStatus.isLoading">{{!isNewReview() ? 'SUBMIT' : 'PUBLISH' }}</button>
+        </section>
       </form>
 
 
       <ng-template #htmlReview>
-      <h1>{{review.titolo}}</h1>
-      <div class="w-100" id="review" [innerHtml]="sanitizer.bypassSecurityTrustHtml(this.review.contenuto)"></div>
-      <h1>{{review.voto}}/10</h1>
+        <h1>{{review.titolo}}</h1>
+        <div class="w-100" id="review" [innerHtml]="sanitizer.bypassSecurityTrustHtml(this.review.contenuto)"></div>
+        <h1>{{review.voto}}/10</h1>
+        <app-feedback [feedback]="this.review" [target]="this"></app-feedback>
       </ng-template>
 
-      <button class="btn button button-secondary" *ngIf="!this.isNewReview() && loggedUser !== null && loggedUser?.username === review.utente" [disabled]="this.publishReviewStatus.isLoading" (click)="this.setEditMode(!this.isEditMode)">{{!this.isEditMode ? "EDIT" : "DISCARD CHANGES"}}</button>
 
 
-    </section >
-    <section class="" *ngIf="!this.isNewReview()" [immediateCheck]="true" infiniteScroll (scrolled)="loadNewComments()" id="commentsSection">
+    </section>
+    <section class="mt-5" *ngIf="!this.isNewReview()" [immediateCheck]="true" infiniteScroll (scrolled)="loadNewComments()" id="commentsSection">
 
 
-      <div>
-        <h3>Comment Section</h3>
-        <section *ngIf="this.loggedUser !== null && this.loggedUser !== undefined; else authenticationText">
+      <h3>Comment Section</h3>
+
+      <h5 *ngIf="this.loggedUser === null || this.loggedUser === undefined; else banText">To comment you must be <a href="http://localhost:8080/login">logged in</a></h5>
+      <ng-template #banText>
+        <h5 *ngIf="this.loggedUser?.bandito; else writeComment">You are banned from commenting</h5>
+      </ng-template>
+      <ng-template #writeComment>
           <textarea [formControl]="newCommentFormControl" placeholder="Write comment..." class="w-100 ny-4 background-secondary-color whitesmoke-text" autosize [minRows]="1" [maxRows]="15" style="resize: none;border: unset;"></textarea>
           <button class="btn button button-primary" [disabled]="this.addCommentStatus.isLoading || newCommentFormControl.invalid" (click)="addComment()">PUBBLICA</button>
-        </section>
-      </div>
-      <ng-template #authenticationText>
-        <h5>To comment you must be <a href="http://localhost:8080/login">logged in</a></h5>
       </ng-template>
       <app-comment *ngFor="let comment of comments" [comment]="comment" [loggedUser]="this.loggedUser" (onDelete)="deleteComment($event)"></app-comment>
     </section>
