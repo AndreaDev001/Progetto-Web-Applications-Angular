@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit,OnDestroy{
 
   public isLogged: boolean = false;
   public isAdmin: boolean = false;
+  public currentUser?: Utente;
   private subscriptions: Subscription[] = [];
   public icons: IconDefinition[] = [faHouse,faNewspaper,faPeopleGroup,faCircleUser,faIdCard];
   constructor(public springHandler: SpringHandlerService) {
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit,OnDestroy{
   public ngOnInit(): void{
     this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: Utente) => {
       this.isLogged = value != undefined;
+      this.currentUser = value;
       if(this.isLogged)
         this.isAdmin = value.amministratore;
     }));
