@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {Review, Utente} from "../../interfaces";
 import {Router} from "@angular/router";
+import {DOMParserService} from "../../services/domparser.service";
 
 @Component({
   selector: 'app-profile-review-list',
@@ -16,7 +17,7 @@ export class ProfileReviewListComponent implements OnInit,OnDestroy{
   public owner?: string;
   public userReviews: Review[] = [];
 
-  constructor(public springHandler: SpringHandlerService,private router: Router) {
+  constructor(public springHandler: SpringHandlerService,private domParser: DOMParserService,private router: Router) {
 
   }
   public ngOnInit(): void{
@@ -40,16 +41,9 @@ export class ProfileReviewListComponent implements OnInit,OnDestroy{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
   public formatReviews(): void{
-    let domParser: DOMParser = new DOMParser();
-    for(let current of this.userReviews)
-    {
-      let document: Document = domParser.parseFromString(current.contenuto,'text/html');
-      let all: HTMLCollectionOf<Element> = document.getElementsByTagName("*");
-      for(let i = 0;i < all.length;i++){
-        let currentElement: Element = all[i];
-        if(currentElement.textContent != undefined && currentElement.textContent != "")
-          current.contenuto = currentElement.textContent;
-      }
+    for(let current of this.userReviews){
+      let value: string | undefined = this.domParser.findFirstText(current.contenuto);
+      current.contenuto = value ? value : "Preview not found";
     }
     this.userReviews.sort((first: Review,second: Review) => second.numeroMiPiace - first.numeroMiPiace);
   }

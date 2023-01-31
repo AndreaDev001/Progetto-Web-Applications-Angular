@@ -67,8 +67,5 @@ export class GameReviewListComponent implements OnInit,OnDestroy{
     else if(this.isLogged && !this.isBanned && !this.userReview)
       this.router.navigate(["../../" + this.gameID + "/newRecensione"],{queryParams: this.springHandler.getParams()})
   }
-  public goToLogin(): void{
-    window.open("http://localhost:8080/login","_self");
-  }
 }
 

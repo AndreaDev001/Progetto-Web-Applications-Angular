@@ -17,29 +17,26 @@ export class GameMainInfoRightComponent implements OnInit{
   public ngOnInit(): void{
 
   }
-  public createGenres(): overflowItem[]{
+  public createGenres(): overflowItem[]
+  {
     let genres: overflowItem[] = [];
-    if(this.gameInfo?.genres){
+    if(this.gameInfo?.genres)
       for(let current of this.gameInfo.genres)
         genres.push({name: current});
-    }
     return genres;
   }
   public createPlatforms(): overflowItem[]{
     let platforms: overflowItem[] = [];
-    if(this.gameInfo?.platforms){
+    if(this.gameInfo?.platforms)
       for(let current of this.gameInfo.platforms)
         platforms.push({name: current,icon: this.gameIconTranslator.getPlatformIcon(current,true)})
-    }
     return platforms;
   }
   public createStores(): overflowItem[]{
     let stores: overflowItem[] = [];
     if(this.gameInfo?.stores)
-    {
       for(let current of this.gameInfo.stores)
         stores.push({name: current.name,icon: this.gameIconTranslator.getStoreIcon(current.name,true),link: current.link});
-    }
     return stores;
   }
 }

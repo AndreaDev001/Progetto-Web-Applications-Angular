@@ -8,6 +8,8 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {StoreLink, GameInfo} from "../../interfaces";
 import {Subscription} from "rxjs";
 import {faCircleExclamation, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {DOMParserService} from "../../services/domparser.service";
+import {GameIconTranslatorService} from "../../services/game-icon-translator.service";
 
 @Component({
   selector: 'app-game-detail',
@@ -26,9 +28,7 @@ export class GameDetailComponent implements OnInit,OnDestroy{
   public userReview?: Review;
   private subscriptions: Subscription[] = [];
   public failed: boolean = false;
-  public errorIcon: IconDefinition = faCircleExclamation;
-
-  constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,public springHandler: SpringHandlerService) {
+  constructor(private route: ActivatedRoute,private spinnerService: NgxSpinnerService,private gameHandler: GameHandlerService,private gameJSONReader: GameJSONReaderService,private domParser: DOMParserService,private iconTranslator: GameIconTranslatorService,public springHandler: SpringHandlerService) {
 
   }
   public ngOnInit(): void {
@@ -84,13 +84,6 @@ export class GameDetailComponent implements OnInit,OnDestroy{
         result.push(current.highQuality);
     return result;
   }
-  public getStores(values: Store[] | undefined) : string[]{
-    let result: string[] = [];
-    if(values)
-        for(let current of values)
-          result.push(current.name)
-    return result;
-  }
   public createStoreLinks(values: any): void{
     for(let current of values)
     {
@@ -104,47 +97,20 @@ export class GameDetailComponent implements OnInit,OnDestroy{
       })
     }
   }
-  public getGameInfo(): GameInfo | undefined{
+  public getGameInfo(): GameInfo | undefined
+  {
+    //Da rimuovere il ts-ignore
     if(this.gameDetails)
       //@ts-ignore
       return {id: this.gameDetails.id,name: this.gameDetails.original_name,description: this.gameDetails.description_raw,rating: this.gameDetails.rating,
       website: this.gameDetails.website,reddit_url: this.gameDetails.reddit_url,image: this.gameDetails.image_background,
-      metacritic_url: this.gameDetails.metacritic_url,released: this.gameDetails.releaseDate,esrbRating: this.getEsrbImage(),stores: this.storeLinks,genres: this.getValues(this.gameDetails.genres),platforms: this.getValues(this.gameDetails.platforms)
+      metacritic_url: this.gameDetails.metacritic_url,released: this.gameDetails.releaseDate,esrbRating: this.iconTranslator.getEsrbImage(this.gameDetails.esbrRating?.slug),stores: this.storeLinks,genres: this.getValues(this.gameDetails.genres),platforms: this.getValues(this.gameDetails.platforms)
     };
     return undefined;
   }
-  public getEsrbImage(): string | undefined{
-    if(this.gameDetails?.esbrRating){
-      let esrbSlug: string = this.gameDetails.esbrRating.slug;
-      switch (esrbSlug){
-        case "teen":
-          return "https://www.esrb.org/wp-content/uploads/2019/05/T.svg";
-        case "mature":
-          return "https://www.esrb.org/wp-content/uploads/2019/05/M.svg";
-        case "everyone":
-          return "https://www.esrb.org/wp-content/uploads/2019/05/E.svg";
-        case "everyone-10-plus":
-          return "https://www.esrb.org/wp-content/uploads/2019/05/E10plus.svg";
-      }
-    }
-    return undefined;
-  }
-  private formatReview(value: Review): void{
-    let result: string | undefined = this.formatHTML(value.contenuto);
-    console.log("Result:" + result);
-    value.contenuto = result ? result : value.contenuto;
-  }
-  private formatHTML(value: string): string | undefined {
-    let domParser: DOMParser = new DOMParser();
-    let document: Document = domParser.parseFromString(value,'text/html');
-    let all: HTMLCollectionOf<Element> = document.body.getElementsByTagName("*");
-    for(let i = 0;i < all.length;i++)
-    {
-      let currentElement: Element = all[i];
-      if(currentElement.textContent != undefined && currentElement.textContent != "")
-        return currentElement.textContent;
-    }
-    return "Text not found";
+  private formatReview(review: Review){
+    let text: string | undefined = this.domParser.findFirstText(review.contenuto);
+    review.contenuto = text ? text : "No preview found";
   }
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());

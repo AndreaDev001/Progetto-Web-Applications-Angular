@@ -53,4 +53,19 @@ export class GameIconTranslatorService {
       return faStore;
     return undefined;
   }
+  public getEsrbImage(value: string | undefined): string | undefined
+  {
+    switch(value) {
+      case "teen":
+        return "https://www.esrb.org/wp-content/uploads/2019/05/T.svg";
+      case "mature":
+        return "https://www.esrb.org/wp-content/uploads/2019/05/M.svg";
+      case "everyone":
+        return "https://www.esrb.org/wp-content/uploads/2019/05/E.svg";
+      case "everyone-10-plus":
+        return "https://www.esrb.org/wp-content/uploads/2019/05/E10plus.svg";
+      default:
+        return undefined;
+    }
+  }
 }
