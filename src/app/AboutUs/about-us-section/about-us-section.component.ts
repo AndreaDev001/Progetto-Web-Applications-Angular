@@ -17,6 +17,7 @@ export class AboutUsSectionComponent implements OnInit
    @Input() techUsed: string[] = [];
    @Input() pictureCaptions: FigureCaption[] = [];
    @Input() stringLinks: StringLink[] = [];
+   @Input() image?: string;
    public userIcon: IconDefinition = faCircleUser;
 
    constructor(public springHandler: SpringHandlerService)
