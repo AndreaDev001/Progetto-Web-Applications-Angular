@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {OrderingMode, OrderingType} from "../enum";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {Location} from "@angular/common";
 
 export interface ParamType{
   orderingType?: OrderingType;
@@ -24,9 +25,9 @@ export class GameRouterHandlerService {
         this.currentParamType.next(this.readParams())
     });
     this.router.events.subscribe((value: any) => {
-      if(value instanceof NavigationEnd && this.router.url === "/games")
+      if(value instanceof NavigationEnd && router.url.split("?")[0] == "/games")
         this.currentParamType.next(this.readParams());
-    });
+    })
   }
   private readParams(): ParamType{
     let orderingType = this.activatedRoute.snapshot.queryParams['orderingType'];

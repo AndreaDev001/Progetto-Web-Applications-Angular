@@ -1,34 +1,63 @@
-<app-error *ngIf="!isLogged" [errorMessage]="'You have to be logged in to use this page'" [errorButtonText]="'Back to home'"></app-error>
-<div class = "container pt-4" *ngIf="isLogged">
-  <h1 class = "text-white" style="font-weight: bold">{{owner}}'s Reviews</h1>
-  <div class = "d-block" *ngIf="this.userReviews.length == 0">
-    <p class = "text-white" style="font-size: 20px">You haven't written a review yet</p>
-    <a class = "btn btn-lg button button-primary" [routerLink]="['/games']" [queryParams]="springHandler.getParams()">Back to home page</a >
+<div class = "container pt-4">
+  <div id="error-holder" class = "w-100 h-100 text-center" *ngIf="!isLogged">
+    <div class = "d-block py-4 text-white" style="background-color: var(--background-secondary);border-radius: 30px">
+      <h1 style="font-weight: bold">Not Authorized</h1>
+      <div class = "w-100 mt-4">
+        <a class = "btn btn-lg button button-primary w-50" [routerLink]="['/games']" [queryParams]="springHandler.getParams()">Back to home page</a>
+      </div>
+      <div class = "w-100 mt-2">
+        <a class = "btn btn-lg button button-secondary w-50" href="http://localhost:8080/login">Login</a>
+      </div>
+      <div class = "w-100 mt-2">
+        <a class = "btn btn-lg button button-secondary w-50" [routerLink]="['/registration']" [queryParams]="springHandler.getParams()">Sign up</a>
+      </div>
+    </div>
   </div>
-  <div class = "d-block pt-3" *ngIf="this.userReviews.length > 0">
-    <h4 class = "text-white">Here you can see all the reviews written by you</h4>
-    <table class = "table table-borderless rounded rounded-4 overflow-hidden">
-      <caption class = "text-white">List of Reviews, you can see more about a single review by clicking on it</caption>
-      <thead>
-         <tr id = "profile-review-header" class = "text-center">
-           <th scope="col">#</th>
-           <th scope="col">Title</th>
-           <th scope="col">Preview</th>
-           <th scope="col">Vote</th>
-           <th scope="col">Like Count</th>
-           <th scope="col">Dislike Count</th>
-         </tr>
-      </thead>
-      <tbody>
-      <tr class = "profile-review text-center" *ngFor="let current of this.userReviews;let i = index" (click)="handleClick(current)">
-        <th scope="row">{{i + 1}}</th>
-        <td>{{current.titolo}}</td>
-        <td>{{current.contenuto | slice: 0: current.contenuto.length / 2}}...</td>
-        <td>{{current.voto}}</td>
-        <td>{{current.numeroMiPiace}}</td>
-        <td>{{current.numeroNonMiPiace}}</td>
-      </tr>
-      </tbody>
-    </table>
+  <div class = "w-100 h-100" *ngIf="isLogged">
+    <h1 class = "text-white" style="font-weight: bold">{{owner}}'s Reviews</h1>
+    <div class = "d-block" *ngIf="this.userReviews.length == 0">
+      <p class = "text-white" style="font-size: 20px">You haven't written a review yet</p>
+      <a class = "btn btn-lg button button-primary" [routerLink]="['/games']" [queryParams]="springHandler.getParams()">Back to home page</a >
+    </div>
+    <div class = "d-block pt-3" *ngIf="this.userReviews.length > 0">
+      <h4 class = "text-white">Here you can see all the reviews written by you</h4>
+      <div class = "row">
+        <div class = "col-12 col-md-6 col-lg-3 mt-2" *ngFor="let current of this.userReviews">
+          <button class = "card text-white text-center text-decoration-none" (click)="handleClick(current)">
+            <div class = "card-header" style="background-color: var(--secondary)">
+              <h2 style="font-weight: bold">{{current.nomeGioco}}</h2>
+            </div>
+            <div class = "card-body">
+              <ul class = "list-group list-group-flush">
+                <li class = "list-group-item card-field">
+                  <span>Title:</span>
+                  {{current.titolo}}
+                </li>
+                <li class = "list-group-item card-field">
+                  Preview:
+                  {{current.contenuto | slice: 0:current.contenuto.length / 2}}...
+                </li>
+                <li class = "list-group-item card-field">
+                  <span>Rating:</span>
+                  {{current.voto}}
+                </li>
+                <li class = "list-group-item card-field">
+                  <span>Like Count:</span>
+                  {{current.numeroMiPiace}}
+                </li>
+                <li class = "list-group-item card-field">
+                  <span>Dislike Count:</span>
+                  {{current.numeroNonMiPiace}}
+                </li>
+                <li class = "list-group-item card-field">
+                  <span>Date:</span>
+                  {{current.data | date: 'medium'}}
+                </li>
+              </ul>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

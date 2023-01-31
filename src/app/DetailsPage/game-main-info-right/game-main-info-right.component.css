@@ -2,7 +2,7 @@ p.game-name{
   font-size: 30px;
   font-weight: bold;
 }
-p.game-description{
+div.game-description{
   font-size: 17px;
   font-weight: normal;
 }

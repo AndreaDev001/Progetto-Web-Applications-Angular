@@ -134,6 +134,7 @@ export interface Review extends FeedbackContainer
   utente?: string;
   gioco?: number;
   data?: string;
+  nomeGioco?: string;
 }
 export interface Utente{
   username: string;

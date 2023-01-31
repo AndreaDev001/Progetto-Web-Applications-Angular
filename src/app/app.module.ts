@@ -116,7 +116,7 @@ import { AboutUsSectionComponent } from './AboutUs/about-us-section/about-us-sec
     ErrorComponent,
     ProfileReviewListComponent,
     FeedbackComponent,
-    AboutUsSectionComponent
+    AboutUsSectionComponent,
   ],
   imports: [
     BrowserModule,

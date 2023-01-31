@@ -4,10 +4,52 @@ tr.profile-review{
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
+li.card-field{
+  background-color: inherit;
+  border: none;
+  color: whitesmoke;
+}
+button
+{
+  background-color: var(--background-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+button:hover{
+  background-color: var(--secondary);
+  color: whitesmoke;
+  transform: scale(1.02);
+  z-index: 10;
+}
 tr.profile-review:hover{
   background-color: var(--secondary);
 }
 tr#profile-review-header{
   background-color: var(--primary);
   color: whitesmoke;
+}
+a:visited{
+  color: whitesmoke;
+}
+a:hover{
+  color: var(--background-secondary);
+}
+#error-holder
+{
+  padding: 5% 30%;
+}
+@media screen and (max-width: 576px) {
+  #error-holder{
+    padding: 5% 0;
+  }
+}
+@media screen and (max-width: 768px){
+  #error-holder{
+    padding: 5% 20%;
+  }
+}
+@media screen and (max-width: 992px){
+  #error-holder{
+    padding: 5% 10%;
+  }
 }

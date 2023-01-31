@@ -1,44 +1,29 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Platform} from "../../../interfaces";
-import {faDesktop, IconDefinition} from "@fortawesome/free-solid-svg-icons";
-import {faAndroid, faApple, faPlaystation, faXbox} from "@fortawesome/free-brands-svg-icons";
+import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {GameIconTranslatorService} from "../../../services/game-icon-translator.service";
 
 @Component({
   selector: 'app-platform-list',
   templateUrl: './platform-list.component.html',
   styleUrls: ['./platform-list.component.css']
 })
-export class PlatformListComponent implements OnInit{
+export class PlatformListComponent implements OnChanges{
 
   @Input() platforms?: Platform[]
   icons: IconDefinition[] = [];
 
-  constructor() {
+  constructor(private gameIconTranslator: GameIconTranslatorService) {
   }
-  ngOnInit(): void{
-    this.icons = this.getAllIcons();
+  public ngOnChanges(changes: SimpleChanges) {
+    if(this.platforms)
+        for(let current of this.platforms){
+          let element: IconDefinition | undefined = this.gameIconTranslator.getPlatformIcon(current.slug.toLowerCase(),false);
+          if(element)
+            this.addItem(this.icons,element);
+        }
   }
-  getAllIcons(): IconDefinition[]{
-    //Implementazione da cambiare,ovviamente quelle di nintendo non ci sono
-    let icons: IconDefinition[] = [];
-    if(this.platforms){
-      for(let current of this.platforms){
-        let slug: string = current.slug;
-        if(slug.includes('pc'))
-          this.addItem(icons,faDesktop);
-        if(slug.includes('xbox'))
-          this.addItem(icons,faXbox);
-        else if(slug.includes('playstation'))
-          this.addItem(icons,faPlaystation);
-        else if(slug.includes('android'))
-          this.addItem(icons,faAndroid);
-        else if(slug.includes('ios'))
-          this.addItem(icons,faApple);
-      }
-    }
-    return icons;
-  }
-  addItem(icons: IconDefinition[],icon: IconDefinition){
+  public addItem(icons: IconDefinition[],icon: IconDefinition){
     if(icons.includes(icon))
       return;
     icons.push(icon);

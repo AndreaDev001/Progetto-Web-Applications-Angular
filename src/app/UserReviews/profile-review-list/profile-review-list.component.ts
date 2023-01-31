@@ -28,6 +28,10 @@ export class ProfileReviewListComponent implements OnInit,OnDestroy{
         this.springHandler.getUserReviews(value.username).subscribe(((values: Review[]) => {
           this.userReviews = values;
           this.formatReviews();
+          for(let current of this.userReviews) {
+            if (current.gioco)
+              this.springHandler.getGame(current.gioco).subscribe((value: any) => current.nomeGioco = value.titolo);
+          }
         }));
       }
     }));
@@ -37,15 +41,17 @@ export class ProfileReviewListComponent implements OnInit,OnDestroy{
   }
   public formatReviews(): void{
     let domParser: DOMParser = new DOMParser();
-    for(let current of this.userReviews){
+    for(let current of this.userReviews)
+    {
       let document: Document = domParser.parseFromString(current.contenuto,'text/html');
       let all: HTMLCollectionOf<Element> = document.getElementsByTagName("*");
       for(let i = 0;i < all.length;i++){
         let currentElement: Element = all[i];
-        if(currentElement.innerHTML != undefined && currentElement.innerHTML != "")
-          current.contenuto = currentElement.innerHTML;
+        if(currentElement.textContent != undefined && currentElement.textContent != "")
+          current.contenuto = currentElement.textContent;
       }
     }
+    this.userReviews.sort((first: Review,second: Review) => second.numeroMiPiace - first.numeroMiPiace);
   }
   public handleClick(review: Review): void{
     this.router.navigate(['/recensioni',review.id],{queryParams: this.springHandler.getParams()});
