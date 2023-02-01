@@ -174,7 +174,7 @@ export class GameJSONReaderService {
     let platforms = value.platforms;
     let foundGenres: Genre[] = this.readGenres(genres);
     let foundPlatforms: Platform[] = this.readPlatforms(platforms);
-    return {id: id,name: name,slug: slug,img: img,released: released,rating: rating,metacritic: metacritic,genres: foundGenres,platforms: foundPlatforms};
+    return {id: id,name: name,slug: slug,background_image: img,released: released,rating: rating,metacritic: metacritic,genres: foundGenres,platforms: foundPlatforms};
   }
   public readGenres(value: any): Genre[]{
     if(value == null)

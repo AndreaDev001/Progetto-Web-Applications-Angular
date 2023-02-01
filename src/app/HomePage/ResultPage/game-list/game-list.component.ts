@@ -54,7 +54,10 @@ export class GameListComponent implements OnInit,OnDestroy{
   }
   public handleClick(): void
   {
-    this.searchHandler.setCurrentList(GameListType.BEST_RATED);
+    if(this.searchHandler.getCurrentList(true) == undefined)
+        this.searchHandler.setCurrentList(GameListType.BEST_RATED);
+    else
+        this.searchHandler.setCurrentGenre("action");
   }
   public scroll(): void{
     if(!this.searchHandler.getIsIncreasingPage(true))

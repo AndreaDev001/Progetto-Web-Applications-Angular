@@ -50,10 +50,8 @@ import { TextOverflowComponent } from './DetailsPage/text-overflow/text-overflow
 import { GameAdditionalInfoComponent } from './DetailsPage/game-additional-info/game-additional-info.component';
 import { GameMainInfoComponent } from './DetailsPage/game-main-info/game-main-info.component';
 import { GameDetailsMediaComponent } from './DetailsPage/game-details-media/game-details-media.component';
-import { VideoSelectorComponent } from './DetailsPage/video-selector/video-selector.component';
 import { GameReviewComponent } from './DetailsPage/game-review/game-review.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import appRoutes from "./appRoutes";
 import {NgxSpinnerModule} from "ngx-spinner";
 import { GameReviewListComponent } from './DetailsPage/game-review-list/game-review-list.component';
 import { GameMainInfoLeftComponent } from './DetailsPage/game-main-info-left/game-main-info-left.component';
@@ -69,6 +67,8 @@ import { ErrorComponent } from './error/error.component';
 import { ProfileReviewListComponent } from './UserReviews/profile-review-list/profile-review-list.component';
 import { FeedbackComponent } from './ReviewPage/feedback/feedback.component';
 import { AboutUsSectionComponent } from './AboutUs/about-us-section/about-us-section.component';
+import appRoutes from "./appRoutes";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,7 +102,6 @@ import { AboutUsSectionComponent } from './AboutUs/about-us-section/about-us-sec
     GameAdditionalInfoComponent,
     GameMainInfoComponent,
     GameDetailsMediaComponent,
-    VideoSelectorComponent,
     GameReviewComponent,
     GameReviewListComponent,
     GameMainInfoLeftComponent,
