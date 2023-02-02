@@ -12,13 +12,21 @@ export class CommentService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getComments(reviewID : number, startIndex : number, size : number) : Observable<Comment[]>
+  public getComments(reviewID : number, startIndex : number, size : number, jsessionid ?: string) : Observable<Comment[]>
   {
       let queryParams = new HttpParams();
       queryParams = queryParams.append("reviewID", reviewID);
       queryParams = queryParams.append("startIndex", startIndex);
       queryParams = queryParams.append("commentsSize", size);
-      return this.httpClient.get<Comment[]>("http://localhost:8080/getComments", {params: queryParams});
+      if(jsessionid !== undefined)
+        queryParams = queryParams.append("jsessionid", jsessionid);
+      return this.httpClient.get("http://localhost:8080/getComments", {params: queryParams}).pipe(map((result : any) => {
+        const comments : Comment[] = [];
+        result.forEach((element: any) => {
+          comments.push({...element.comment, currentFeedback: FeedbackType[element.feedback as keyof typeof FeedbackType]})
+        });
+        return comments;
+      }));
   }
 
   public changeFeedback(commentID: number, isLike : boolean, username: string) : Observable<FeedbackType>
@@ -28,14 +36,6 @@ export class CommentService {
         tipo: isLike,
         utente: username
       }, {responseType: 'text' as any}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
-  }
-
-  public getCommentFeedback(username: string, commentID: number): Observable<FeedbackType>
-  {
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("commentID", commentID);
-    queryParams = queryParams.append("username", username);
-    return this.httpClient.get<string>("http://localhost:8080/getCommentFeedback", {responseType: 'text' as any, params: queryParams}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
   }
 
   public addComment(reviewID : number, contenuto : string, username: string) : Observable<number>

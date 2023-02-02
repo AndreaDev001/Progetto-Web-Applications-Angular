@@ -68,6 +68,7 @@ import { ProfileReviewListComponent } from './UserReviews/profile-review-list/pr
 import { FeedbackComponent } from './ReviewPage/feedback/feedback.component';
 import { AboutUsSectionComponent } from './AboutUs/about-us-section/about-us-section.component';
 import appRoutes from "./appRoutes";
+import { CommentListComponent } from './ReviewPage/comment-list/comment-list.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import appRoutes from "./appRoutes";
     ProfileReviewListComponent,
     FeedbackComponent,
     AboutUsSectionComponent,
+    CommentListComponent,
   ],
   imports: [
     BrowserModule,

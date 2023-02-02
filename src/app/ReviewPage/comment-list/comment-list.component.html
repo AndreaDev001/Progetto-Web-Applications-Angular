@@ -1,0 +1,15 @@
+<section class="mt-5" [immediateCheck]="true" infiniteScroll (scrolled)="loadNewComments()" id="commentsSection">
+
+
+  <h3>Comment Section</h3>
+
+  <h5 *ngIf="this.loggedUser === null || this.loggedUser === undefined; else banText">To comment you must be <a href="http://localhost:8080/login">logged in</a></h5>
+  <ng-template #banText>
+    <h5 *ngIf="this.loggedUser?.bandito; else writeComment">You are banned from commenting</h5>
+  </ng-template>
+  <ng-template #writeComment>
+      <textarea [formControl]="newCommentFormControl" placeholder="Write comment..." class="w-100 ny-4 background-secondary-color whitesmoke-text" autosize [minRows]="1" [maxRows]="15" style="resize: none;border: unset;"></textarea>
+      <button class="btn button button-primary" [disabled]="this.addCommentStatus.isLoading || newCommentFormControl.invalid" (click)="addComment()">PUBBLICA</button>
+  </ng-template>
+  <app-comment *ngFor="let comment of comments" [comment]="comment" [loggedUser]="this.loggedUser" (onDelete)="deleteComment($event)"></app-comment>
+</section>

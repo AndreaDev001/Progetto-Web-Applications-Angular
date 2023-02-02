@@ -12,11 +12,16 @@ export class ReviewService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getReview(reviewID: number) : Observable<Review>
+  getReview(reviewID: number, jsessionid: string) : Observable<Review>
   {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("reviewID", reviewID);
-    return this.httpClient.get<Review>("http://localhost:8080/getReview", {params: queryParams});
+    queryParams = queryParams.append("jsessionid", jsessionid);
+    return this.httpClient.get<any>("http://localhost:8080/getReview", {params: queryParams}).pipe(map(result => {
+      let review = <Review>result.review;
+      review.currentFeedback = FeedbackType[result.feedback as keyof typeof FeedbackType];
+      return review;
+    }));
   }
 
   publish(review: Review) : Observable<number>
@@ -52,22 +57,14 @@ export class ReviewService {
       }, {responseType: 'text' as any}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
   }
 
-  public getFeedback(user : string, reviewID: number): Observable<FeedbackType>
-  {
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("user", user)
-    queryParams = queryParams.append("reviewID", reviewID);
-    return this.httpClient.get<string>("http://localhost:8080/getReviewFeedback", {responseType: 'text' as any, params: queryParams}).pipe(map(value => FeedbackType[value as keyof typeof FeedbackType]));
-  }
 }
 
 export const reviewResolver: ResolveFn<Review> = (route: ActivatedRouteSnapshot) : Observable<Review> =>  {
   const router = inject(Router);
   const cs = inject(ReviewService);
   const id : string = route.paramMap.get('reviewID')!;
-
-
-  return cs.getReview(parseInt(id)).pipe(mergeMap(review => {
+  const jsessionid : string = route.queryParamMap.get('jsessionid')!;
+  return cs.getReview(parseInt(id), jsessionid).pipe(mergeMap(review => {
     if (review) {
       return of(review);
     } else {  // id not found
