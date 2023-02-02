@@ -45,13 +45,6 @@ export class CommentComponent implements FeedbackStrategy{
     return this.service.changeFeedback(this.comment.id, feedback === FeedbackType.like, this.loggedUser.username);
   }
 
-  public getInitialFeedback() : Observable<FeedbackType>
-  {
-    if(this.loggedUser === null || this.loggedUser === undefined)
-      return EMPTY;
-    return this.service.getCommentFeedback(this.loggedUser.username, this.comment.id);
-  }
-
   editStatus = new ObserverStatus();
 
   editComment()

@@ -70,38 +70,15 @@
           <button class="btn button button-primary" style="text-align: center;"  type="submit" [disabled]="form.invalid || !form.dirty || this.publishReviewStatus.isLoading">{{!isNewReview() ? 'SUBMIT' : 'PUBLISH' }}</button>
         </section>
       </form>
-
-
       <ng-template #htmlReview>
         <h1>{{review.titolo}}</h1>
         <div class="w-100" id="review" [innerHtml]="sanitizer.bypassSecurityTrustHtml(this.review.contenuto)"></div>
         <h1>{{review.voto}}/10</h1>
-        <app-feedback [feedback]="this.review" [target]="this"></app-feedback>
+        <app-feedback class="background-secondary-color px-2 rounded-sm" [feedback]="this.review" [target]="this"></app-feedback>
       </ng-template>
-
-
 
     </section>
-    <section class="mt-5" *ngIf="!this.isNewReview()" [immediateCheck]="true" infiniteScroll (scrolled)="loadNewComments()" id="commentsSection">
-
-
-      <h3>Comment Section</h3>
-
-      <h5 *ngIf="this.loggedUser === null || this.loggedUser === undefined; else banText">To comment you must be <a href="http://localhost:8080/login">logged in</a></h5>
-      <ng-template #banText>
-        <h5 *ngIf="this.loggedUser?.bandito; else writeComment">You are banned from commenting</h5>
-      </ng-template>
-      <ng-template #writeComment>
-          <textarea [formControl]="newCommentFormControl" placeholder="Write comment..." class="w-100 ny-4 background-secondary-color whitesmoke-text" autosize [minRows]="1" [maxRows]="15" style="resize: none;border: unset;"></textarea>
-          <button class="btn button button-primary" [disabled]="this.addCommentStatus.isLoading || newCommentFormControl.invalid" (click)="addComment()">PUBBLICA</button>
-      </ng-template>
-      <app-comment *ngFor="let comment of comments" [comment]="comment" [loggedUser]="this.loggedUser" (onDelete)="deleteComment($event)"></app-comment>
-    </section>
-
-
-
-
-
+    <app-comment-list #commentsList [loggedUser]="loggedUser" [reviewId]="this.review.id" [jsessionid]="this.springService.getSessionID(true)"></app-comment-list>
 </div>
 
 

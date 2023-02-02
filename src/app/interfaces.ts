@@ -154,9 +154,6 @@ export interface FeedbackStrategy
 {
   //this is called by the feedback component when a like or dislike is pressed
   onFeedbackChange: (type : FeedbackType) => Observable<FeedbackType>
-
-  //this is called when the component is initialized
-  getInitialFeedback: () => Observable<FeedbackType>
 }
 export interface FigureCaption{
   img: string,
