@@ -86,10 +86,6 @@ export class GameURLBuilderService {
     this.currentHttpParams = this.currentHttpParams.append("search_precise",precise);
     this.currentHttpParams = this.currentHttpParams.append("search_exact",exact);
   }
-  public addPlatformCount(amount: number): void{
-    this.validateRequest();
-    this.currentHttpParams = this.currentHttpParams.append("platforms_count",amount);
-  }
   public addMetacritic(min: number,max: number): void{
     this.validateRequest();
     let value: string = min + "," + max;

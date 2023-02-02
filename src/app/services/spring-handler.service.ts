@@ -44,12 +44,6 @@ export class SpringHandlerService {
     params = params.append("gameID",gameID);
     return this.httpClient.get(desiredURL,{params: params});
   }
-  public removeGame(gameID: number): Observable<any>{
-    const desiredURL: string = this.url + "/removeGame";
-    let params: HttpParams = new HttpParams();
-    params = params.append("gameID",gameID);
-    return this.httpClient.post(desiredURL,{},{params: params});
-  }
   public getGame(gameID: number): Observable<any> {
     const desiredURL: string = this.url + "/getGame";
     let params: HttpParams = new HttpParams();
