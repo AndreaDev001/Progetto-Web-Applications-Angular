@@ -202,7 +202,7 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
   {
     if(this.review.id === undefined || this.loggedUser === undefined || this.loggedUser === null)
     {
-      this.alertService.setAllValues("Warning", "You are not logged in", true);
+      this.alertService.setAllValues("Warning", "You must be logged in to leave a feedback", true);
       return EMPTY;
     }
     return this.reviewS.changeFeedback(this.review.id, feedback === FeedbackType.like, this.loggedUser.username);

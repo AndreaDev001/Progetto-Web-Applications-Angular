@@ -41,7 +41,7 @@ export class CommentComponent implements FeedbackStrategy{
   {
     if(this.loggedUser === undefined || this.loggedUser === null)
     {
-      this.alertService.setAllValues("Warning", "You are not logged in", true);
+      this.alertService.setAllValues("Warning", "You must be logged in to leave a feedback", true);
       return EMPTY;
     }
 
