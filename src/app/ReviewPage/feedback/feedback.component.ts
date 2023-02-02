@@ -3,7 +3,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/
 
 
 import {faThumbsDown, faThumbsUp, IconDefinition} from "@fortawesome/free-solid-svg-icons";
-import { EMPTY } from 'rxjs';
+import { EMPTY, observable, Observable } from 'rxjs';
 import { FeedbackType } from 'src/app/enum';
 import { FeedbackContainer, FeedbackStrategy } from 'src/app/interfaces';
 
@@ -33,6 +33,9 @@ export class FeedbackComponent {
 
   public updateFeedback(type : FeedbackType)
   {
+    const observable = this.target.onFeedbackChange(type);
+    if(observable == EMPTY) return;
+
     this.loading = true;
     this.target.onFeedbackChange(type).subscribe(newFeedback  => {
       this.loading = false;
