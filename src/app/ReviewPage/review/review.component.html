@@ -79,7 +79,7 @@
         </ng-template>
 
       </section>
-      <app-comment-list #commentsList [loggedUser]="loggedUser" [reviewId]="this.review.id" [jsessionid]="this.springService.getSessionID(true)"></app-comment-list>
+      <app-comment-list *ngIf="!isNewReview()" #commentsList [loggedUser]="loggedUser" [reviewId]="this.review.id" [jsessionid]="this.springService.getSessionID(true)"></app-comment-list>
   </div>
 </div>
 
