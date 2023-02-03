@@ -22,6 +22,10 @@ export class GameReviewListComponent implements OnInit,OnDestroy{
   constructor(public springHandler: SpringHandlerService, private router: Router) {
 
   }
+
+  /***
+   * Si iscrive a tutti gli osservabili necessari
+   */
   public ngOnInit(): void
   {
     this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: Utente) => {
@@ -32,13 +36,26 @@ export class GameReviewListComponent implements OnInit,OnDestroy{
       this.currentButtonText = this.createButtonText();
     }));
   }
+
+  /***
+   * Elimina tutte le iscrizioni
+   */
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
+
+  /***
+   * Effettua un ordinamento delle recensioni quando esse cambiano
+   * @param changes
+   */
   public ngOnChanges(changes: SimpleChanges): void{
     if(this.reviews)
       this.reviews = this.reviews.sort((first: Review,second: Review) => second.voto - first.voto);
   }
+
+  /***
+   * Aggiorna il testo sotto il pulsante
+   */
   public createText(): string{
     if(this.isLogged && !this.isBanned && !this.userReview)
       return "You haven't written a review on this game yet";
@@ -50,6 +67,10 @@ export class GameReviewListComponent implements OnInit,OnDestroy{
       return "To write a review you need to be logged in";
     return "Text";
   }
+
+  /***
+   * Aggiorna il testo del pulsante
+   */
   public createButtonText(): string{
     if(this.isLogged && this.isBanned)
       return "Back to home page";
@@ -59,6 +80,10 @@ export class GameReviewListComponent implements OnInit,OnDestroy{
       return "Login";
     return "Button Text";
   }
+
+  /***
+   * Gestisce il click sul pulsante
+   */
   public handleClick(): void{
     if(!this.isLogged)
       window.open("http://localhost:8080/login","_self");

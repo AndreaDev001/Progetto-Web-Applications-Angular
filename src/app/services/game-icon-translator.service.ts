@@ -17,6 +17,12 @@ export class GameIconTranslatorService {
   constructor() {
 
   }
+
+  /***
+   * Ritorna una icona di una piattaforma desiderata
+   * @param value Nome dell'icona
+   * @param defaultIcon Se non viene trovata nessuna icona, se utilizzare una icona predefinita
+   */
   public getPlatformIcon(value: string, defaultIcon: boolean): IconDefinition | undefined{
     value = value.toLowerCase();
     if(value.includes("playstation"))
@@ -37,6 +43,12 @@ export class GameIconTranslatorService {
       return faGamepad;
     return undefined;
   }
+
+  /***
+   * Ritorna una icona di un negozio
+   * @param value Il nome dell'icona
+   * @param defaultValue Se non viene trovata nessuna icona, se utilizzare una icona predefinita
+   */
   public getStoreIcon(value: string, defaultValue: boolean): IconDefinition | undefined{
     value = value.toLowerCase();
     if(value.includes("playstation"))
@@ -53,6 +65,11 @@ export class GameIconTranslatorService {
       return faStore;
     return undefined;
   }
+
+  /***
+   * Ritorna una immagine relativa a esrb
+   * @param value Il nome dell'immagine esrb
+   */
   public getEsrbImage(value: string | undefined): string | undefined
   {
     switch(value) {

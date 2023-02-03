@@ -13,11 +13,15 @@ export class ErrorComponent implements OnInit
   public errorIcon: IconDefinition = faCircleExclamation;
 
   constructor() {
-  
+
   }
   public ngOnInit(): void{
 
   }
+
+  /***
+   * Ricarica la pagina
+   */
   public handleClick(): void{
     window.location.reload();
   }

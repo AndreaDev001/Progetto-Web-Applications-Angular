@@ -15,9 +15,18 @@ export class GameAdditionalInfoComponent implements OnInit{
 
   constructor() {
   }
+
+  /***
+   * Verifica se il componente è vuoto o meno
+   */
   public ngOnInit(): void{
     this.isEmpty = !this.developers && !this.publishers && !this.tags && !this.achievements;
   }
+
+  /***
+   * Crea i valori per i text overflow contenuti nell'html
+   * @param values Stringhe da utilizzare negli items
+   */
   public createItems(values: string[]): overflowItem[]{
     let result: overflowItem[] = [];
     for(let current of values)

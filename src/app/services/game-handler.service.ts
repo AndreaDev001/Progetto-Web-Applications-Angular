@@ -21,6 +21,11 @@ export class GameHandlerService {
     this.loadGenres();
     this.loadPlatforms();
   }
+
+  /***
+   * Esegue una richiesta HTTP
+   * @param value URL da cercare e parametri dell'url
+   */
   public performRequest(value: {url: string,queryParams: HttpParams}): any{
     return this.httpClient.get(value.url,{
       observe: 'body',
@@ -31,6 +36,15 @@ export class GameHandlerService {
       return throwError(() => err);
     }));
   }
+
+  /***
+   * Esegue una ricerca utilizzando filtri
+   * @param orderingType Il tipo dell'ordinamento
+   * @param orderingMode La modalità dell'ordinamento
+   * @param genre Il genere da cercare
+   * @param requiredPage La pagina della ricerca
+   * @param dateInterval L'intervallo di tempo
+   */
   public search(orderingType?: OrderingType,orderingMode?: OrderingMode,genre?: string,requiredPage?: number,dateInterval?: DateInterval): any{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
@@ -46,6 +60,12 @@ export class GameHandlerService {
       this.gameURLBuilder.addDates(dateInterval.startDate,dateInterval.endDate);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
+
+  /***
+   * Ricerca un gioco per nome
+   * @param value Il nome da cercare
+   * @param requiredPage La pagina della ricerca
+   */
   public searchByName(value: string,requiredPage?: number){
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
@@ -56,7 +76,13 @@ export class GameHandlerService {
     this.gameURLBuilder.addMetacritic(20,100);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
-  public getGameList(listType: GameListType,requiredPage?: number,dateInterval?: DateInterval): any{
+
+  /***
+   * Cerca una lista predefinita
+   * @param listType Il tipo di lista
+   * @param requiredPage La pagina della ricerca
+   */
+  public getGameList(listType: GameListType,requiredPage?: number): any{
     let orderingType: OrderingType = OrderingType.NAME;
     let orderingMode: OrderingMode = OrderingMode.DESCENDED;
     switch (listType){
@@ -71,6 +97,11 @@ export class GameHandlerService {
     }
     return this.search(orderingType,orderingMode,"",requiredPage);
   }
+
+  /**
+   * Cerca i dettagli di un gioco
+   * @param id L'id del gioco
+   */
   public getGameDetails(id: number): any{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
@@ -78,6 +109,11 @@ export class GameHandlerService {
     this.gameURLBuilder.addAPIKey(this.apiKEY);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
+
+  /***
+   * Cerca i negozi di un gioco
+   * @param id L'id del gioco
+   */
   public getGameStores(id: number): any{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
@@ -86,6 +122,11 @@ export class GameHandlerService {
     this.gameURLBuilder.addAPIKey(this.apiKEY);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
+
+  /***
+   * Cerca gli screenshots di un gioco
+   * @param id L'id del gioco
+   */
   public getGameScreenshots(id: number): any{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
@@ -94,6 +135,11 @@ export class GameHandlerService {
     this.gameURLBuilder.addAPIKey(this.apiKEY);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
+
+  /***
+   * Cerca gli obiettivi di un gioco
+   * @param id L'id del gioco
+   */
   public getGameAchievements(id: number): any{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
@@ -102,6 +148,11 @@ export class GameHandlerService {
     this.gameURLBuilder.addAPIKey(this.apiKEY);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
+
+  /***
+   * Cerca i trailer di un gioco
+   * @param id L'id del gioco
+   */
   public getGameTrailers(id: number): any{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.GAMES);
@@ -110,12 +161,21 @@ export class GameHandlerService {
     this.gameURLBuilder.addAPIKey(this.apiKEY);
     return this.performRequest(this.gameURLBuilder.getURL());
   }
+  /**
+   * Aggiorna i generi attuali
+   * @private
+   */
   private loadGenres(): void{
     this.gameURLBuilder.reset()
     this.gameURLBuilder.setRequestType(RequestType.GENRES);
     this.gameURLBuilder.addAPIKey(this.apiKEY);
     this.performRequest(this.gameURLBuilder.getURL()).subscribe((result: any) => this.loadedGenres.next(result.results),(error: any) => this.errorMessage.next(error.message));
   }
+
+  /***
+   * Aggiorna le piattaforme attuali
+   * @private
+   */
   private loadPlatforms(): void{
     this.gameURLBuilder.reset();
     this.gameURLBuilder.setRequestType(RequestType.PLATFORMS);

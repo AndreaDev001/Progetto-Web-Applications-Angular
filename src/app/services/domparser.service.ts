@@ -11,23 +11,10 @@ export class DOMParserService
   constructor() {
 
   }
-  public getElementsText(text: string,requiredSelector: string,body: boolean): string[]{
-    let values: string[] = [];
-    let document: Document = this.domParser.parseFromString(text,"text/html");
-    let elements: NodeListOf<Element>;
-    elements = body ? document.body.querySelectorAll(requiredSelector) : document.querySelectorAll(requiredSelector);
-    for(let i = 0;i < elements.length;i++){
-      let current: Element = elements[i];
-      if(current.textContent)
-        values.push(current.textContent);
-    }
-    return values;
-  }
-  public getElementText(text: string,id: string): string | undefined{
-    let document: Document = this.domParser.parseFromString(text,"text/html");
-    let element: HTMLElement | null = document.getElementById(id);
-    return element ? element.innerText : undefined;
-  }
+  /**
+   * Ritorna il primo testo contenuto in un file html
+   * @param text Il testo html
+   */
   public findFirstText(text: string): string | undefined{
     let document: Document = this.domParser.parseFromString(text,"text/html");
     let all: HTMLCollectionOf<Element> = document.getElementsByTagName("*");

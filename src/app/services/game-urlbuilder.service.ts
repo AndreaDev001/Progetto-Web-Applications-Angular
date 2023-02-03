@@ -13,6 +13,7 @@ export class GameURLBuilderService {
   constructor() {
 
   }
+  //Imposta il tipo attuale di ricerca da effettuare, prende come parametri requestType
   public setRequestType(requestType: RequestType): void{
     this.requestType = requestType;
     let regex: RegExp = /\/([a-zA-Z]+)\?/;
@@ -53,54 +54,60 @@ export class GameURLBuilderService {
       this.addDetails(id);
     this.url += "/screenshots";
   }
+  //Aggiune una api key all'url, prende come parametro apiKEY
   public addAPIKey(apiKEY: string): void{
     this.apiKEY = apiKEY;
     this.currentHttpParams = this.currentHttpParams.append("key",this.apiKEY);
   }
+  //Controlla se l'api key e il tipo di richiesta sono stati impostati
   public validateRequest(): void{
     if(this.requestType == undefined)
         throw new Error("Request type must be specified before adding any query parameter");
     if(this.apiKEY == undefined)
         throw new Error("API Key must be added before adding any query parameter");
   }
+  //Aggiunge un tipo di ordinamento all'url, prende come parametro orderingType e orderingMode
   public addOrdering(orderingType: OrderingType,orderingMode: OrderingMode): void{
     this.validateRequest();
     let value: string = (((orderingMode == OrderingMode.DESCENDED)) ? "-" : "") + orderingType;
     this.currentHttpParams = this.currentHttpParams.append("ordering",value);
   }
+  //Aggiunge un genere all'url, prende come parametro genre
   public addGenre(genre: string): void{
     this.validateRequest();
     this.currentHttpParams = this.currentHttpParams.append("genres",genre);
   }
+  //Aggiunge il numero di una pagina all'url, prende come parametro page
   public addPage(page: number): void{
     this.validateRequest();
     this.currentHttpParams = this.currentHttpParams.append("page",page);
   }
-  public addPageSize(pageSize: number){
-    this.validateRequest();
-    this.currentHttpParams = this.currentHttpParams.append("page_size",pageSize);
-  }
+  //Aggiunge un nome all'url, prende come parametri name, precise e exact
   public addSearch(name: string,precise: boolean,exact: boolean): void{
     this.validateRequest();
     this.currentHttpParams = this.currentHttpParams.append("search",name);
     this.currentHttpParams = this.currentHttpParams.append("search_precise",precise);
     this.currentHttpParams = this.currentHttpParams.append("search_exact",exact);
   }
+  //Aggiunge una votazione minima e massima all'url, prende come parametri min e max
   public addMetacritic(min: number,max: number): void{
     this.validateRequest();
     let value: string = min + "," + max;
     this.currentHttpParams = this.currentHttpParams.append("metacritic",value);
   }
+  //Aggiunge un intervallo di tempo all'url, prende come parametro first e second
   public addDates(first: string,second: string): void{
     this.validateRequest();
     let value: string = first + "," + second;
     this.currentHttpParams = this.currentHttpParams.append("dates",value);
   }
+  //Reimposta l'url attuale
   public reset(): void{
     this.url = "https://api.rawg.io/api/";
     this.apiKEY = undefined;
     this.currentHttpParams = new HttpParams();
   }
+  //Ritorna e reimposta l'url attuale
   public getURL(): {url: string,queryParams: HttpParams} {
     let value = {url: this.url,queryParams: this.currentHttpParams};
     this.reset();

@@ -12,6 +12,6 @@ export class GameDetailsMediaComponent implements OnInit{
   constructor() {
   }
   public ngOnInit() {
-    console.log(this.images);
+
   }
 }

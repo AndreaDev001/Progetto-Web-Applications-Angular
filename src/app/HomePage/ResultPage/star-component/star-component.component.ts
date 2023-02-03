@@ -17,6 +17,10 @@ export class StarComponentComponent implements OnInit{
   ngOnInit(): void{
     this.calculateStars();
   }
+
+  /***
+   * Calcola il numero delle stelle piene e mezze
+   */
   public calculateStars(): number{
     let result: number = 0;
     if(this.rating != undefined){

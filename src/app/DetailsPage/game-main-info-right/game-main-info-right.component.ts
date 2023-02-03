@@ -17,6 +17,10 @@ export class GameMainInfoRightComponent implements OnInit{
   public ngOnInit(): void{
 
   }
+
+  /***
+   * Crea tutti gli overflowItems riguardanti i generi
+   */
   public createGenres(): overflowItem[]
   {
     let genres: overflowItem[] = [];
@@ -25,6 +29,10 @@ export class GameMainInfoRightComponent implements OnInit{
         genres.push({name: current});
     return genres;
   }
+
+  /***
+   * Crea tutti gli overflowItems per le piattaforme
+   */
   public createPlatforms(): overflowItem[]{
     let platforms: overflowItem[] = [];
     if(this.gameInfo?.platforms)
@@ -32,6 +40,10 @@ export class GameMainInfoRightComponent implements OnInit{
         platforms.push({name: current,icon: this.gameIconTranslator.getPlatformIcon(current,true)})
     return platforms;
   }
+
+  /***
+   * Crea tutti gli overflow items per i negozi
+   */
   public createStores(): overflowItem[]{
     let stores: overflowItem[] = [];
     if(this.gameInfo?.stores)

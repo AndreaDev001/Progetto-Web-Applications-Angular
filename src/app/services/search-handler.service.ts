@@ -27,6 +27,11 @@ export class SearchHandlerService
   constructor(private gameHandler: GameHandlerService,private gameRouterHandler: GameRouterHandlerService,private datePipe: DatePipe) {
     this.handleParams();
   }
+
+  /***
+   * Si iscrive al gameRouterHandler e legge i parametri
+   * @private
+   */
   private handleParams(): void
   {
       this.gameRouterHandler.getCurrentParamType().subscribe((result: ParamType) => {
@@ -42,6 +47,11 @@ export class SearchHandlerService
         this.performSearch(true);
       });
   }
+
+  /***
+   * Utilizzando gameRouterHandler aggiorna il route attuale in base ai filtri selezionati attualmente
+   * @private
+   */
   private updateRoute()
   {
      let firstValue: string | null = this.datePipe.transform(this.startDate.value,'yyyy-MM-dd');
@@ -53,6 +63,11 @@ export class SearchHandlerService
         this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType.value,orderingMode: this.currentOrderingMode.value,
         genre: this.currentGenre.value,name: this.currentName.value})
   }
+
+  /***
+   * Imposta il tipo di ordinamento attuale
+   * @param orderingType Il nuovo tipo di ordinamento
+   */
   public setCurrentOrderingType(orderingType: OrderingType): any{
     this.currentOrderingType.next(orderingType);
     this.currentListType.next(undefined);
@@ -60,6 +75,11 @@ export class SearchHandlerService
     this.currentName.next(undefined);
     this.update();
   }
+
+  /**
+   * Imposta la modalità di ordinamento attuale
+   * @param orderingMode La nuova modalità di ordinamento
+   */
   public setCurrentOrderingMode(orderingMode: OrderingMode): any{
     this.currentOrderingMode.next(orderingMode);
     this.currentListType.next(undefined);
@@ -67,6 +87,11 @@ export class SearchHandlerService
     this.currentName.next(undefined);
     this.update();
   }
+
+  /***
+   * Imposta il genere attuale
+   * @param genre Il nuovo genere
+   */
   public setCurrentGenre(genre: string): void{
     this.currentGenre.next(genre.toLowerCase());
     this.currentListType.next(undefined);
@@ -76,12 +101,22 @@ export class SearchHandlerService
     this.currentOrderingMode.next(this.currentOrderingMode.value == null ? OrderingMode.DESCENDED : this.currentOrderingMode.value);
     this.update();
   }
+
+  /***
+   * Si assicura che l'intervallo di tempo attuale non sia nullo
+   * @private
+   */
   private validateDates(){
     if(this.startDate.value == undefined || this.endDate.value == undefined){
       this.startDate.next(new Date('1970-12-31'));
       this.endDate.next(new Date());
     }
   }
+  /***
+   * Imposta l'intervallo di tempo attuale
+   * @param startDate Data di inizio
+   * @param endDate Data di fine
+   */
   public setCurrentDate(startDate: Date,endDate: Date){
     this.startDate.next(startDate);
     this.endDate.next(endDate);
@@ -92,6 +127,11 @@ export class SearchHandlerService
         this.gameRouterHandler.setParamType({orderingType: this.currentOrderingType.value,orderingMode: this.currentOrderingMode.value,
         genre: this.currentGenre.value,name: this.currentName.value,minDate: firstValue,maxDate: secondValue})
   }
+
+  /***
+   * Imposta il tipo di lista attuale
+   * @param listType Il nuovo tipo di lista
+   */
   public setCurrentList(listType: GameListType): void{
     this.currentListType.next(listType);
     this.currentGenre.next(undefined);
@@ -111,10 +151,20 @@ export class SearchHandlerService
     }
     this.update();
   }
+
+  /**
+   * Si assicura che l'intervallo di tempo non sia nullo e aggiorna il route attuale
+   * @private
+   */
   private update(): void{
     this.validateDates();
     this.updateRoute();
   }
+
+  /**+
+   * Richiede i risultati di una ricerca al gameHandler
+   * @param updateIsSearching Se mostrare o meno una schermata di caricamento
+   */
   public performSearch(updateIsSearching: boolean): void{
     let startDate: string | null | undefined = this.datePipe.transform(this.startDate.value,'yyyy-MM-dd');
     let endDate: string | null | undefined = this.datePipe.transform(this.endDate.value,'yyyy-MM-dd');
@@ -135,20 +185,41 @@ export class SearchHandlerService
     else
       this.currentSubscription = this.gameHandler.getGameList(this.currentListType.value,this.currentMaxPage.value).subscribe((result: any) => this.updateResults(result.results,false),(error: any) => this.resetSearching());
   }
+
+  /**
+   * Reimposta la ricerca attuale, ripristina isSearching, isIncreasingPage e latestValues
+   * @private
+   */
   private resetSearching(): void{
     this.isSearching.next(false);
     this.isIncreasingPage.next(false);
     this.latestValues.next([]);
   }
+
+  /**
+   * Aggiorna i risultati di una ricerca
+   * @param values I nuovi risultati di una ricerca
+   * @param searchingValue Se mostrare una schermata di caricamento
+   * @private
+   */
   private updateResults(values: any[],searchingValue: boolean){
     this.latestValues.next(values);
     this.isSearching.next(searchingValue);
     this.isIncreasingPage.next(false);
   }
+
+  /**
+   * Aumenta di uno il numero di pagina attuale
+   */
   public increaseMaxPage(){
     this.currentMaxPage.next(this.currentMaxPage.value + 1);
     this.performSearch(false);
   }
+
+  /***
+   * Imposta il nome attuale di una ricerca
+   * @param name Il nuovo nome della ricerca
+   */
   public setCurrentName(name: string): void{
     this.currentName.next(name);
     this.currentMaxPage.next(1);

@@ -18,6 +18,10 @@ export class GameCardComponent implements OnInit{
   public ngOnInit(): void {
 
   }
+
+  /***
+   * Prepara la string contenente tutti i generi
+   */
   public getGenres(): string {
     let result: string = "";
     if (this.game?.genres) {

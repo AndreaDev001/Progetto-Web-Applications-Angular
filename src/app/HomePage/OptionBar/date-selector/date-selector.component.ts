@@ -22,10 +22,18 @@ export class DateSelectorComponent implements OnInit,OnDestroy{
   constructor(private searchHandler: SearchHandlerService) {
 
   }
-  ngOnDestroy(): void{
+
+  /***
+   * Elimina tutte le iscrizioni
+   */
+  public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
-  ngOnInit(): void {
+
+  /***
+   * Si iscrive a tutti gli osservabili necessari
+   */
+  public ngOnInit(): void {
     let maxYear: number = new Date().getFullYear();
     let startYear: number = 1980;
     this.intervals.push({start: 1970,end: maxYear});
@@ -43,11 +51,21 @@ export class DateSelectorComponent implements OnInit,OnDestroy{
       }
     }));
   }
+
+  /***
+   * Aggiorna l'intervallo di tempo attuale
+   * @param value Il nuovo intervallo di tempo
+   */
   public updateValue(value: YearInterval): void{
     let currentStart: string = value.start + "-" + "12" + "-" + "31";
     let currentEnd: string = value.end + "-" + "12" + "-" + "31";
     this.searchHandler.setCurrentDate(new Date(currentStart),new Date(currentEnd));
   }
+
+  /***
+   * Ritorna una stringa corrispondente ad un intervallo di tempo
+   * @param current L'intervallo di tempo
+   */
   public getInterval(current: YearInterval) : string | undefined{
     if(current != undefined)
       return current.start + "-" + current.end;

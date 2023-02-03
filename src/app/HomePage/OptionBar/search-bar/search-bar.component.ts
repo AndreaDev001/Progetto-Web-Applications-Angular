@@ -16,6 +16,10 @@ export class SearchBarComponent implements OnInit,OnDestroy{
   private subscriptions: Subscription[] = [];
   constructor(private searchHandler: SearchHandlerService) {
   }
+
+  /***
+   * Si iscrive a tutti gli osservabili necessari
+   */
   public ngOnInit(): void{
     this.textField = document.querySelector("input");
     this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: boolean) => {
@@ -24,9 +28,17 @@ export class SearchBarComponent implements OnInit,OnDestroy{
       this.currentName = genre || list ? "" : this.searchHandler.getCurrentName(true);
     }));
   }
+
+  /***
+   * Elimina tutte le iscrizioni
+   */
   public ngOnDestroy() {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
+  /***
+   * Gestice eventi dell'utente
+   * @param event Il tipo di evento
+   */
   public handleInput(event: any): void{
     if(event.key == "Enter"){
       this.currentName = event.target.value;
@@ -34,6 +46,10 @@ export class SearchBarComponent implements OnInit,OnDestroy{
            this.searchHandler.setCurrentName(this.currentName);
     }
   }
+
+  /***
+   * Gestisce il click dell'utente
+   */
   public handleClick(): void{
     this.currentName = this.textField?.value;
     if(this.currentName){

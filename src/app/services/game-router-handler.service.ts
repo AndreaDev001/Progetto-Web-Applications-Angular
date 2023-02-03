@@ -29,6 +29,11 @@ export class GameRouterHandlerService {
         this.currentParamType.next(this.readParams());
     })
   }
+
+  /***
+   * Legge i parametri dall'url
+   * @private
+   */
   private readParams(): ParamType{
     let orderingType = this.activatedRoute.snapshot.queryParams['orderingType'];
     let orderingMode = this.activatedRoute.snapshot.queryParams['orderingMode'];
@@ -38,6 +43,11 @@ export class GameRouterHandlerService {
     let name = this.activatedRoute.snapshot.queryParams['name'];
     return {orderingType: orderingType,orderingMode: orderingMode,genre: genre,minDate: minDate,maxDate: maxDate,name: name};
   }
+
+  /***
+   * Imposta i parametri attuali
+   * @param value Il nuovo tipo di parametro
+   */
   public setParamType(value: ParamType): void{
     this.router.navigate(['/games'],{
       queryParams: {

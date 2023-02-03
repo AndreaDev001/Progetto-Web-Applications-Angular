@@ -15,6 +15,11 @@ export class PlatformListComponent implements OnChanges{
 
   constructor(private gameIconTranslator: GameIconTranslatorService) {
   }
+
+  /**
+   * Aggiorna la lista attuale quando avvengono delle modifiche
+   * @param changes
+   */
   public ngOnChanges(changes: SimpleChanges) {
     if(this.platforms)
         for(let current of this.platforms){
@@ -23,6 +28,11 @@ export class PlatformListComponent implements OnChanges{
             this.addItem(this.icons,element);
         }
   }
+  /***
+   * Aggiunge un'icona ad una lista di icone
+   * @param icons La lista di icone a cui aggiungere un'icona
+   * @param icon L'icona da aggiungere
+   */
   public addItem(icons: IconDefinition[],icon: IconDefinition){
     if(icons.includes(icon))
       return;

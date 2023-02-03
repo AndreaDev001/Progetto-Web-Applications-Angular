@@ -15,6 +15,10 @@ export class GameReviewComponent implements OnInit{
 
   constructor(public springHandler: SpringHandlerService) {
   }
+
+  /***
+   * Aggiorna l'icona in base al voto
+   */
   public ngOnInit(){
     this.selectedIcon = this.review && this.review.voto >= 6 ? faThumbsUp : faThumbsDown;
   }

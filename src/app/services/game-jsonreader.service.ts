@@ -21,12 +21,22 @@ export class GameJSONReaderService {
   constructor() {
 
   }
+
+  /***
+   * Legge tutti i giochi di contenuti in una array
+   * @param value L'array contenente i giochi in formato JSON
+   */
   public readGames(value: any): Game[]{
     let values: Game[] = [];
     for(let current of value)
          values.push(this.readGame(current));
     return values;
   }
+
+  /***
+   * Legge i dettagli di un gioco in formato JSON
+   * @param value I dettagli del gioco in formato JSON
+   */
   public readGameDetails(value: any): GameDetails{
     let id: number = value.id;
     let original_name: string = value.name_original;
@@ -54,48 +64,88 @@ export class GameJSONReaderService {
     website: website,genres: genres,platforms: platforms,image_background: image_background,achievementsCount: achievementsCount,reddit_name: redditName,reddit_url: redditUrl,
     metacritic_url: metaCriticUrl,stores: stores,developers: developers,publishers: publishers,tags: tags,esbrRating: currentEsrb};
   }
+
+  /***
+   * Legge i negozi di un gioco in formato JSON
+   * @param value I negozi del gioco in formato JSON
+   */
   public readStores(value: any): Store[]{
     let stores: Store[] = [];
     for(let current of value)
       stores.push(this.readStore(current.store));
     return stores;
   }
+
+  /***
+   * Legge gli sviluppatori di un gioco in formato JSON
+   * @param value Gli sviluppatori del gioco in formato JSON
+   */
   public readDevelopers(value: any): Developer[]{
     let developers: Developer[] = [];
     for(let current of value)
         developers.push(this.readDeveloper(current));
     return developers;
   }
+
+  /***
+   * Legge i publisher di un gioco in formato JSON
+   * @param value I publisher del gioco in formato JSON
+   */
   public readPublishers(value: any): Publisher[]{
     let publishers: Publisher[] = [];
     for(let current of value)
          publishers.push(this.readPublisher(current));
     return publishers;
   }
+
+  /***
+   * Legge gli screenshots di un gioco in formato JSON
+   * @param value Gli screenshots di un gioco in formato JSON
+   */
   public readScreenshots(value: any): Screenshot[]{
     let screenshots: Screenshot[] = [];
     for(let current of value)
       screenshots.push(this.readScreenshot(current));
     return screenshots;
   }
+
+  /***
+   * Legge le tag di un gioco in formato JSON
+   * @param value Le tag di un gioco in formato JSON
+   */
   public readTags(value: any): Tag[]{
     let tags: Tag[] = [];
     for(let current of value)
       tags.push(this.readTag(current));
     return tags;
   }
+
+  /***
+   * Legge gli obiettivi di un gioco in formato JSON
+   * @param value Gli obiettivi di un gioco in formato JSON
+   */
   public readAchievements(value: any): Achievement[]{
     let achievements: Achievement[] = [];
     for(let current of value)
       achievements.push(this.readAchievement(current));
     return achievements;
   }
+
+  /***
+   * Legge i trailer di un gioco in formato JSON
+   * @param value I trailer di un gioco in formato JSON
+   */
   public readTrailers(value: any): Trailer[]{
     let trailers: Trailer[] = [];
     for(let current of value)
       trailers.push(this.readTrailer(current));
     return trailers;
   }
+
+  /**
+   * Legge un singolo sviluppatore in formato JSON
+   * @param value Lo sviluppatore in formato JSON
+   */
   public readDeveloper(value: any): Developer{
     let id: number = value.id;
     let name: string = value.name;
@@ -104,6 +154,11 @@ export class GameJSONReaderService {
     let image_background: string = value.image_background;
     return {id: id,name: name,slug: slug,games_count: games_count,image_background: image_background};
   }
+
+  /***
+   * Legge un singolo negozio in formato JSON
+   * @param value Il negozio in formato JSON
+   */
   public readStore(value: any): Store{
     let id: number = value.id;
     let name: string = value.name;
@@ -113,6 +168,11 @@ export class GameJSONReaderService {
     let image_background: string = value.image_background;
     return {id: id,name: name,slug: slug,domain: domain,games_count: games_count,image_background: image_background};
   }
+
+  /***
+   * Legge una tag in formato JSON
+   * @param value La tag in formato JSON
+   */
   public readTag(value: any): Tag{
     let id: number = value.id;
     let name: string = value.name;
@@ -122,6 +182,11 @@ export class GameJSONReaderService {
     let image_background: string = value.image_background;
     return {id: id,name: name,slug: slug,language: language,games_count: games_count,image_background: image_background};
   }
+
+  /***
+   * Legge un achievement in formato JSON
+   * @param value L'achievement in formato JSON
+   */
   public readAchievement(value: any): Achievement{
     let id: number = value.id;
     let name: string = value.name;
@@ -130,6 +195,11 @@ export class GameJSONReaderService {
     let percent: number = value.percent;
     return {id: id,name: name,description: description,image: image,percent: percent};
   }
+
+  /***
+   * Legge un trailer in formato JSON
+   * @param value Il trailer in formato JSON
+   */
   public readTrailer(value: any): Trailer{
     let id: number = value.id;
     let name: string = value.name;
@@ -138,12 +208,22 @@ export class GameJSONReaderService {
     let highQuality: string = value.data.max;
     return {id: id,name: name,preview: preview,lowQuality: lowQuality,highQuality: highQuality};
   }
+
+  /***
+   * Legge una votazione ESRB in formato JSON
+   * @param value La votazione ESRB in formato JSON
+   */
   public readEsrbRating(value: any): EsrbRating{
     let id: number = value.id;
     let name: string = value.name;
     let slug: string = value.slug;
     return {id: id,name: name,slug:slug};
   }
+
+  /***
+   * Legge un publisher in formato JSON
+   * @param value Il publisher in formato JSON
+   */
   public readPublisher(value: any): Publisher{
     let id: number = value.id;
     let name: string = value.name;
@@ -152,6 +232,11 @@ export class GameJSONReaderService {
     let image_background: string = value.image_background;
     return {id: id,name: name,slug: slug,games_count: games_count,image_background: image_background};
   }
+
+  /***
+   * Legge uno screenshot in formato JSON
+   * @param value Lo screenshot in formato JSON
+   */
   public readScreenshot(value: any): Screenshot{
     let id: number = value.id;
     let image: string = value.image;
@@ -160,6 +245,11 @@ export class GameJSONReaderService {
     let isDeleted: boolean = value.is_deleted;
     return {id: id,name: image,width: width,height: height,is_deleted: isDeleted};
   }
+
+  /***
+   * Legge un gioco in formato JSON
+   * @param value Il gioco in formato JSON
+   */
   public readGame(value: any): Game{
     let id: number = value.id;
     let name: string = value.name;
@@ -176,6 +266,11 @@ export class GameJSONReaderService {
     let foundPlatforms: Platform[] = this.readPlatforms(platforms);
     return {id: id,name: name,slug: slug,background_image: img,released: released,rating: rating,metacritic: metacritic,genres: foundGenres,platforms: foundPlatforms};
   }
+
+  /***
+   * Legge i generi di un gioco in formato JSON
+   * @param value I generi in formato JSON
+   */
   public readGenres(value: any): Genre[]{
     if(value == null)
         return [];
@@ -184,6 +279,11 @@ export class GameJSONReaderService {
          values.push(this.readGenre(current));
     return values;
   }
+
+  /***
+   * Legge le piattaforme di un gioco in formato JSON
+   * @param value Le piattaforme in formato JSON
+   */
   public readPlatforms(value: any): Platform[]{
     if(value == null)
       return [];
@@ -192,6 +292,11 @@ export class GameJSONReaderService {
         values.push(current.platform != undefined ? this.readPlatform(current.platform) : this.readPlatform(current));
     return values;
   }
+
+  /***
+   * Legge un singolo genere in formato JSON
+   * @param value Il genere in formato JSON
+   */
   public readGenre(value: any): Genre{
     let name = value.name;
     let slug = value.slug;
@@ -199,6 +304,11 @@ export class GameJSONReaderService {
     let games_count = value.games_count;
     return {name: name,slug: slug,img: img,games_count: games_count};
   }
+
+  /***
+   * Legge una singola piattaforma in formato JSON
+   * @param value La piattaforma in formato JSON
+   */
   public readPlatform(value: any): Platform{
     let name = value.name;
     let slug = value.slug;

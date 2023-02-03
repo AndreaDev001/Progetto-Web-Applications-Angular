@@ -23,6 +23,10 @@ export class GameListComponent implements OnInit,OnDestroy{
   constructor(private searchHandler: SearchHandlerService,private gameJSONReader: GameJSONReaderService){
 
   }
+
+  /***
+   * Si iscrive a tutti gli osservabili di searchHandler
+   */
   public ngOnInit(): void{
     this.subscriptions.push(this.searchHandler.getIsSearching(false).subscribe((value: any) => this.loadingVisible = value));
     this.subscriptions.push(this.searchHandler.getLatestValues(false).subscribe((result: any[]) => {
@@ -52,6 +56,10 @@ export class GameListComponent implements OnInit,OnDestroy{
     }));
     this.subscriptions.push(this.searchHandler.getIsIncreasingPage(false).subscribe((value: any) => this.increasingPage = value));
   }
+
+  /**
+   * Gestisce il fallimento della ricerca
+   */
   public handleClick(): void
   {
     if(this.searchHandler.getCurrentList(true) == undefined)
@@ -59,10 +67,18 @@ export class GameListComponent implements OnInit,OnDestroy{
     else
         this.searchHandler.setCurrentGenre("action");
   }
+
+  /***
+   * Chiede allo searchHandler i risultati della prossima pagina della ricerca
+   */
   public scroll(): void{
     if(!this.searchHandler.getIsIncreasingPage(true))
         this.searchHandler.increaseMaxPage();
   }
+
+  /***
+   * Elimina tutte le iscrizioni
+   */
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }

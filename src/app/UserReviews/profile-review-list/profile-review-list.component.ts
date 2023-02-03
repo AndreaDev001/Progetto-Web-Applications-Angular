@@ -20,6 +20,10 @@ export class ProfileReviewListComponent implements OnInit,OnDestroy{
   constructor(public springHandler: SpringHandlerService,private domParser: DOMParserService,private router: Router) {
 
   }
+
+  /***
+   * Si iscrive a tutti gli osservabili necessari
+   */
   public ngOnInit(): void{
     this.subscriptions.push(this.springHandler.getCurrentUsername(false).subscribe((value: Utente) => {
       this.isLogged = value != null;
@@ -37,9 +41,17 @@ export class ProfileReviewListComponent implements OnInit,OnDestroy{
       }
     }));
   }
+
+  /***
+   * Elimina tutte le iscrizioni
+   */
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
+
+  /***
+   * Formatta tutte le recensioni ottenute e le ordina in base al numero dei mi piace, in modo decrescente
+   */
   public formatReviews(): void{
     for(let current of this.userReviews){
       let value: string | undefined = this.domParser.findFirstText(current.contenuto);
@@ -47,6 +59,11 @@ export class ProfileReviewListComponent implements OnInit,OnDestroy{
     }
     this.userReviews.sort((first: Review,second: Review) => second.numeroMiPiace - first.numeroMiPiace);
   }
+
+  /***
+   * Gestisce il click su una recensione
+   * @param review La recensione cliccata
+   */
   public handleClick(review: Review): void{
     this.router.navigate(['/recensioni',review.id],{queryParams: this.springHandler.getParams()});
   }

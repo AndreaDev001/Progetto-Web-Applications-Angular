@@ -12,6 +12,10 @@ export class OptionBarComponent implements OnInit,OnDestroy{
   constructor(private searchHandler: SearchHandlerService) {
 
   }
+
+  /***
+   * Si iscrive a tutti gli osservabili necessari
+   */
   public ngOnInit(): void{
       this.subscriptions.push(this.searchHandler.getCurrentList(false).subscribe((value: any) => {
         let optionHolder: HTMLElement | null = document.getElementById("optionHolder");
@@ -20,6 +24,10 @@ export class OptionBarComponent implements OnInit,OnDestroy{
         }
       }));
   }
+
+  /***
+   * Elimina tutte le iscrizioni
+   */
   public ngOnDestroy(): void{
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
