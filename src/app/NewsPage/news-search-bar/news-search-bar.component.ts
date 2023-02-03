@@ -19,6 +19,7 @@ export class NewsSearchBarComponent {
 
   @Output() searchValueChanged = new EventEmitter<string>();
 
+  // Comunica al componente padre (news) il nuovo valore di this.searchForm
   makeNewSearch() {
     let searchValue = this.searchForm.get('searchField')?.value
     this.searchValueChanged.emit(searchValue)

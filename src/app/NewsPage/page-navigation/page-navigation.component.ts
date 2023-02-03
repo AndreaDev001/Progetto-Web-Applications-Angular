@@ -30,7 +30,7 @@ export class PageNavigationComponent implements OnInit {
   ngOnInit() {
     this.newsSearchService.getPassedResults().subscribe(
       (response: any) => {
-        this.totalResults = (response.totalResults > 100) ? 100 : response.totalResults // posso ricevere max 100 risultati per ricerca all'API
+        this.totalResults = (response.totalResults > 100) ? 100 : response.totalResults // si possono ricevere dall'API max 100 risultati per ricerca
         if (this.totalResults % this.newsPerPage === 0) {
           this.currentLastPage = this.totalResults / this.newsPerPage
         }
@@ -38,7 +38,7 @@ export class PageNavigationComponent implements OnInit {
           this.currentLastPage = Math.floor(this.totalResults / this.newsPerPage) + 1
         }
 
-        // riempio pages
+        // riempio this.pages con i numeri corrispondenti alle pagine prodotte dalla ricerca
         if (this.pages.length != 0) {
           this.pages = []
         }
@@ -46,13 +46,15 @@ export class PageNavigationComponent implements OnInit {
           this.pages.push(i)
         }
 
-        // first page
+        // se la pagina corrente è la prima della raccolta, imposto this.isFirstPage = true,
+        // cosicchè il bottone per caricare la pagina precedente possa essere disabilitato
         if (this.currentPage === 1) {
           this.isFirstPage = true
         }
         else { this.isFirstPage = false }
 
-        // last page
+        // se la pagina corrente è l'ultima della raccolta, imposto this.isLastPage = true,
+        // cosicchè il bottone per caricare la pagina successiva possa essere disabilitato
         if (this.currentPage == this.currentLastPage) {
           this.isLastPage = true
         }
@@ -63,16 +65,22 @@ export class PageNavigationComponent implements OnInit {
     )
   }
 
+  // Invocato per passare alla pagina successiva dei risultati.
+  // Incrementa di una this.currentPage e ne comunica il nuovo valore al componente padre (news)
   loadNextPage() {
     this.currentPage++
     this.currentPageChanged.emit(this.currentPage)
   }
 
+  // Invocato per passare alla pagina precedente dei risultati.
+  // Incrementa di una this.currentPage e ne comunica il nuovo valore al componente padre (news)
   loadPreviousPage() {
     this.currentPage--
     this.currentPageChanged.emit(this.currentPage)
   }
 
+  // Invocato per passare ad una pagina specifica dei risultati.
+  // Incrementa di una this.currentPage e ne comunica il nuovo valore al componente padre (news)
   loadPage(page: number): void {
     this.currentPage = page
     this.currentPageChanged.emit(this.currentPage)

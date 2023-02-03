@@ -7,11 +7,16 @@ import { HttpEvent } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { SpinnerService } from "../services/spinner.service";
 
+
+
+
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
 
   constructor(private spinnerService: SpinnerService) { }
 
+  // Intercetta richeiste HTTP per mostrare lo prinner di spinner.service.ts
+  // ogni volta che ne parte una, e nasconderlo quando questa termina
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     this.spinnerService.show();

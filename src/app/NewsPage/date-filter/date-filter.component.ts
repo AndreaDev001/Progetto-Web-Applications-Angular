@@ -20,8 +20,8 @@ export class DateFilterComponent implements OnInit {
 
   @Output() dateValueChanged = new EventEmitter<DateRange>();
 
+  // Comunica al componente padre (news) il nuovo valore di selectedDateRange
   makeNewSearch() {
-    console.warn("MAKE NEW SEARCH")
     this.dateValueChanged.emit(this.selectedDateRange)
   }
 

@@ -23,7 +23,6 @@ export class NewsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log("ngOnInit")
     this.urlBuilder.initUrl();
     this.subscribeToNews(this.urlBuilder.buildUrl())
     this.urlBuilder.resetUrl();
@@ -42,7 +41,6 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   updateKeywords(newKeywords: string) {
     this.keywords = newKeywords.split(/\s+/);
-    console.log("new keywords: ", this.keywords)  // todo: debug
     this.resetCurrentPage()
     this.search()
   }
@@ -58,7 +56,6 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.currentSorting = sorting
     this.resetCurrentPage()
     this.search()
-    console.warn("sorting: ", sorting)  // todo: debug
   }
 
   updateCurrentPage(newCurrentPage: number): void {
@@ -75,12 +72,10 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.currentPage = 1
   }
 
-
   subscribeToNews(value: {url: string, queryParams: HttpParams}): void {
     this.subscriptions.push(
       this.newsSearchService.getResults(value).subscribe(
         (response: any) => {
-          console.log('Data from newsCompnent subscribeToNews():\n', response)
           this.newsSearchService.passResults({
             results: response.articles,
             totalResults: response.totalResults
@@ -94,6 +89,8 @@ export class NewsComponent implements OnInit, OnDestroy {
     )
   }
 
+  // invoca l'urlBuilder per costruire l'url della ricerca con i parametri correnti
+  // e fa partire una nuova ricerca, poi resetta l'url
   search() {
     this.urlBuilder.addKeywords(this.keywords)
     this.urlBuilder.addDateFilter(this.currentDateRange)

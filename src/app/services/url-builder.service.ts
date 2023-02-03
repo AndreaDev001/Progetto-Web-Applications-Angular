@@ -6,6 +6,9 @@ import {DateRange, Sorting} from "../enum";
   providedIn: 'root'
 })
 
+// Servizio utilizzato per costruire l'url per effettuare la ricerca di notizie
+// tramite API in accordo con i parametri keywords, data di pubblicazione e
+// ordinamento correntemente selezionati
 export class UrlBuilderService {
   newsApiKey: string =  "6babce9602e74985ae5a69d08718eeea";
 
@@ -21,6 +24,7 @@ export class UrlBuilderService {
     this.url = this.defaultUrl;
   }
 
+  // imposta il parametro 'q' e lo aggiunge a this.httpParams
   addKeywords(keywords: String[]): void {
     let paramKeywords = "";
 
@@ -41,11 +45,10 @@ export class UrlBuilderService {
     this.httpParams = this.httpParams.append('q', paramKeywords)
   }
 
+  // imposta i parametri 'from' e 'to' e li aggiunge a this.httpPArams
   addDateFilter(dateRange: DateRange): void {
-    console.error('CIAOOOOOOOO')
     if (dateRange !== DateRange.ALL) {
       var now = new Date();
-      console.log("now: " + now)  // todo: debug
 
       // setting from date:
       var fromDate = new Date();
@@ -76,7 +79,7 @@ export class UrlBuilderService {
     }
   }
 
-
+  // imposta il parametro 'sortBy' e lo aggiunge a this.httpParams
   addSorting(sortingType: Sorting): void {
     if (sortingType === Sorting.LATEST) {
       this.httpParams = this.httpParams.append('sortBy', 'publishedAt')
@@ -86,24 +89,22 @@ export class UrlBuilderService {
     }
   }
 
+  // imposta il parametro 'page' e lo aggiunge a this.httpParams
   addCurrentPage(page: number) {
     this.httpParams = this.httpParams.append('page', page)
   }
 
 
+  // imposta il parametro 'apiKey' e lo aggiunge a this.httpParams
+  // Invocato quando l'url è completo
   buildUrl(): {url: string, queryParams: HttpParams} {
     this.httpParams = this.httpParams.append('apiKey', this.newsApiKey)
-    console.warn(this.httpParams.toString())
-    /*
-    let finalUrl = (this.url + this.httpParams.toString())  // todo: debug
-    return finalUrl
-
-     */
-
     let finalUrl = {url: this.url, queryParams: this.httpParams}
     return finalUrl
   }
 
+  // resetta l'url a quello di pase, eliminando tutti i parametri personalizzabili
+  // precedentemente impostati
   public resetUrl(): void{
     this.url = this.baseUrl;
     this.httpParams = new HttpParams();

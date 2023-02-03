@@ -21,6 +21,7 @@ export class SortingFilterComponent {
 
   @Output() sortingValueChanged = new EventEmitter<Sorting>();
 
+  // Comunica al componente padre (news) il nuovo valore di this.selectedSortingType
   makeNewSearch() {
     this.sortingValueChanged.emit(this.selectedSortingType)
   }
