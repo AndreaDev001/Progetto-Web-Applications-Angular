@@ -1,0 +1,15 @@
+<ng-template #content let-modal>
+  <div class = "d-block">
+    <div class="modal-header firstModal">
+      <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="this.defaultCloseOperation()"></button>
+    </div>
+    <div class="modal-body secondModal">
+      <p style="white-space: pre-line">{{text}}</p>
+    </div>
+    <div class="modal-footer thirdModal" style="border: 0">
+      <button [ngClass]="current.className ? current.className : 'btn btn-lg button button-primary'" type="button" *ngFor="let current of options" (click)="call(current)">{{current.name}}</button>
+    </div>
+  </div>
+</ng-template>
+<hr />

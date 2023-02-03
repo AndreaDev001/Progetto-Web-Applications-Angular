@@ -1,0 +1,45 @@
+input.ng-invalid.ng-touched {
+  border: var(--danger) 2px solid;
+}
+.error-message {
+  color: var(--danger);
+}
+
+.btn-outline-danger {
+  border-radius: 70%;
+  font-size: 11px;
+}
+
+.i {
+  margin-left: -30px;
+  cursor: pointer;
+}
+.heading {
+  color: whitesmoke;
+  font-size: 44px;
+}
+.form {
+  color: whitesmoke;
+  background-color: var(--background-secondary);
+  border-radius: 30px;
+  padding: 2% 0;
+}
+#reg-holder
+{
+  padding: 5% 30%;
+}
+@media screen and (max-width: 576px) {
+  #reg-holder{
+    padding: 5% 0;
+  }
+}
+@media screen and (max-width: 768px){
+  #reg-holder{
+    padding: 5% 20%;
+  }
+}
+@media screen and (max-width: 992px){
+  #reg-holder{
+    padding: 5% 10%;
+  }
+}

@@ -1,1 +1,177 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+/* Altri temi material: */
+/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
+/* @import "~@angular/material/prebuilt-themes/pink-bluegrey.css"; */
+/* @import "~@angular/material/prebuilt-themes/purple-green.css"; */
+
+:root {
+  --background-color: #151515;
+  --background-secondary: #212529;
+  --primary: #5730aa;
+  --secondary: #2c264a;
+  --lighter: #b093ed;
+
+  /* aggiunti */
+  --danger: #de645b;
+  --success: #75a34e;
+  --warning: #e0a55c;
+}
+*
+{
+  box-sizing: border-box;
+}
+html
+{
+   background-color: var(--background-color);
+}
+body
+{
+  background-color: var(--background-color);
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #151515;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  width: 6px;
+  border-radius: 30px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+*:focus
+{
+  outline: none;
+}
+.button {
+  border-radius: 20px;
+}
+.button:hover {
+  transition: all .2s ease-in-out;
+  transform: scale(1.02);
+  z-index: 10;
+}
+.button-primary {
+  background-color: var(--primary);
+  border: transparent;
+  color: whitesmoke;
+}
+.button-primary:disabled {
+  background-color: var(--secondary);
+  border: transparent;
+}
+.button-primary:hover {
+  background-color: whitesmoke;
+  color: var(--secondary);
+}
+.button-secondary {
+  background-color: var(--background-secondary);
+  border-color: whitesmoke;
+  color: whitesmoke;
+}
+.button-secondary:hover {
+  background-color: whitesmoke;
+  color: var(--background-secondary);
+}
+::-webkit-scrollbar-corner{
+  background: #151515;
+}
+button.custom-item{
+  background-color: var(--background-secondary);
+  color: whitesmoke;
+  transition: all 0.2s ease-in-out;
+}
+button.custom-item:hover{
+  background-color: var(--secondary);
+  color: whitesmoke;
+  text-decoration: underline;
+  text-decoration-color: whitesmoke;
+  padding-left: 30px;
+}
+div.custom-dropdown{
+  background-color: var(--background-secondary);
+  border: 1px solid grey;
+}
+button.custom-dropdown-button{
+  padding: 10px;
+  background-color: var(--background-secondary);
+  color: whitesmoke;
+  border: 1px solid grey;
+  border-radius: 10px;
+}
+button.custom-dropdown-button:hover{
+  padding: 10px;
+  background-color: var(--secondary);
+  color: whitesmoke;
+  border: 1px solid grey;
+}
+
+
+a:visited {
+  color: var(--lighter);
+}
+
+
+.background-color
+{
+  background-color: var(--background-color) !important;
+}
+
+.background-secondary-color
+{
+  background-color: var(--background-secondary) !important;
+}
+
+.secondary
+{
+  background-color: var(--secondary) !important;
+}
+
+.whitesmoke-text
+{
+  color: whitesmoke !important;
+}
+
+
+.NgxEditor
+{
+  background-color: var(--background-secondary) !important;
+  color: whitesmoke !important;
+}
+
+.NgxEditor__MenuBar {
+
+  background-color: var(--secondary) !important;
+}
+
+.NgxEditor__Popup,
+.NgxEditor__Dropdown--DropdownMenu
+{
+  background-color: var(--secondary) !important;
+}
+
+.button-danger {
+  background-color: var(--danger);
+  border: transparent;
+  color: whitesmoke;
+}
+
+.button-danger:hover {
+  background-color: whitesmoke;
+  color: var(--danger);
+}
+.button-danger:disabled {
+  background-color: var(--danger);
+}
+
+blockquote
+{
+  border-left: 3px solid whitesmoke;
+}
+
+

@@ -1,0 +1,16 @@
+a.game-card{
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  background-color: var(--background-secondary);
+  color: whitesmoke;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+}
+a.game-card:hover{
+  background-color: var(--secondary);
+  color: whitesmoke;
+  transform: scale(1.02);
+  z-index: 10;
+}

@@ -1,0 +1,13 @@
+div.firstModal{
+  background-color: var(--secondary);
+  color: whitesmoke;
+}
+div.secondModal{
+  background-color: var(--background-secondary);
+  color: whitesmoke;
+}
+div.thirdModal
+{
+  background-color: var(--background-secondary);
+  color: whitesmoke;
+}

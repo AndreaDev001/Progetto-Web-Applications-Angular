@@ -1,0 +1,14 @@
+<ngx-spinner [color]="'#6D42BA'" type="ball-scale-multiple" [fullScreen]="true">
+  <h2 class = "text-white">Searching Game Details...</h2>
+</ngx-spinner>
+<div class = "container-fluid container-lg" *ngIf="gameDetails">
+    <app-game-main-info [gameInfo]="getGameInfo()"></app-game-main-info>
+    <section class = "game-section">
+      <app-game-details-media style="padding: 20px 0" [name]="'Media'" [trailers]="getTrailers(this.gameTrailers)"  [images]="getValues(this.gameScreenshots)"></app-game-details-media>
+    </section>
+    <section class = "game-section row">
+      <app-game-review-list [gameID]="gameID" [reviews]="gameReviews" [userReview]="userReview" class = "col-12 col-md-6"></app-game-review-list>
+      <app-game-additional-info class = "col-12 col-md-6" [achievements]="getValues(this.gameAchievements)" [developers]="getValues(this.gameDetails.developers)" [publishers]="getValues(this.gameDetails.publishers)" [tags]="getValues(this.gameDetails.tags)"></app-game-additional-info>
+    </section>
+</div>
+<app-error *ngIf="failed" [errorMessage]="'Game not found, requested game does not exist or a connection error happened'" [errorButtonText]="'Reload Page'"></app-error>

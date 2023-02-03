@@ -1,0 +1,29 @@
+button.side-item-button{
+  background-color: var(--background-secondary);
+  color: whitesmoke;
+  border-top: 1px solid grey;
+  transition: all 0.2s ease-in-out;
+}
+button.side-item-selected{
+  background-color: var(--secondary);
+  color: whitesmoke;
+  border-top: 1px solid grey;
+  transition: all 0.2s ease-in-out;
+  text-decoration: underline;
+  text-decoration-color: whitesmoke;
+}
+span.side-item-text{
+  padding: 0 2%;
+  font-size: 16px;
+}
+button.side-item-button:hover{
+  background-color: var(--secondary);
+  color: whitesmoke;
+  text-decoration: underline;
+  text-decoration-color: whitesmoke;
+}
+img.side-img{
+  width: 80px;
+  height: 60px;
+  border-radius: 40px;
+}

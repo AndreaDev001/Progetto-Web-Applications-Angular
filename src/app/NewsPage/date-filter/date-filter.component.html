@@ -1,0 +1,12 @@
+<label class = "text-white">
+  <fa-icon [icon]="dateIcon"></fa-icon>
+  Publish Date:
+</label>
+<div ngbDropdown class="d-inline-block" style="margin-left: 10px">
+  <button type="button" class="custom-dropdown-button" style="padding: 5px" id="dropdownToggle" ngbDropdownToggle>
+    {{selectedDateRange}}
+  </button>
+  <div class = "custom-dropdown" ngbDropdownMenu aria-labelledby="dropdownToggle">
+    <button class = "custom-item" (click)="updateDate(selected)" ngbDropdownItem *ngFor="let selected of dateRanges">{{selected}}</button>
+  </div>
+</div>

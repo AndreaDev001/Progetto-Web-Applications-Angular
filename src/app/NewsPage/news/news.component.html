@@ -1,0 +1,20 @@
+<div class = "row container-fluid text-white" style="background-color: var(--background-color);padding: 20px 2%">
+  <app-news-search-bar class = "col-12 col-md-7" (searchValueChanged)="updateKeywords($event)"></app-news-search-bar>
+  <div class = "col-12 col-md-5">
+    <app-sorting-filter class = "d-inline-block" (sortingValueChanged)="updateSorting($event)"></app-sorting-filter>
+    <app-date-filter class = "d-inline-block mt-2 mt-md-0" style="margin-left: 10px" (dateValueChanged)="updateDateRange($event)"></app-date-filter>
+  </div>
+</div>
+<div class="container-fluid">
+  <div *ngIf="spinnerService.visibility | async" class="text-center">
+    <mat-progress-spinner diameter=70 class = "mx-auto" color="primary" mode="indeterminate"></mat-progress-spinner>
+    <h5 class="news-fetcher">Fetching news...</h5>
+  </div>
+  <div *ngIf="requestSuccess">
+    <app-news-results></app-news-results>
+    <app-page-navigation [currentPage]="currentPage" (currentPageChanged)="updateCurrentPage($event)"></app-page-navigation>
+  </div>
+  <div *ngIf="!requestSuccess">
+    <app-error class = "h-100" [errorMessage]="'Connection error,check your internet connection'" [errorButtonText]="'Reload Page'"></app-error>
+  </div>
+</div>

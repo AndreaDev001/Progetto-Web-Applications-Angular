@@ -1,0 +1,4 @@
+<button class = "list-group-item list-group-item-action side-item-button" placement="top" [ngbTooltip]="getTooltipText()" (click)="handeClick()">
+  <img class = "side-img" *ngIf="img" [src]="img" alt = "Not Found">
+  <span class = "side-item-text">{{name}}</span>
+</button>

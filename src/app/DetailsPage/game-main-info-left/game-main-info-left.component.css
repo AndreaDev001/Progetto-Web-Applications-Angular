@@ -1,0 +1,23 @@
+img#gameImage{
+  width: 100%;
+  height: auto;
+  border-radius: 30px;
+}
+p.game-name{
+  font-size: 30px;
+  font-weight: bold;
+}
+a.game-link{
+  font-size: 17px;
+  border: 0;
+  color: whitesmoke;
+  transition: 0.2s all ease-in-out;
+  cursor: pointer;
+  background-color: var(--background-secondary);
+}
+a.game-link:hover{
+  background-color: var(--secondary);
+  color: whitesmoke;
+  text-decoration: underline;
+  text-decoration-color: whitesmoke;
+}

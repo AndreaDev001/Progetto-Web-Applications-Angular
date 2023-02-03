@@ -1,0 +1,12 @@
+<label class = "text-white">
+  <fa-icon [icon]="sortIcon"></fa-icon>
+  Sort by:
+</label>
+<div ngbDropdown class="d-inline-block" style="margin-left: 10px">
+  <button type="button" class="custom-dropdown-button" id="dropdownToggle" style="padding: 5px" ngbDropdownToggle>
+    {{selectedSortingType}}
+  </button>
+  <div class = "custom-dropdown" ngbDropdownMenu aria-labelledby="dropdownToggle">
+    <button class = "custom-item" (click)="updateSorting(selected)" ngbDropdownItem *ngFor="let selected of sortingTypes">{{selected}}</button>
+  </div>
+</div>

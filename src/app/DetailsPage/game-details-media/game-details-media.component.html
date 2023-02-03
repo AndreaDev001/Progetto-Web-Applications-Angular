@@ -1,0 +1,15 @@
+<div class = "container-fluid text-center" *ngIf="(images && images.length > 0) || (trailers && trailers.length > 0)">
+  <h2 class = "text-white" style="font-weight: bold" *ngIf="name">{{name}}</h2>
+  <div class = "container-fluid row mt-2">
+    <div [ngClass]="images && images.length > 0 ? 'col-12 col-md-6' : 'col-12'" *ngIf="trailers">
+      <video autoplay controls [muted]="'muted'" *ngIf="trailers[0]" class="w-100 h-auto" style="border-radius: 30px;">
+        <source [src]="trailers[0]" type="video/mp4">
+      </video>
+    </div>
+    <app-image-slider [ngClass] = "trailers  && trailers.length > 0 ? 'col-12 col-md-6' : 'col-12'" *ngIf="images" [images]="images"></app-image-slider>
+  </div>
+</div>
+<div class = "container-fluid text-center" *ngIf="(!images || images.length == 0) && (!trailers || trailers.length == 0)">
+  <h2 class = "text-white" style="font-weight: bold" *ngIf="name">{{name}}</h2>;
+  <p class = "text-white" style="font-size: 17px">No Media Found</p>
+</div>

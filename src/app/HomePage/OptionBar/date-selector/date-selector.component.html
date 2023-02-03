@@ -1,0 +1,8 @@
+<div class = "mt-2 mt-lg-0" *ngIf="shouldBeVisible">
+  <div ngbDropdown *ngIf="currentInterval">
+    <button class = "custom-dropdown-button" ngbDropdownToggle id="dropdownTypeButton" aria-haspopup="true" aria-expanded="false">{{getInterval(currentInterval)}}</button>
+    <div ngbDropdownMenu class = "custom-dropdown" aria-labelledby="dropdownTypeButton">
+      <button class = "custom-item" ngbDropdownItem *ngFor="let current of intervals" (click)="updateValue(current)">{{getInterval(current)}}</button>
+    </div>
+  </div>
+</div>

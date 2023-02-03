@@ -1,0 +1,17 @@
+<div *ngIf="totalResults > 0" class="d-flex justify-content-around">
+  <ul class="pagination justify-content-center align-baseline">
+    <li class="page-item" [ngClass]="{'disabled': isFirstPage}">
+      <button class="page-link" (click)="loadPreviousPage()" >
+        <fa-icon [icon]="chevronLeft" class="m-2" style="font-size: 12px;"></fa-icon>
+      </button>
+    </li>
+    <li *ngFor="let page of pages" class="page-item" [ngClass]="{'active': page === currentPage}">
+      <button class="page-link"  (click)="loadPage(page)">{{page}}</button>
+    </li>
+    <li class="page-item" [ngClass]="{'disabled': isLastPage}">
+      <button class="page-link" (click)="loadNextPage()">
+        <fa-icon [icon]="chevronRight" class="m-2" style="font-size: 12px;"></fa-icon>
+      </button>
+    </li>
+  </ul>
+</div>
