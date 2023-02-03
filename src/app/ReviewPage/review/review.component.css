@@ -6,7 +6,6 @@
   background-position: center;
   z-index: 1;
 }
-
 #review
 {
   background-color: var(--background-secondary);
@@ -14,25 +13,20 @@
   border-radius: 9px;
   padding: 0px 10px;
 }
-
 #review_section
 {
   margin-bottom: 2em;
   word-wrap:break-word;
 }
-
 #review_section img
 {
   max-width: 100%;
 }
-
 .content
 {
   width: 90%;
   margin: 0px auto;
 }
-
-
 .NgxEditor__ImageWrapper
 {
   max-width: 100% !important;

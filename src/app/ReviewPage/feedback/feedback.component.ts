@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 
 
 import {faThumbsDown, faThumbsUp, IconDefinition} from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +12,7 @@ import { FeedbackContainer, FeedbackStrategy } from 'src/app/interfaces';
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css']
 })
-export class FeedbackComponent {
+export class FeedbackComponent{
 
   public FeedbackTypeEnum = FeedbackType;
   public icons: IconDefinition[] = [faThumbsUp,faThumbsDown];
