@@ -49,6 +49,8 @@ Nell'applicazione sono state utilizzate due API, una per la ricerca di giochi e 
 
 ### INFORMAZIONI AGGIUNTIVE:
 
+La password ed username utilizzati per accedere il database è "postgres"
+
 Durante la procedura di cambio password, la mail con il link per reimpostare la password va aperta 
 dallo stesso browser su cui si è avviata la procedura di modifica password.
 Questo perchè la pagina per reimpostare la password (/changePassword) è protetta, e vi si puo' accedere 
