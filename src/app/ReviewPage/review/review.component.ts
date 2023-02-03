@@ -24,19 +24,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
   //this tells if the user is editing the review or not
   isEditMode: boolean = false;
-
-  //the comments inside the review
-  comments: Comment[] = [];
-  loadedTimes : number = 0;
-
   loggedUser ?: Utente;
-
   review: Review = {titolo: "", contenuto:"", voto: 0, currentFeedback: FeedbackType.none, numeroMiPiace: 0, numeroNonMiPiace: 0};
   //the editor instance
   editor!: Editor;
   votes : number[] = [0,1,2,3,4,5,6,7,8,9,10];
-
-  newCommentFormControl = new FormControl("", [Validators.required]);
 
   game : {image : string, title: string} = {image: "", title: ""};
 
@@ -50,6 +42,7 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
     ['link', 'image'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
+
   //report section
   openedReportModal ?: any;
   reportFormControl = new FormControl("", [Validators.required]);
@@ -61,6 +54,7 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
     titolo: new FormControl("", [Validators.required]),
     voto: new FormControl(0, [Validators.required]),
   });
+
 
   constructor (public modalService: NgbModal, private commentS: CommentService, private reviewS : ReviewService, private route: ActivatedRoute, private router: Router,private location: Location, public sanitizer: DomSanitizer, public springService: SpringHandlerService, private alertService: AlertHandlerService){
   }
@@ -85,7 +79,6 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
       else
       {
         this.review = data["review"];
-        this.loadNewComments();
       }
       this.springService.getGame(this.review.gioco!).subscribe(result => {
         this.game.image = result.immagine;
@@ -208,61 +201,11 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
   public onFeedbackChange(feedback : FeedbackType) : Observable<FeedbackType>
   {
     if(this.review.id === undefined || this.loggedUser === undefined || this.loggedUser === null)
+    {
+      this.alertService.setAllValues("Warning", "You must be logged in to leave a feedback", true);
       return EMPTY;
-
+    }
     return this.reviewS.changeFeedback(this.review.id, feedback === FeedbackType.like, this.loggedUser.username);
   }
 
-  public getInitialFeedback() : Observable<FeedbackType>
-  {
-    if(this.review.id === undefined || this.loggedUser === undefined)
-      return EMPTY;
-    console.log("TRY GET FEEDBACK");
-    return this.reviewS.getFeedback(this.loggedUser?.username, this.review.id);
-  }
-
-  //COMMENT SECTION
-
-  loadCommentsStatus = new ObserverStatus();
-
-  loadNewComments()
-  {
-    this.loadCommentsStatus.call(this.commentS.getComments(this.review.id!, this.loadedTimes * 10, 10), (newComments) =>
-    {
-      this.comments = this.comments.concat(newComments);
-      this.loadedTimes += 1;
-    });
-  }
-
-
-  addCommentStatus = new ObserverStatus();
-
-  addComment()
-  {
-    if(this.loggedUser === undefined)
-      return;
-
-    this.addCommentStatus.call(this.commentS.addComment(this.review.id!, this.newCommentFormControl.value!, this.loggedUser.username), (commentID) =>
-    {
-        this.comments.unshift({
-          contenuto: this.newCommentFormControl.value!,
-          id: commentID,
-          numeroMiPiace: 0,
-          numeroNonMiPiace: 0,
-          utente: this.loggedUser?.username!,
-          data: new Date().toISOString(),
-          currentFeedback: FeedbackType.none})
-        this.newCommentFormControl.reset();
-    });
-
-  }
-  deleteCommentStatus = new ObserverStatus();
-  deleteComment(comment : Comment)
-  {
-    this.deleteCommentStatus.call(this.commentS.deleteComment(comment.id), () =>
-    {
-      this.comments = this.comments.filter(val => val.id !== comment.id);
-    });
-
-  }
 }

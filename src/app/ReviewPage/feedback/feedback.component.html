@@ -1,5 +1,4 @@
 <section tabindex="0" data-bs-trigger="hover focus click" [attr.title]="disabled !== null ? undefined : 'You must login to leave a feedback'">
-
   <section class="buttonsSection py-2" >
     <button [ngClass]="{'likeSelected': feedback.currentFeedback === FeedbackTypeEnum.like}" class="feedbackButton" [disabled]="disabled || loading" (click)="updateFeedback(FeedbackTypeEnum.like)">
       <fa-icon [icon]="this.icons[0]"></fa-icon>

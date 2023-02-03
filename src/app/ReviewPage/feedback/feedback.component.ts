@@ -1,9 +1,9 @@
 import { ThisReceiver } from '@angular/compiler';
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 
 
 import {faThumbsDown, faThumbsUp, IconDefinition} from "@fortawesome/free-solid-svg-icons";
-import { EMPTY } from 'rxjs';
+import { EMPTY, observable, Observable } from 'rxjs';
 import { FeedbackType } from 'src/app/enum';
 import { FeedbackContainer, FeedbackStrategy } from 'src/app/interfaces';
 
@@ -12,7 +12,7 @@ import { FeedbackContainer, FeedbackStrategy } from 'src/app/interfaces';
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css']
 })
-export class FeedbackComponent implements AfterViewInit{
+export class FeedbackComponent{
 
   public FeedbackTypeEnum = FeedbackType;
   public icons: IconDefinition[] = [faThumbsUp,faThumbsDown];
@@ -21,7 +21,7 @@ export class FeedbackComponent implements AfterViewInit{
   @Input() feedback : FeedbackContainer = {currentFeedback: FeedbackType.none, numeroMiPiace: 0, numeroNonMiPiace: 0};
   @Output() feedbackChange = new EventEmitter<FeedbackContainer>();
   @Input() disabled : boolean = false;
-  @Input() target : FeedbackStrategy = {onFeedbackChange: () => { return EMPTY; }, getInitialFeedback: () => {return EMPTY}};
+  @Input() target : FeedbackStrategy = {onFeedbackChange: () => { return EMPTY; }};
 
   private updateFeedbackCount(feedback : FeedbackType, increase : boolean)
   {
@@ -33,6 +33,9 @@ export class FeedbackComponent implements AfterViewInit{
 
   public updateFeedback(type : FeedbackType)
   {
+    const observable = this.target.onFeedbackChange(type);
+    if(observable == EMPTY) return;
+
     this.loading = true;
     this.target.onFeedbackChange(type).subscribe(newFeedback  => {
       this.loading = false;
@@ -42,12 +45,6 @@ export class FeedbackComponent implements AfterViewInit{
       this.feedbackChange.emit(this.feedback);
     })
 
-  }
-
-  ngAfterViewInit(): void {
-    this.target.getInitialFeedback().subscribe(initFeedback => {
-      this.feedback.currentFeedback = initFeedback;
-    })
   }
 
 }

@@ -4,7 +4,7 @@ import {GameListType, OrderingMode, OrderingType, RequestType} from "../enum";
 import {GameURLBuilderService} from "./game-urlbuilder.service";
 import {DatePipe} from '@angular/common';
 import {DateInterval} from "../interfaces";
-import {BehaviorSubject, catchError, Subject, throwError, timeout} from "rxjs";
+import {BehaviorSubject, catchError, delay, Subject, throwError, timeout} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class GameHandlerService {
       responseType: 'json',
       withCredentials: false,
       params: value.queryParams,
-    }).pipe(timeout(5000),catchError( err => {
+    }).pipe(catchError( err => {
       return throwError(() => err);
     }));
   }

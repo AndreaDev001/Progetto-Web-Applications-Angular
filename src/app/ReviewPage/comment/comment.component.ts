@@ -40,16 +40,12 @@ export class CommentComponent implements FeedbackStrategy{
   public onFeedbackChange(feedback : FeedbackType) : Observable<FeedbackType>
   {
     if(this.loggedUser === undefined || this.loggedUser === null)
+    {
+      this.alertService.setAllValues("Warning", "You must be logged in to leave a feedback", true);
       return EMPTY;
+    }
 
     return this.service.changeFeedback(this.comment.id, feedback === FeedbackType.like, this.loggedUser.username);
-  }
-
-  public getInitialFeedback() : Observable<FeedbackType>
-  {
-    if(this.loggedUser === null || this.loggedUser === undefined)
-      return EMPTY;
-    return this.service.getCommentFeedback(this.loggedUser.username, this.comment.id);
   }
 
   editStatus = new ObserverStatus();
