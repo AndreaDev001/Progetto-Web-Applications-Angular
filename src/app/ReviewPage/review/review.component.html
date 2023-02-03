@@ -17,11 +17,9 @@
     </div>
   </div>
 </ng-template>
-
 <div>
   <!-- review section-->
   <div class="banner text-white" style="background-image: linear-gradient(0deg, var(--background-color) 8%, rgba(25, 25, 25,0.4) 100%), url('{{game.image}}');">
-
     <header *ngIf="!isNewReview()" class="d-flex p-2">
       <div class="w-50 text-muted">
         <span class="whitesmoke-text w-100">Review: <a [routerLink]="['/games', this.review.gioco]" [queryParams]="{jsessionid: this.springService.getSessionID(true)}">{{game.title}}</a></span>
@@ -34,19 +32,16 @@
         <button *ngIf="this.review.utente !== undefined && this.review.utente === this.loggedUser?.username" class="btn button button-secondary" [disabled]="this.isEditMode" (click)="this.setEditMode(true)">EDIT</button>
       </section>
     </header>
-
     <div class="content">
       <section id="review_section" class="d-flex flex-column justify-content-center align-items-center">
         <form class="w-100" (ngSubmit)="(isNewReview() ? publishReview() : editReview())" [formGroup]="form" *ngIf="this.isEditMode; else htmlReview">
-
           <div class="form-group">
-            <label for="exampleFormControlInput1">Title</label>
+            <label>Title</label>
             <input maxlength="40" formControlName="titolo" type="text" class="whitesmoke-text form-control background-secondary-color" placeholder="titolo" >
             <div *ngIf="form.controls.titolo.errors  && (form.dirty || form.touched)" class="text-danger">
               Title is required
             </div>
           </div>
-
           <!-- editor form -->
           <div *ngIf="form.hasError('required', 'title')">EEEE</div>
           <div class="NgxEditor__Wrapper">
@@ -61,11 +56,9 @@
                 Review is required
             </div>
           </div>
-
           <select class="form-select form-select-sm background-secondary-color whitesmoke-text" formControlName="voto">
             <option *ngFor="let vote of votes" [value]="vote">{{vote}}/10</option>
           </select>
-
           <section class="mt-2">
             <button *ngIf="!isNewReview()" class="btn button button-secondary" [disabled]="this.publishReviewStatus.isLoading" (click)="this.setEditMode(false)">DISCARD CHANGES</button>
             <button class="btn button button-primary" style="text-align: center;"  type="submit" [disabled]="form.invalid || !form.dirty || this.publishReviewStatus.isLoading">{{!isNewReview() ? 'SUBMIT' : 'PUBLISH' }}</button>
@@ -77,7 +70,6 @@
           <h1>{{review.voto}}/10</h1>
           <app-feedback class="background-secondary-color px-2 rounded-sm" [feedback]="this.review" [target]="this"></app-feedback>
         </ng-template>
-
       </section>
       <app-comment-list #commentsList [loggedUser]="loggedUser" [reviewId]="this.review.id" [jsessionid]="this.springService.getSessionID(true)"></app-comment-list>
   </div>

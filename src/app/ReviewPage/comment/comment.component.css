@@ -4,7 +4,6 @@
   flex-direction: row-reverse;
   justify-content: space-between;
 }
-
 .buttonsSection
 {
   display: flex;
@@ -12,8 +11,20 @@
   justify-content: space-around;
   gap: 10px;
 }
-
-h4{
+li.edit-button
+{
+  background-color: var(--background-secondary);
+  color: whitesmoke;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+li.edit-button:hover{
+  background-color: var(--secondary);
+  text-decoration: underline;
+  padding-left: 30px;
+}
+h4
+{
   text-align: left;
   padding: 0.25em;
 }
