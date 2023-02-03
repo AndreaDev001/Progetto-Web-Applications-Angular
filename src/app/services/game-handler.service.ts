@@ -27,7 +27,7 @@ export class GameHandlerService {
       responseType: 'json',
       withCredentials: false,
       params: value.queryParams,
-    }).pipe(delay(5000),timeout(12000),catchError( err => {
+    }).pipe(catchError( err => {
       return throwError(() => err);
     }));
   }
