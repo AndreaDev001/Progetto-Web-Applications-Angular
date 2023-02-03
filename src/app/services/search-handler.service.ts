@@ -4,7 +4,7 @@ import {GameHandlerService} from "./game-handler.service";
 import {DateInterval} from "../interfaces";
 import {GameRouterHandlerService, ParamType} from "./game-router-handler.service";
 import {DatePipe} from "@angular/common";
-import {BehaviorSubject,Subscription} from "rxjs";
+import {BehaviorSubject, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'

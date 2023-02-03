@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { GameJSONReaderService } from './game-jsonreader.service';
+import {GameJSONReaderService} from './game-jsonreader.service';
 
 describe('GameJSONReaderService', () => {
   let service: GameJSONReaderService;

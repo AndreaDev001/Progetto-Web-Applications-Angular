@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import {Review} from "../interfaces";
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'

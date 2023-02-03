@@ -3,7 +3,7 @@ import {GameListType, SideListType} from "../../../enum";
 import {Genre, Platform} from "../../../interfaces";
 import {GameHandlerService} from "../../../services/game-handler.service";
 import {GameJSONReaderService} from "../../../services/game-jsonreader.service";
-import {skip, Subscription, take} from "rxjs";
+import {Subscription} from "rxjs";
 
 export interface SideItem{
   name: string,

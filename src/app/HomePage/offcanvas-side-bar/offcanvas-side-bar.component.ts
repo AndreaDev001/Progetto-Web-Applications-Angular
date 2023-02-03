@@ -15,7 +15,6 @@ export class OffcanvasSideBarComponent implements OnInit{
   }
   public ngOnInit() {
     this.element = document.querySelector("offCanvas");
-    console.log(this.element);
   }
   public open(content: any) {
     this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then(

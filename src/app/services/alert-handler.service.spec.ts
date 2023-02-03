@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AlertHandlerService } from './alert-handler.service';
+import {AlertHandlerService} from './alert-handler.service';
 
 describe('AlertHandlerService', () => {
   let service: AlertHandlerService;

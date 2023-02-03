@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OffcanvasSideBarComponent } from './offcanvas-side-bar.component';
+import {OffcanvasSideBarComponent} from './offcanvas-side-bar.component';
 
 describe('OffcanvasSideBarComponent', () => {
   let component: OffcanvasSideBarComponent;

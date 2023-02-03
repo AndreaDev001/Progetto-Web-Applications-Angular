@@ -1,11 +1,10 @@
-import { ThisReceiver } from '@angular/compiler';
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 
 import {faThumbsDown, faThumbsUp, IconDefinition} from "@fortawesome/free-solid-svg-icons";
-import { EMPTY, observable, Observable } from 'rxjs';
-import { FeedbackType } from 'src/app/enum';
-import { FeedbackContainer, FeedbackStrategy } from 'src/app/interfaces';
+import {EMPTY} from 'rxjs';
+import {FeedbackType} from 'src/app/enum';
+import {FeedbackContainer, FeedbackStrategy} from 'src/app/interfaces';
 
 @Component({
   selector: 'app-feedback',

@@ -4,14 +4,14 @@ import {GameListType, OrderingMode, OrderingType, RequestType} from "../enum";
 import {GameURLBuilderService} from "./game-urlbuilder.service";
 import {DatePipe} from '@angular/common';
 import {DateInterval} from "../interfaces";
-import {BehaviorSubject, catchError, delay, Subject, throwError, timeout} from "rxjs";
+import {BehaviorSubject, catchError, Subject, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameHandlerService {
 
-  private readonly apiKEY: string = "e0d46bb2aa1d42c9b7bc13bcb10f96fa";
+  private readonly apiKEY: string = "4c594591fcc74bfa84b0bb2f160aa5b3";
   private readonly minRating: number = 20;
   private readonly maxRating: number = 100;
   private loadedGenres: BehaviorSubject<any[] | undefined> = new BehaviorSubject<any[] | undefined>(undefined);

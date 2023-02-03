@@ -1,16 +1,15 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {SpringHandlerService} from "../services/spring-handler.service";
 import {Utente} from "../interfaces";
 import {
-  faPeopleGroup,
   faCircleUser,
   faHouse,
+  faIdCard,
   faNewspaper,
-  IconDefinition,
-  faIdCard
+  faPeopleGroup,
+  IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',

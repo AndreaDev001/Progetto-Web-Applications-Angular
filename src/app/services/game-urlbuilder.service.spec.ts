@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { GameURLBuilderService } from './game-urlbuilder.service';
+import {GameURLBuilderService} from './game-urlbuilder.service';
 
 describe('GameURLBuilderService', () => {
   let service: GameURLBuilderService;

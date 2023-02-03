@@ -1,20 +1,18 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
-import { Editor, Toolbar} from 'ngx-editor';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Validators as NGXValidators } from 'ngx-editor'
-import { DomSanitizer } from '@angular/platform-browser';
-import { Comment, CommentService } from '../../services/comment.service';
-import { ReviewService } from '../../services/review.service';
-import { FeedbackStrategy, Review, Utente } from '../../interfaces';
-import { ObserverStatus } from '../../utils/observer';
-import { SpringHandlerService } from 'src/app/services/spring-handler.service';
-import { HttpParams } from '@angular/common/http';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
-import { FeedbackType } from 'src/app/enum';
-import { EMPTY, Observable } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Editor, Toolbar, Validators as NGXValidators} from 'ngx-editor';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {DomSanitizer} from '@angular/platform-browser';
+import {CommentService} from '../../services/comment.service';
+import {ReviewService} from '../../services/review.service';
+import {FeedbackStrategy, Review, Utente} from '../../interfaces';
+import {ObserverStatus} from '../../utils/observer';
+import {SpringHandlerService} from 'src/app/services/spring-handler.service';
+import {AlertHandlerService} from 'src/app/services/alert-handler.service';
+import {FeedbackType} from 'src/app/enum';
+import {EMPTY, Observable} from 'rxjs';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-review',
@@ -63,7 +61,6 @@ export class ReviewComponent implements OnInit, OnDestroy, FeedbackStrategy  {
 
     this.springService.getCurrentUsername(false).subscribe((value: Utente | undefined) => {
       this.loggedUser = value;
-      console.log(this.loggedUser);
     });
 
     this.editor = new Editor();

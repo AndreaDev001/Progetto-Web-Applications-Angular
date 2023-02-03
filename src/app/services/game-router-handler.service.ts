@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {OrderingMode, OrderingType} from "../enum";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {Location} from "@angular/common";
 
 export interface ParamType{
   orderingType?: OrderingType;

@@ -1,12 +1,11 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { ObserverStatus } from '../../utils/observer';
-import { Comment, CommentService } from '../../services/comment.service'
-import { FeedbackType } from "../../enum";
-import { FeedbackStrategy, Utente } from 'src/app/interfaces';
-import { FeedbackComponent } from '../feedback/feedback.component';
-import { EMPTY, Observable } from 'rxjs';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
+import {ObserverStatus} from '../../utils/observer';
+import {Comment, CommentService} from '../../services/comment.service'
+import {FeedbackType} from "../../enum";
+import {FeedbackStrategy, Utente} from 'src/app/interfaces';
+import {EMPTY, Observable} from 'rxjs';
+import {AlertHandlerService} from 'src/app/services/alert-handler.service';
 
 
 @Component({

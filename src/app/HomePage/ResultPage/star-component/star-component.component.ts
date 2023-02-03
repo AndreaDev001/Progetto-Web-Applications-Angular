@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {faStar,faStarHalfStroke, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {faStar, faStarHalfStroke, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-star-component',

@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { GameIconTranslatorService } from './game-icon-translator.service';
+import {GameIconTranslatorService} from './game-icon-translator.service';
 
 describe('GameIconTranslatorService', () => {
   let service: GameIconTranslatorService;

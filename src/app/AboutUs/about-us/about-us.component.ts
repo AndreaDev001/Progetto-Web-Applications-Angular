@@ -1,7 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import { faAngular, faGithub, faJava } from '@fortawesome/free-brands-svg-icons';
-import {faA, faCircleUser, faKey, IconDefinition} from "@fortawesome/free-solid-svg-icons";
-import {FigureCaption} from "../../interfaces";
 import {StringLink} from "../../interfaces";
 
 @Component({
@@ -14,10 +11,10 @@ export class AboutUsComponent implements OnInit{
   public firstSectionLinks: StringLink[] = [{name: "Ricercare Giochi",spring: false,url: "/games"},
     {name: "Visualizzazione dettagli gioco",spring: false, url: "/games/320"},
     {name: "Visualizzazione recensioni proprie (Profilo)",spring: false,url: "/reviews"}];
-  public secondSectionLinks: StringLink[] = [{name: "Gestire Recensioni",spring: false,url: "/games"},
-    {name: "Gestire Commenti",spring: false,url: "/games"},
-    {name: "Segnalare Recensioni",spring: false,url: "/games"},
-    {name: "Gestire wishlist (Profilo)",spring: true,url:"/wishlist"}];
+  public secondSectionLinks: StringLink[] = [{name: "Gestire Recensioni",spring: false,url: "/recensioni/108"},
+    {name: "Gestire Commenti",spring: false,url: "/recensioni/108"},
+    {name: "Segnalare Recensioni",spring: false,url: "/recensioni/108"},
+    {name: "Gestire wishlist (Profilo)",spring: true,url:"http://localhost:8080/wishlist"}];
   public thirdSectionLinks: StringLink[] = [{name: "Ricercare Notizie",spring: false,url: "/news"},
     {name: "Login",spring: true,url: "http://localhost:8080/login"},
     {name: "Registrazione",spring: false,url: "/registration"},

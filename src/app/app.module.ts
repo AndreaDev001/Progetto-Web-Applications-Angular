@@ -1,74 +1,73 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 
-import { ReviewComponent } from './ReviewPage/review/review.component';
-import { CommentComponent } from './ReviewPage/comment/comment.component';
+import {ReviewComponent} from './ReviewPage/review/review.component';
+import {CommentComponent} from './ReviewPage/comment/comment.component';
 
 
-
-import { NgxEditorModule } from 'ngx-editor';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {NgxEditorModule} from 'ngx-editor';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {AutosizeModule} from 'ngx-autosize';
-import { HomePageComponent } from './HomePage/home-page/home-page.component';
-import { GameListComponent } from './HomePage/ResultPage/game-list/game-list.component';
-import { GameCardComponent } from './HomePage/ResultPage/game-card/game-card.component';
+import {HomePageComponent} from './HomePage/home-page/home-page.component';
+import {GameListComponent} from './HomePage/ResultPage/game-list/game-list.component';
+import {GameCardComponent} from './HomePage/ResultPage/game-card/game-card.component';
 import {RouterModule} from "@angular/router";
-import { NewsComponent} from "./NewsPage/news/news.component";
+import {NewsComponent} from "./NewsPage/news/news.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { NewsResultsComponent} from "./NewsPage/news-results/news-results.component";
-import { NoResultsComponent} from "./NewsPage/no-results/no-results.component";
-import { DateFilterComponent} from "./NewsPage/date-filter/date-filter.component";
-import { SortingFilterComponent} from "./NewsPage/sorting-filter/sorting-filter.component";
+import {NewsResultsComponent} from "./NewsPage/news-results/news-results.component";
+import {NoResultsComponent} from "./NewsPage/no-results/no-results.component";
+import {DateFilterComponent} from "./NewsPage/date-filter/date-filter.component";
+import {SortingFilterComponent} from "./NewsPage/sorting-filter/sorting-filter.component";
 import {CustomHttpInterceptor} from "./util/http-interceptor";
-import { PageNavigationComponent} from "./NewsPage/page-navigation/page-navigation.component";
+import {PageNavigationComponent} from "./NewsPage/page-navigation/page-navigation.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
-import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import {RegistrationFormComponent} from './registration-form/registration-form.component';
 
 import {SideBarComponent} from "./HomePage/SideBar/side-bar/side-bar.component";
 import {SideListComponent} from "./HomePage/SideBar/side-list/side-list.component";
-import { SideItemComponent } from './HomePage/SideBar/side-item/side-item.component';
+import {SideItemComponent} from './HomePage/SideBar/side-item/side-item.component';
 
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { ResultPageComponent } from './HomePage/ResultPage/result-page/result-page.component';
-import { SortingSelectorComponent } from './HomePage/OptionBar/sorting-selector/sorting-selector.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {ResultPageComponent} from './HomePage/ResultPage/result-page/result-page.component';
+import {SortingSelectorComponent} from './HomePage/OptionBar/sorting-selector/sorting-selector.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import { StarComponentComponent } from './HomePage/ResultPage/star-component/star-component.component';
-import { PlatformListComponent } from './HomePage/ResultPage/platform-list/platform-list.component';
-import {DatePipe, NgOptimizedImage} from "@angular/common";
-import { DateSelectorComponent } from './HomePage/OptionBar/date-selector/date-selector.component';
-import { OptionBarComponent } from './HomePage/OptionBar/option-bar/option-bar.component';
+import {StarComponentComponent} from './HomePage/ResultPage/star-component/star-component.component';
+import {PlatformListComponent} from './HomePage/ResultPage/platform-list/platform-list.component';
+import {DatePipe} from "@angular/common";
+import {DateSelectorComponent} from './HomePage/OptionBar/date-selector/date-selector.component';
+import {OptionBarComponent} from './HomePage/OptionBar/option-bar/option-bar.component';
 import {SearchBarComponent} from "./HomePage/OptionBar/search-bar/search-bar.component";
-import { GameDetailComponent } from './DetailsPage/game-detail/game-detail.component';
-import { ImageSliderComponent } from './DetailsPage/image-slider/image-slider.component';
-import { TextOverflowComponent } from './DetailsPage/text-overflow/text-overflow.component';
-import { GameAdditionalInfoComponent } from './DetailsPage/game-additional-info/game-additional-info.component';
-import { GameMainInfoComponent } from './DetailsPage/game-main-info/game-main-info.component';
-import { GameDetailsMediaComponent } from './DetailsPage/game-details-media/game-details-media.component';
-import { GameReviewComponent } from './DetailsPage/game-review/game-review.component';
+import {GameDetailComponent} from './DetailsPage/game-detail/game-detail.component';
+import {ImageSliderComponent} from './DetailsPage/image-slider/image-slider.component';
+import {TextOverflowComponent} from './DetailsPage/text-overflow/text-overflow.component';
+import {GameAdditionalInfoComponent} from './DetailsPage/game-additional-info/game-additional-info.component';
+import {GameMainInfoComponent} from './DetailsPage/game-main-info/game-main-info.component';
+import {GameDetailsMediaComponent} from './DetailsPage/game-details-media/game-details-media.component';
+import {GameReviewComponent} from './DetailsPage/game-review/game-review.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgxSpinnerModule} from "ngx-spinner";
-import { GameReviewListComponent } from './DetailsPage/game-review-list/game-review-list.component';
-import { GameMainInfoLeftComponent } from './DetailsPage/game-main-info-left/game-main-info-left.component';
-import { GameMainInfoRightComponent } from './DetailsPage/game-main-info-right/game-main-info-right.component';
-import { OffcanvasSideBarComponent } from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
+import {GameReviewListComponent} from './DetailsPage/game-review-list/game-review-list.component';
+import {GameMainInfoLeftComponent} from './DetailsPage/game-main-info-left/game-main-info-left.component';
+import {GameMainInfoRightComponent} from './DetailsPage/game-main-info-right/game-main-info-right.component';
+import {OffcanvasSideBarComponent} from './HomePage/offcanvas-side-bar/offcanvas-side-bar.component';
 import {LazyLoadImageModule} from "ng-lazyload-image";
-import { NewsSearchBarComponent} from "./NewsPage/news-search-bar/news-search-bar.component";
-import { HeaderComponent } from './header/header.component';
-import { AboutUsComponent} from "./AboutUs/about-us/about-us.component";
-import { NotFoundComponent } from './not-found/not-found.component';
-import { MessagePopUpComponent } from './message-pop-up/message-pop-up.component';
-import { ErrorComponent } from './error/error.component';
-import { ProfileReviewListComponent } from './UserReviews/profile-review-list/profile-review-list.component';
-import { FeedbackComponent } from './ReviewPage/feedback/feedback.component';
-import { AboutUsSectionComponent } from './AboutUs/about-us-section/about-us-section.component';
+import {NewsSearchBarComponent} from "./NewsPage/news-search-bar/news-search-bar.component";
+import {HeaderComponent} from './header/header.component';
+import {AboutUsComponent} from "./AboutUs/about-us/about-us.component";
+import {NotFoundComponent} from './not-found/not-found.component';
+import {MessagePopUpComponent} from './message-pop-up/message-pop-up.component';
+import {ErrorComponent} from './error/error.component';
+import {ProfileReviewListComponent} from './UserReviews/profile-review-list/profile-review-list.component';
+import {FeedbackComponent} from './ReviewPage/feedback/feedback.component';
+import {AboutUsSectionComponent} from './AboutUs/about-us-section/about-us-section.component';
 import appRoutes from "./appRoutes";
-import { CommentListComponent } from './ReviewPage/comment-list/comment-list.component';
+import {CommentListComponent} from './ReviewPage/comment-list/comment-list.component';
 
 @NgModule({
   declarations: [

@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { UrlBuilderService } from './url-builder.service';
+import {UrlBuilderService} from './url-builder.service';
 
 describe('UrlBuilderService', () => {
   let service: UrlBuilderService;

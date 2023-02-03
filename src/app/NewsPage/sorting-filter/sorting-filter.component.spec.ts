@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SortingFilterComponent } from './sorting-filter.component';
+import {SortingFilterComponent} from './sorting-filter.component';
 
 describe('SortingFilterComponent', () => {
   let component: SortingFilterComponent;

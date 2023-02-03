@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {faGamepad, faStore, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {
   faAndroid,
   faApple,
-  faAppStoreIos, faItchIo,
+  faAppStoreIos,
+  faItchIo,
   faLinux,
-  faPlaystation, faSteam,
+  faPlaystation,
+  faSteam,
   faWindows,
   faXbox
 } from "@fortawesome/free-brands-svg-icons";

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GameMainInfoComponent } from './game-main-info.component';
+import {GameMainInfoComponent} from './game-main-info.component';
 
 describe('GameMainInfoComponent', () => {
   let component: GameMainInfoComponent;

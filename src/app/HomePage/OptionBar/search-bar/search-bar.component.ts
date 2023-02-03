@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchHandlerService} from "../../../services/search-handler.service";
-import {GameListType, OrderingMode, OrderingType} from "../../../enum";
+import {GameListType} from "../../../enum";
 import {faSearch, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {Subscription} from "rxjs";
 

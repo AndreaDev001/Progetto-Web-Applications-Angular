@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { SpringHandlerService } from './spring-handler.service';
+import {SpringHandlerService} from './spring-handler.service';
 
 describe('SpringHandlerService', () => {
   let service: SpringHandlerService;

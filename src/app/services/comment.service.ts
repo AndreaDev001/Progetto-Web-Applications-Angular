@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import { map, Observable } from 'rxjs';
-import { FeedbackType } from '../enum';
-import { FeedbackContainer, Utente } from '../interfaces';
+import {map, Observable} from 'rxjs';
+import {FeedbackType} from '../enum';
+import {FeedbackContainer} from '../interfaces';
 
 
 @Injectable({

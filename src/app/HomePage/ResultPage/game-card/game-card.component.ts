@@ -1,7 +1,6 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Game} from "../../../interfaces";
-import {IconDefinition,faCalendarDays} from "@fortawesome/free-solid-svg-icons";
-import { NgOptimizedImage } from "@angular/common"
+import {faCalendarDays, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {SpringHandlerService} from "../../../services/spring-handler.service";
 
 @Component({

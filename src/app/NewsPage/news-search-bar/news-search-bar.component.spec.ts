@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NewsSearchBarComponent } from './news-search-bar.component';
+import {NewsSearchBarComponent} from './news-search-bar.component';
 
 describe('NewsSearchBarComponent', () => {
   let component: NewsSearchBarComponent;

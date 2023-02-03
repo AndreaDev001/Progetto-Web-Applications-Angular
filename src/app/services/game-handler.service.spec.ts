@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { GameHandlerService } from './game-handler.service';
+import {GameHandlerService} from './game-handler.service';
 
 describe('GameHandlerService', () => {
   let service: GameHandlerService;

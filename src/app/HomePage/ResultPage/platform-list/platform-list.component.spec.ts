@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlatformListComponent } from './platform-list.component';
+import {PlatformListComponent} from './platform-list.component';
 
 describe('PlatformListComponent', () => {
   let component: PlatformListComponent;

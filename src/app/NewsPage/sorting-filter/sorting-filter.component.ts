@@ -1,6 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {Sorting} from "../../enum";
-import {faSort, faSortAmountUp, faSortAsc, faSortUp, IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {faSortAmountUp, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-sorting-filter',

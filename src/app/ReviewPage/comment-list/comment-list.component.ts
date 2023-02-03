@@ -1,11 +1,9 @@
-import { ThisReceiver } from '@angular/compiler';
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { of } from 'rxjs';
-import { FeedbackType } from 'src/app/enum';
-import { Utente } from 'src/app/interfaces';
-import { Comment, CommentService } from 'src/app/services/comment.service';
-import { ObserverStatus } from 'src/app/utils/observer';
+import {Component, Input, SimpleChanges} from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
+import {FeedbackType} from 'src/app/enum';
+import {Utente} from 'src/app/interfaces';
+import {Comment, CommentService} from 'src/app/services/comment.service';
+import {ObserverStatus} from 'src/app/utils/observer';
 
 @Component({
   selector: 'app-comment-list',

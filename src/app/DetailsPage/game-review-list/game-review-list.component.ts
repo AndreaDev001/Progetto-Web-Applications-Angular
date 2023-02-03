@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges, OnDestroy} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Review, Utente} from "../../interfaces";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {Subscription} from "rxjs";

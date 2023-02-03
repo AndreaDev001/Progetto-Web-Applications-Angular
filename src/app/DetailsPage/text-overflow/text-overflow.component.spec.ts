@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TextOverflowComponent } from './text-overflow.component';
+import {TextOverflowComponent} from './text-overflow.component';
 
 describe('TextOverflowComponent', () => {
   let component: TextOverflowComponent;

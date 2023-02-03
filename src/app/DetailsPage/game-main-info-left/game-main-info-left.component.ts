@@ -1,15 +1,11 @@
-import {Component,Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {GameInfo} from "../../interfaces";
-import {
-  faCalendarDays,
-  faGlobe, faHeartCirclePlus,
-  faStar,
-  IconDefinition
-} from "@fortawesome/free-solid-svg-icons";
+import {faCalendarDays, faGlobe, faHeartCirclePlus, faStar, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 import {faReddit} from "@fortawesome/free-brands-svg-icons";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {Subscription, take} from "rxjs";
 import {AlertHandlerService} from "../../services/alert-handler.service";
+
 export interface GameLink{
   name: string,
   link?: string,

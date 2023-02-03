@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {OrderingType,OrderingMode} from "../../../enum";
+import {OrderingMode, OrderingType} from "../../../enum";
 import {SearchHandlerService} from "../../../services/search-handler.service";
-import {Subscription, take} from "rxjs";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-sorting-selector',

@@ -1,5 +1,5 @@
-import { Observable } from "rxjs";
-import { FeedbackType } from "./enum";
+import {Observable} from "rxjs";
+import {FeedbackType} from "./enum";
 
 
 export interface Game{

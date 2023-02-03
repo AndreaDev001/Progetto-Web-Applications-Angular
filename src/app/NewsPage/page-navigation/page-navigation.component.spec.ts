@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PageNavigationComponent } from './page-navigation.component';
+import {PageNavigationComponent} from './page-navigation.component';
 
 describe('PageNavigationComponent', () => {
   let component: PageNavigationComponent;

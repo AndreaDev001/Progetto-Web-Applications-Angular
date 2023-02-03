@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MessagePopUpComponent } from './message-pop-up.component';
+import {MessagePopUpComponent} from './message-pop-up.component';
 
 describe('MessagePopUpComponent', () => {
   let component: MessagePopUpComponent;

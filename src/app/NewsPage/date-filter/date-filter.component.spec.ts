@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DateFilterComponent } from './date-filter.component';
+import {DateFilterComponent} from './date-filter.component';
 
 describe('DateFilterComponent', () => {
   let component: DateFilterComponent;

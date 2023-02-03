@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Achievement, GameDetails, Review, Screenshot, Store, Trailer} from "../../interfaces";
+import {Achievement, GameDetails, GameInfo, Review, Screenshot, Store, StoreLink, Trailer} from "../../interfaces";
 import {ActivatedRoute} from "@angular/router";
 import {GameJSONReaderService} from "../../services/game-jsonreader.service";
 import {GameHandlerService} from "../../services/game-handler.service";
 import {SpringHandlerService} from "../../services/spring-handler.service";
 import {NgxSpinnerService} from "ngx-spinner";
-import {StoreLink, GameInfo} from "../../interfaces";
 import {Subscription} from "rxjs";
 import {DOMParserService} from "../../services/domparser.service";
 import {GameIconTranslatorService} from "../../services/game-icon-translator.service";

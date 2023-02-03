@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   Achievement,
   Developer,
@@ -10,7 +10,8 @@ import {
   Publisher,
   Screenshot,
   Store,
-  Tag, Trailer
+  Tag,
+  Trailer
 } from "../interfaces";
 
 @Injectable({
