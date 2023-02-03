@@ -1,27 +1,55 @@
-# Angular
+# Progetto-Web-Applications-Spring
+Progetto "Community Videogiochi" sviluppato per l'esame di Web Applications a.a. 2022/2023 da:
+- Pierluigi Altimari 219886
+- Francesca Filice 220119
+- Andrea Marhio 223401
+- Piero Stalteri 220248
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Nel file dump allegato sono stati già inseriti degli account di prova, di cui 4 sono di tipo "profilo" e 1 è di tipo "amministratore".
+Sono stati anche reati dei commenti e delle recensioni di prova riguardanti i seguenti videogiochi:
+"Hollow Knight", "Mario Kart 8 Deluxe", "Pokemon FireRed, LeafGreen", "Persona 5 Royal", "Elden Ring", "Mafia Definitive Edition", "For Honor".
+Inoltre, per visualizzare le recensioni di ogni account più facilmente, è possibile utilizzare la sezione "Recensioni proprie" accedendovi da header > Account > Your Reviews.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+PROFILO 1
+- username: AndreaMarchio
+- password: progettoWeb22-1
 
-## Build
+PROFILO 2
+- username: PierluigiAltimari
+- password: progettoWeb22-2
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+PROFILO 3
+- username: PieroStalteri
+- password: progettoWeb22-3
 
-## Running unit tests
+PROFILO 4
+- username: FrancescaFilice
+- password: progettoWeb22-4
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ADMIN 1
+- username: MainAdmin
+- password: progettoWeb22-5
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Nell'applicazione sono state utilizzate due API, una per la ricerca di giochi e l'altra per la ricerca di notizie, di cui seguono le rispettive API key:
 
-## Further help
+### RAWG API KEY (ricerca giochi)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- principale: 4c594591fcc74bfa84b0bb2f160aa5b3
+- secondaria: e0d46bb2aa1d42c9b7bc13bcb10f96fa
+
+### NEWS API KEY (ricerca notizie)
+
+- principale:	6babce9602e74985ae5a69d08718eeea
+- secondaria:	a62dfaa21d6b4cf289dc35964926bc15
+
+
+### INFORMAZIONI AGGIUNTIVE:
+
+Durante la procedura di cambio password, la mail con il link per reimpostare la password va aperta 
+dallo stesso browser su cui si è avviata la procedura di modifica password.
+Questo perchè la pagina per reimpostare la password (/changePassword) è protetta, e vi si puo' accedere 
+solo se la sessionId è valorizzata
